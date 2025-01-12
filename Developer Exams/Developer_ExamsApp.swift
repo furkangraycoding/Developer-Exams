@@ -6,27 +6,60 @@
 //
 
 import SwiftUI
-import SwiftData
+import GoogleMobileAds
 
 @main
 struct Developer_ExamsApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @State private var isActive = false
+    @State private var username: String = "" // Kullanıcının girdiği takma ad
+    @StateObject var interstitialAdsManager = InterstitialAdsManager()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isActive {
+                ContentView(username: username)
+            } else {
+                VStack {
+                    Text("Developer Exams")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                    
+                    TextField("Nickname...", text: $username)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                    
+                    Button(action: {
+                        withAnimation {
+                            isActive = true
+                        }
+                    }) {
+                        Text("Go")
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundColor(.blue)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(15)
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.blue)
+            }
         }
-        .modelContainer(sharedModelContainer)
+    }
+}
+
+class AppDelegate:NSObject,UIApplicationDelegate{
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        GADMobileAds.sharedInstance().start()
+        return true
     }
 }

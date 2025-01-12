@@ -1,0 +1,15 @@
+{
+  "originHash" : "8982ca4a3e1f1295632476304e5ad96f36a1f90f2d38d5478ed235df589c1c92",
+  "pins" : [
+    {
+      "identity" : "swift-package-manager-google-user-messaging-platform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git",
+      "state" : {
+        "revision" : "708a282840c2171ee63bd93b87afa49fe507d70e",
+        "version" : "2.7.0"
+      }
+    }
+  ],
+  "version" : 3
+}

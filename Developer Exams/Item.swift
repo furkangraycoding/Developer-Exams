@@ -1,8 +1,8 @@
 //
 //  Item.swift
-//  Developer Exams
+//  FlashCard
 //
-//  Created by furkan gurcay on 12.01.2025.
+//  Created by furkan gurcay on 3.08.2024.
 //
 
 import Foundation

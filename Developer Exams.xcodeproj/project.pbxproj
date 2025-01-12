@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A07114312D3433B9004087DC /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114302D3433B9004087DC /* GoogleMobileAds */; };
+		A07114942D343558004087DC /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114932D343558004087DC /* GoogleMobileAds */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A07114042D3432EB004087DC /* Developer Exams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Developer Exams.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A07114942D343558004087DC /* GoogleMobileAds in Frameworks */,
+				A07114312D3433B9004087DC /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "Developer Exams";
 			packageProductDependencies = (
+				A07114302D3433B9004087DC /* GoogleMobileAds */,
+				A07114932D343558004087DC /* GoogleMobileAds */,
 			);
 			productName = "Developer Exams";
 			productReference = A07114042D3432EB004087DC /* Developer Exams.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = A07113FB2D3432EB004087DC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A07114922D343558004087DC /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A07114052D3432EB004087DC /* Products */;
 			projectDirPath = "";
@@ -255,11 +267,13 @@
 				DEVELOPMENT_TEAM = 9L4W8ND457;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Developer Exams/InfoAdMob.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -284,11 +298,13 @@
 				DEVELOPMENT_TEAM = 9L4W8ND457;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Developer Exams/InfoAdMob.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +340,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A07114922D343558004087DC /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Downloads/swift-package-manager-google-mobile-ads-main";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A07114302D3433B9004087DC /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
+		A07114932D343558004087DC /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A07113FC2D3432EB004087DC /* Project object */;
 }
