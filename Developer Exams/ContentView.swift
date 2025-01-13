@@ -66,14 +66,9 @@ struct ContentView: View {
                         .padding(.top, 70)
                         .padding(.horizontal) // HStack'in etrafında yatay padding
             
-                if flashcardViewModel.currentIndex < flashcardViewModel.currentQuestions.count {
-                    Text("\(flashcardViewModel.currentQuestions[flashcardViewModel.currentIndex].point) points")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.top, 20)
-                }
+
                 
-                Spacer()
+                
                 
                 // Oyun bitti durumunda "Oyun Bitti" ve yüksek skorlar gösterimi
                 if flashcardViewModel.gameOver {
@@ -199,7 +194,7 @@ struct ContentView: View {
                                 Text(flashcard.question)
                                     .font(.title)
                                     .fontWeight(.semibold)
-                                    .padding()
+                                    .padding(.top,20)
                                     .transition(.scale)
                                     .animation(.easeInOut(duration: 0.5))
                                 
@@ -219,6 +214,14 @@ struct ContentView: View {
                                         .transition(.scale)
                                         .animation(.easeInOut(duration: 0.5))
                                     }
+                                    HStack{
+                                        HStack(spacing: Double(200/flashcard.point)) {  // Adjust the spacing if needed
+                                                    ForEach(0..<flashcard.point) { _ in
+                                                        Star().frame(width: Double(200/flashcard.point), height: Double(200/flashcard.point))
+                                                    }
+                                                }
+                                    }
+                                    
                                 }
                                 .transition(.scale)
                                 .animation(.easeInOut(duration: 0.5))
