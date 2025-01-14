@@ -2,8 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    
-    var username: String // Kullanıcının girdiği takma ad
+    var username: String
     @StateObject private var flashcardViewModel = FlashcardViewModel()
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @State private var isLoadedAds: Bool
@@ -21,7 +20,7 @@ struct ContentView: View {
     let originalBackgroundColor: Color = .white  // Orijinal arka plan rengi
     
     // Yüksek skorları uygulama başlarken yükle
-    init(username: String) {
+    init(username: String, chosenMenu: String) {
         self.username = username
         self.isLoadedAds = false
         _highScores = State(initialValue: ScoreManager.shared.loadScores())
@@ -140,7 +139,8 @@ struct ContentView: View {
                         .onAppear {
                             showMessage = true
                         }
-                    } else if flashcardViewModel.currentQuestions.isEmpty {
+                    }
+                    else if flashcardViewModel.currentQuestions.isEmpty {
                         Text("Loading...")
                             .font(.title)
                             .padding()

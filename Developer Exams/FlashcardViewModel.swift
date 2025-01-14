@@ -11,17 +11,25 @@ class FlashcardViewModel: ObservableObject {
     @Published var loadingNewQuestions: Bool = false
     @Published var heartsRemaining: Int = 5 // Kalp simgeleri için
     @Published var gameOver: Bool = false // Oyun bitişi durumu
+    @Published var chosenMenu: String = ""
     
     private var allFlashcards: [Flashcard] = []
     private var wrongQuestions: [Flashcard] = []
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        loadFlashcards()
+        self.chosenMenu = GlobalViewModel.shared.chosenMenu
+        loadFlashcards(chosenMenu: self.chosenMenu)
     }
     
-    func loadFlashcards() {
-        guard let url = Bundle.main.url(forResource: "questions", withExtension: "json") else {
+    func updateMenu(globalViewModel: GlobalViewModel) {
+        // Access the global chosenMenu
+        self.chosenMenu = globalViewModel.chosenMenu
+        print("Updated chosenMenu: \(self.chosenMenu)")
+    }
+    
+    func loadFlashcards(chosenMenu : String) {
+        guard let url = Bundle.main.url(forResource: chosenMenu, withExtension: "json") else {
             print("JSON file not found")
             return
         }

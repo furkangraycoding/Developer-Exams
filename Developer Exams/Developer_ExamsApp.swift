@@ -13,11 +13,20 @@ struct Developer_ExamsApp: App {
     @State private var isActive = false
     @State private var username: String = "" // Kullanıcının girdiği takma ad
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
+    @StateObject private var globalViewModel = GlobalViewModel()
+    @State private var isMenuVisible: Bool = true
 
     var body: some Scene {
         WindowGroup {
             if isActive {
-                ContentView(username: username)
+                if isMenuVisible {
+                            MenuView(isMenuVisible: $isMenuVisible).environmentObject(globalViewModel)
+                        } else {
+                            if globalViewModel.chosenMenu == "Swift" {
+                                ContentView(username: username, chosenMenu: globalViewModel.chosenMenu)
+                            }
+                        }
+                
             } else {
                 VStack {
                     Text("Developer Exams")
