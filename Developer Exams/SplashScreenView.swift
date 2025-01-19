@@ -18,7 +18,7 @@ struct SplashScreenView: View {
             ZStack {
                 // Set the entire screen's background color to black
                 Color.black
-                    .ignoresSafeArea(.all) // Make sure this fills the entire screen
+                    .edgesIgnoringSafeArea(.all) // Make sure this fills the entire screen
 
                 VStack {
                     Spacer()

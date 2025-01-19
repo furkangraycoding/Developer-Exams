@@ -12,6 +12,7 @@ class GlobalViewModel: ObservableObject {
     @Published var chosenMenu: String = ""
     @Published var isActive: String = "SplashEkranı"
     @Published var username: String = ""
+    @Published var isMenuVisible: Bool = true
     
     static let shared = GlobalViewModel()
 }

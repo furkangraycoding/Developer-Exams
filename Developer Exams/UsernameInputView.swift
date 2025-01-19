@@ -12,85 +12,73 @@ struct UsernameInputView: View {
         ZStack {
             // Primary background is black
             Color.black
-                .ignoresSafeArea()
-
-            VStack {
-                // App Branding (Logo + App Title)
-                HStack {
-                    Image(systemName: "app.fill") // Placeholder for app logo, replace as needed
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.mint)
-                        .background(.purple)
-                    Text("Magnetic Minds App")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.orange) // Purple text for the app title
-                        .padding(.leading, 5)
-                }
-                .padding(.top, 40)
-
-                Spacer()
-
-                // Input Area (Username Field) with animation
+                .edgesIgnoringSafeArea(.all)
+            GeometryReader { geometry in
                 VStack {
-                    Text("Enter Your Username")
-                        .fontWeight(.semibold)
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity)
-                        .padding(.bottom, 10)
-
-                    TextField("Your username...", text: $globalViewModel.username)
-                        .padding()
-                        .background(.orange)
-                        .foregroundColor(.black)// Soft gray background for input field
-                        .cornerRadius(15)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .padding(.horizontal, 30)
-                        .italic()
-
-                    // Button Area
-                    Button(action: {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            globalViewModel.isActive = "AnaEkran"
-                        }
-                    }) {
-                        Text("Continue")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
+                    HStack {
+                        Image(.developer) // Placeholder for app logo, replace as needed
+                            .resizable()
+                            .frame(width: .infinity, height: geometry.size.height / 3)
+                            .foregroundColor(.mint)
+                            .background(.black)
+                    }
+                    .padding(.top, 10)
+                    
+                    // Input Area (Username Field) with animation
+                    VStack {
+                        
+                        TextField("Your username...", text: $username)
                             .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.orange.opacity(0.8)) // Bold orange for button
+                            .background(.green)
+                            .foregroundColor(.black)// Soft gray background for input field
                             .cornerRadius(15)
-                            .shadow(radius: 5)
-                            .padding(.top, 20)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(.horizontal, 30)
+                            .italic()
+                        
+                        // Button Area
+                        Button(action: {
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                globalViewModel.isActive = "AnaEkran"
+                                globalViewModel.username = username
+                            }
+                        }) {
+                            Text("Continue")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.green.opacity(0.8)) // Bold green for button
+                                .cornerRadius(15)
+                                .shadow(radius: 5)
+                                .padding(.top, 20)
+                        }
+                        .padding(.horizontal, 30)
                     }
-                    .padding(.horizontal, 30)
-                }
-                .padding(.vertical, 20)
-                .background(Color.orange.opacity(0.8)) // Semi-transparent black background
-                .cornerRadius(20)
-                .shadow(radius: 10)
-                .offset(y: inputAreaOffset)  // Apply the offset for animation
-                .opacity(inputAreaOpacity)   // Apply opacity for fade-in effect
-                .animation(.easeOut(duration: 0.8), value: inputAreaOffset) // Animate the offset
-                .onAppear {
-                    // Start the animation when the view appears
-                    withAnimation(.easeOut(duration: 0.8)) {
-                        inputAreaOffset = 0      // Move the input area to its original position
-                        inputAreaOpacity = 1     // Fade in the input area
+                    .padding(40)
+                    .background(Color.black.opacity(0.8)) // Semi-transparent black background
+                    .cornerRadius(20)
+                    .shadow(radius: 10)
+                    .offset(y: inputAreaOffset)  // Apply the offset for animation
+                    .opacity(inputAreaOpacity)   // Apply opacity for fade-in effect
+                    .animation(.easeOut(duration: 0.8), value: inputAreaOffset) // Animate the offset
+                    .onAppear {
+                        // Start the animation when the view appears
+                        withAnimation(.easeOut(duration: 0.8)) {
+                            inputAreaOffset = 0      // Move the input area to its original position
+                            inputAreaOpacity = 1     // Fade in the input area
+                        }
                     }
+                    
+                    Spacer()
+                    
+                    // Footer with Copyright Text
+                    Text(" @Copyrights MagneticMindsApp 2025 ")
+                        .font(.subheadline)
+                        .foregroundColor(.green.opacity(0.3)) // Subtle footer text color
+                        .padding(.bottom, 20)
                 }
-
-                Spacer()
-
-                // Footer with Copyright Text
-                Text("@Copyrights MagneticMindsApp 2024 - 2025")
-                    .font(.subheadline)
-                    .foregroundColor(.orange.opacity(0.8)) // Subtle footer text color
-                    .padding(.bottom, 20)
             }
         }
         .animation(.easeInOut(duration: 0.3), value: isActive)

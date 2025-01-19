@@ -6,7 +6,7 @@ struct HighScoresView: View {
     var body: some View {
         ZStack {
             Color.black
-                .ignoresSafeArea(.all)
+                .edgesIgnoringSafeArea(.all)
             VStack {
                 Text("Highest Scores")
                     .font(.title)

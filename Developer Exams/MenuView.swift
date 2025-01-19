@@ -18,7 +18,7 @@ struct MenuView: View {// Binding to chosenMenu from parent view
         NavigationView {
             ZStack {
                 Color.black
-                    .ignoresSafeArea(.all)
+                    .edgesIgnoringSafeArea(.all)
             GeometryReader { geometry in
                 VStack {
                     // Scrollable grid of buttons
@@ -29,14 +29,16 @@ struct MenuView: View {// Binding to chosenMenu from parent view
                                     globalViewModel.chosenMenu = menuItems[index].0
                                     isMenuVisible = false // Hide the menu when a choice is made
                                 }) {
-                                
-
                                     Text(menuItems[index].0)
                                         .font(.title2)
-                                        .foregroundColor(.white)
-                                        .frame(width: geometry.size.width / Double(6/2), height: geometry.size.width / Double(12/4)) // Making each button square
-                                        .background(menuItems[index].1)
-                                        .cornerRadius(15)
+                                        .foregroundColor(menuItems[index].1)
+                                        .frame(width: geometry.size.width / 3, height: geometry.size.width / 3) // Making each button square
+                                        .background(Color.black)
+                                        .cornerRadius(15) // Apply corner radius to the background
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(menuItems[index].1, lineWidth: 5) // Apply border with corner radius
+                                        )
                                 }
                             }
                         }
