@@ -16,6 +16,9 @@ struct MenuView: View {// Binding to chosenMenu from parent view
     
     var body: some View {
         NavigationView {
+            ZStack {
+                Color.black
+                    .ignoresSafeArea(.all)
             GeometryReader { geometry in
                 VStack {
                     // Scrollable grid of buttons
@@ -45,6 +48,7 @@ struct MenuView: View {// Binding to chosenMenu from parent view
                 }
                 .navigationTitle("Menu Selector")
                 .navigationBarTitleDisplayMode(.inline)
+            }
             }
         }
     }}

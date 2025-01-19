@@ -10,7 +10,7 @@ import GoogleMobileAds
 
 @main
 struct Developer_ExamsApp: App {
-    @State private var isActive = false
+    @State private var isActive = "Login"
     @State private var username: String = "" // Kullanıcının girdiği takma ad
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @StateObject private var globalViewModel = GlobalViewModel()
@@ -18,7 +18,7 @@ struct Developer_ExamsApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if isActive {
+            if globalViewModel.isActive == "AnaEkran" {
                 if isMenuVisible {
                             MenuView(isMenuVisible: $isMenuVisible).environmentObject(globalViewModel)
                         } else {
@@ -27,40 +27,13 @@ struct Developer_ExamsApp: App {
                             }
                         }
                 
-            } else {
-                VStack {
-                    Text("Developer Exams")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                    
-                    TextField("Nickname...", text: $username)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(5)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    
-                    Button(action: {
-                        withAnimation {
-                            isActive = true
-                        }
-                    }) {
-                        Text("Go")
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.blue)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(15)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.blue)
+            }
+            else if (globalViewModel.isActive == "SplashEkranı") {
+                SplashScreenView(isActive: $isActive).environmentObject(globalViewModel)
+            }
+                
+            else if (globalViewModel.isActive == "Login") {
+                UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
             }
         }
     }

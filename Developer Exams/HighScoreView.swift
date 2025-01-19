@@ -4,20 +4,27 @@ struct HighScoresView: View {
     @State private var highScores: [UserScore] = []
     
     var body: some View {
-        VStack {
-            Text("Highest Scores")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding()
-            
-            ForEach(highScores) { userScore in
-                HStack {
-                    Text(userScore.username)
-                        .foregroundColor(.primary)
-                    Spacer()
-                    Text("\(userScore.score)")
+        ZStack {
+            Color.black
+                .ignoresSafeArea(.all)
+            VStack {
+                Text("Highest Scores")
+                    .font(.title)
+                    .background(Color.white)
+                    .foregroundColor(.green)
+                    .fontWeight(.bold)
+                    .padding()
+                
+                ForEach(highScores) { userScore in
+                    HStack {
+                        Text(userScore.username)
+                            .foregroundColor(.green)
+                        Spacer()
+                        Text("\(userScore.score)")
+                            .foregroundColor(.green)
+                    }
+                    .padding()
                 }
-                .padding()
             }
         }
         .onAppear {
