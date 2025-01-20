@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Developer.png",
+      "filename" : "dev.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Developer 1.png",
+      "filename" : "dev 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Developer 2.png",
+      "filename" : "dev 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

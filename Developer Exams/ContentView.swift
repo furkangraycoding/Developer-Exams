@@ -45,18 +45,20 @@ struct ContentView: View {
                             MenuView(isMenuVisible: $globalViewModel.isMenuVisible)})
                             {
                                 Text("<")
+                                    .background(.blue)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .padding(5)
                                     .cornerRadius(10)
                             }
                             .cornerRadius(5)
-                            .background(.green)
+                            .background(.blue)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.green, lineWidth: 12) // Apply border with corner radius
+                                    .stroke(.blue, lineWidth: 12) // Apply border with corner radius
                             )
+                            .background(.blue)
                             .padding(.trailing, 5)
                         Text("\(username)")
                             .font(.headline)
@@ -66,7 +68,7 @@ struct ContentView: View {
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         
-                        Spacer().frame(width: 8) // Arada boşluk bırakmak için Spacer ekledim
+                        Spacer().frame(width: 5) // Arada boşluk bırakmak için Spacer ekledim
                         
                         // Skor Bilgisi
                         Text("Score: \(flashcardViewModel.correctAnswersCount)")
@@ -77,7 +79,7 @@ struct ContentView: View {
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         
-                        Spacer().frame(width: 8)
+                        Spacer().frame(width: 5)
                         // En Yüksek Skor Bilgisi
                         Text("Best: \(highestUserScore)")
                             .font(.headline)
