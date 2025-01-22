@@ -15,7 +15,7 @@ struct UsernameInputView: View {
                 .edgesIgnoringSafeArea(.all)
             
             // Add random shapes as background patterns
-            RandomShapesView()
+            RandomShapesView(shapesWithPositions: $globalViewModel.shapesWithPositions).environmentObject(globalViewModel)
                 .opacity(0.8) // Decreased opacity to avoid overwhelming the main content
                 .edgesIgnoringSafeArea(.all)
             

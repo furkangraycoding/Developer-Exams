@@ -1,56 +1,76 @@
 import SwiftUI
 
-struct MenuView: View {// Binding to chosenMenu from parent view
+struct MenuView: View {
     @Binding var isMenuVisible: Bool
     @EnvironmentObject var globalViewModel: GlobalViewModel
+    
+    // New color palette using built-in SwiftUI colors
     let menuItems = [
-        ("Swift", Color.red),
-        ("Menu 2", Color.blue),
-        ("Menu 3", Color.green),
-        ("Menu 4", Color.orange),
-        ("Menu 5", Color.purple),
-        ("Menu 6", Color.yellow),
-        ("Menu 7", Color.pink),
-        ("Menu 8", Color.teal)
+        ("Swift", Color.purple),
+        ("JavaScript", Color.blue),
+        ("Python", Color.green),
+        ("Java", Color.orange),
+        ("C#", Color.red),
+        ("Ruby", Color.pink),
+        ("Go", Color.teal),
+        ("Rust", Color.yellow)
+    ]
+    
+    private let columns = [
+        GridItem(.flexible(), spacing: 20),
+        GridItem(.flexible(), spacing: 20)
     ]
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.black
-                    .edgesIgnoringSafeArea(.all)
+        ZStack {
+            // Soft gradient background with built-in colors
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
+            
             GeometryReader { geometry in
                 VStack {
-                    // Scrollable grid of buttons
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                            ForEach(0..<8) { index in
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            ForEach(0..<menuItems.count, id: \.self) { index in
                                 Button(action: {
-                                    globalViewModel.chosenMenu = menuItems[index].0
-                                    isMenuVisible = false // Hide the menu when a choice is made
+                                    withAnimation {
+                                        globalViewModel.chosenMenu = menuItems[index].0
+                                        isMenuVisible = false // Hide the menu when a choice is made
+                                    }
                                 }) {
                                     Text(menuItems[index].0)
-                                        .font(.title2)
-                                        .foregroundColor(menuItems[index].1)
-                                        .frame(width: geometry.size.width / 3, height: geometry.size.width / 3) // Making each button square
-                                        .background(Color.black)
-                                        .cornerRadius(15) // Apply corner radius to the background
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .stroke(menuItems[index].1, lineWidth: 5) // Apply border with corner radius
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .frame(width: (geometry.size.width - 60) / 2, height: (geometry.size.width - 60) / 2) // Making each button square
+                                        .background(
+                                            LinearGradient(gradient: Gradient(colors: [menuItems[index].1.opacity(0.6), menuItems[index].1]),
+                                                           startPoint: .top, endPoint: .bottom)
                                         )
+                                        .cornerRadius(20) // Apply corner radius to the background
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 20)
+                                                .stroke(menuItems[index].1, lineWidth: 4) // Apply border with corner radius
+                                        )
+                                        .shadow(radius: 10) // Add shadow for a more polished look
+                                        .scaleEffect(isMenuVisible ? 1 : 0.95) // Subtle zoom-in effect
+                                        .animation(.easeInOut(duration: 0.3), value: isMenuVisible) // Smooth animation
                                 }
+                                .padding(.horizontal)
                             }
                         }
-                        .padding(.top, 10)
-                        .padding(.bottom, 20)
+                        .padding(.top, 20)
+                        .padding(.bottom, 40)
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity) // Make sure it takes up the full width
                 }
-                .navigationTitle("Menu Selector")
-                .navigationBarTitleDisplayMode(.inline)
-            }
             }
         }
-    }}
+    }
+}
+
+struct MenuView_Previews: PreviewProvider {
+    static var previews: some View {
+        MenuView(isMenuVisible: .constant(true))
+            .environmentObject(GlobalViewModel())
+    }
+}

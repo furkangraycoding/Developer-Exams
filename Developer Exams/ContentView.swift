@@ -45,20 +45,20 @@ struct ContentView: View {
                             MenuView(isMenuVisible: $globalViewModel.isMenuVisible)})
                             {
                                 Text("<")
-                                    .background(.blue)
+                                    .background(.white)
                                     .font(.headline)
                                     .fontWeight(.bold)
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .padding(5)
                                     .cornerRadius(10)
                             }
                             .cornerRadius(5)
-                            .background(.blue)
+                            .background(.white)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.blue, lineWidth: 12) // Apply border with corner radius
+                                    .stroke(.white, lineWidth: 12) // Apply border with corner radius
                             )
-                            .background(.blue)
+                            .background(.white)
                             .padding(.trailing, 5)
                         Text("\(username)")
                             .font(.headline)
