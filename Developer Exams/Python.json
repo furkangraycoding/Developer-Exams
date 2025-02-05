@@ -1,0 +1,1036 @@
+[
+    {
+      "question": "What is the correct way to define a function in Python?",
+      "answer": "def my_function():",
+      "choices": [
+        "function my_function():",
+        "def my_function():",
+        "create my_function():",
+        "function: my_function()"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which symbol is used for comments in Python?",
+      "answer": "#",
+      "choices": [
+        "//",
+        "#",
+        "--",
+        "/*"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you create a list in Python?",
+      "answer": "my_list = []",
+      "choices": [
+        "my_list = ()",
+        "my_list = {}",
+        "my_list = []",
+        "my_list = <>"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the output of the expression 5 // 2?",
+      "answer": "2",
+      "choices": [
+        "2",
+        "2.5",
+        "3",
+        "1"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you initialize a dictionary in Python?",
+      "answer": "my_dict = {}",
+      "choices": [
+        "my_dict = []",
+        "my_dict = ()",
+        "my_dict = {}",
+        "my_dict = <>"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which of the following is used to handle exceptions in Python?",
+      "answer": "try and except",
+      "choices": [
+        "catch and throw",
+        "try and except",
+        "throw and catch",
+        "error handling"
+      ],
+      "point": 7
+    },
+    {
+      "question": "In Python, what is the keyword used to create a class?",
+      "answer": "class",
+      "choices": [
+        "class",
+        "def",
+        "create",
+        "new"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which loop is used to iterate over a sequence in Python?",
+      "answer": "for",
+      "choices": [
+        "while",
+        "repeat",
+        "for",
+        "each"
+      ],
+      "point": 2
+    },
+    {
+      "question": "In Python, which keyword is used to import a module?",
+      "answer": "import",
+      "choices": [
+        "require",
+        "include",
+        "import",
+        "using"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the len() function do in Python?",
+      "answer": "Returns the length of an object",
+      "choices": [
+        "Counts characters",
+        "Returns the length of an object",
+        "Determines the type",
+        "Creates a new object"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which statement is true about lists in Python?",
+      "answer": "They are ordered and mutable.",
+      "choices": [
+        "They are unordered and immutable.",
+        "They are ordered and mutable.",
+        "They can only store the same data type.",
+        "They cannot be nested."
+      ],
+      "point": 4
+    },
+    {
+      "question": "How can you create a virtual environment in Python?",
+      "answer": "Using python -m venv env_name",
+      "choices": [
+        "Using python -m venv env_name",
+        "Using env create -n env_name",
+        "Using venv.create(env_name)",
+        "Using virtualenv env_name"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What data type does the input() function return?",
+      "answer": "str",
+      "choices": [
+        "int",
+        "float",
+        "str",
+        "bool"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which keyword defines a generator function in Python?",
+      "answer": "yield",
+      "choices": [
+        "yield",
+        "return",
+        "next",
+        "break"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does '*' signify when used in function parameters?",
+      "answer": "Positional-only parameters",
+      "choices": [
+        "Variadic arguments",
+        "Positional-only parameters",
+        "Keyword-only parameters",
+        "Default values"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What is the output of the code: `print(2**3)`?",
+      "answer": "8",
+      "choices": [
+        "8",
+        "9",
+        "6",
+        "Error"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which of the following is a valid way to handle an exception in Python?",
+      "answer": "try: ... except: ...",
+      "choices": [
+        "try: ... exception: ...",
+        "catch: ... finally: ...",
+        "try: ... except: ...",
+        "try: ... error: ..."
+      ],
+      "point": 9
+    },
+    {
+      "question": "How can you read a file in Python?",
+      "answer": "open('filename.txt', 'r')",
+      "choices": [
+        "read('filename.txt')",
+        "open('filename.txt', 'r')",
+        "file('filename.txt')",
+        "getContent('filename.txt')"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will `print(type([]))` output?",
+      "answer": "<class 'list'>",
+      "choices": [
+        "<type 'list'>",
+        "<class 'list'>",
+        "list",
+        "<class 'array'>"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will the output be for this code: `print(3 == 3.0)`?",
+      "answer": "True",
+      "choices": [
+        "False",
+        "None",
+        "True",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How can you create a tuple in Python?",
+      "answer": "my_tuple = (1, 2, 3)",
+      "choices": [
+        "my_tuple = [1, 2, 3]",
+        "my_tuple = (1, 2, 3)",
+        "my_tuple = {1, 2, 3}",
+        "my_tuple = <1, 2, 3>"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the result of this expression: `[1, 2, 3] + [4, 5]`?",
+      "answer": "[1, 2, 3, 4, 5]",
+      "choices": [
+        "[5, 4, 3, 2, 1]",
+        "[1, 2, 3, 4, 5]",
+        "[1, 2, 3, 4]",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the result of checking a membership with the `in` keyword: `5 in [1, 2, 3, 5]`?",
+      "answer": "True",
+      "choices": [
+        "True",
+        "False",
+        "Error",
+        "None"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you convert a string to an integer in Python?",
+      "answer": "int('123')",
+      "choices": [
+        "str('123')",
+        "int('123')",
+        "convert('123')",
+        "float('123')"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of the following will raise an IndexError?",
+      "answer": "Accessing an index that is out of range",
+      "choices": [
+        "Accessing an index that is out of range",
+        "Adding an invalid value",
+        "Using a negative index",
+        "Removing an element"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the output of the following code block?\n\nmy_list = [1, 2, 3]\nprint(my_list[1])\n",
+      "answer": "2",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will be the output of the following code block?\n\nx = 'hello'\nprint(x[1:4])\n",
+      "answer": "ell",
+      "choices": [
+        "hel",
+        "ell",
+        "llo",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the code below?\n\nx = [1, 2, 3]\nprint(x * 2)\n",
+      "answer": "[1, 2, 3, 1, 2, 3]",
+      "choices": [
+        "[1, 2, 3]",
+        "[2, 4, 6]",
+        "[1, 2, 3, 1, 2, 3]",
+        "[1, 2, 3, 2, 4, 6]"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = {1: 'one', 2: 'two'}\ny = x.get(3, 'default')\nprint(y)\n",
+      "answer": "default",
+      "choices": [
+        "one",
+        "two",
+        "default",
+        "None"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = [1, 2, 3]\nprint(x[1:])\n",
+      "answer": "[2, 3]",
+      "choices": [
+        "[1, 2, 3]",
+        "[2, 3]",
+        "[1, 2]",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the result of the code below?\n\nmy_string = 'Python'\nprint(my_string[-1])\n",
+      "answer": "n",
+      "choices": [
+        "P",
+        "n",
+        "o",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will the result of this code be:\n\nprint(3 == 3.0)\n",
+      "answer": "True",
+      "choices": [
+        "True",
+        "False",
+        "None",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = 'Hello'\ny = x + ' World'\nprint(y)\n",
+      "answer": "Hello World",
+      "choices": [
+        "Hello",
+        "Hello World",
+        "World Hello",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of this code?\n\nx = [1, 2, 3]\nprint(x.append(4))\nprint(x)\n",
+      "answer": "[1, 2, 3, 4]",
+      "choices": [
+        "[1, 2, 3]",
+        "None",
+        "[1, 2, 3, 4]",
+        "Error"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the output of the following Python code?\n\nx = {5, 4, 3}\ny = {1, 2}\nprint(x.union(y))\n",
+      "answer": "{1, 2, 3, 4, 5}",
+      "choices": [
+        "{1, 2, 3, 4, 5}",
+        "{5, 4, 3}",
+        "Error",
+        "{5, 4}"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What will the code below output?\n\nx = [1, 2, 3, 4]\nx.remove(2)\nprint(x)\n",
+      "answer": "[1, 3, 4]",
+      "choices": [
+        "[1, 2, 3, 4]",
+        "[1, 3, 4]",
+        "[2, 3, 4]",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be printed out by this code?\n\nx = 'Python'\nprint(x[::-1])\n",
+      "answer": "nohtyP",
+      "choices": [
+        "Python",
+        "nohtyP",
+        "Error",
+        "none"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What does the following code snippet print?\n\nx = {'a': 1, 'b': 2}\nprint(x.get('c', 'Not Found'))\n",
+      "answer": "Not Found",
+      "choices": [
+        "1",
+        "Not Found",
+        "None",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will the output be for this code?\n\nprint(sum([1, 2, 3, 4]))\n",
+      "answer": "10",
+      "choices": [
+        "10",
+        "9",
+        "11",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you start a virtual environment in Python?",
+      "answer": "python -m venv venv_name",
+      "choices": [
+        "python start venv venv_name",
+        "python -m venv venv_name",
+        "venv create venv_name",
+        "Create venv_name.venv"
+      ],
+      "point": 8
+    },
+    {
+      "question": "How do you read a text file in Python?\n\nfile = open('file.txt', 'r')\n",
+      "answer": "Using open() function",
+      "choices": [
+        "Using read() function",
+        "Using open() function",
+        "Using file.read()",
+        "Using readFile()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What does `map()` function do in Python?",
+      "answer": "Applies a function to all items in an iterable",
+      "choices": [
+        "Creates a new list",
+        "Applies a function to all items in an iterable",
+        "Sorts an iterable",
+        "Joins elements"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What does the `all()` function do in Python?",
+      "answer": "Returns True if all elements are true",
+      "choices": [
+        "Returns True if all elements are true",
+        "Returns the first true element",
+        "Returns False if any element is false",
+        "Checks if any element is true"
+      ],
+      "point": 8
+    },
+    {
+      "question": "How do you define a default parameter in a function?\n\ndef greeting(name='World'):\n",
+      "answer": "name='World'",
+      "choices": [
+        "name: 'World'",
+        "name='World'",
+        "name = 'World'",
+        "default name='World'"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How can you get the current working directory in Python?",
+      "answer": "os.getcwd()",
+      "choices": [
+        "os.getcwd()",
+        "os.currentDir()",
+        "os.directory()",
+        "os.path()"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the output of `print(isinstance(1, int))`?",
+      "answer": "True",
+      "choices": [
+        "True",
+        "False",
+        "Error",
+        "None"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will `print(3 * 'a')` output?",
+      "answer": "aaa",
+      "choices": [
+        "aa",
+        "aaa",
+        "Error",
+        "None"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will the following code output?\n\nx = 'hello world'\nprint(x.upper())\n",
+      "answer": "HELLO WORLD",
+      "choices": [
+        "hello world",
+        "HELLO WORLD",
+        "Hello World",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = 10\nif x > 5:\n    print('Greater')\nelse:\n    print('Smaller')\n",
+      "answer": "Greater",
+      "choices": [
+        "Greater",
+        "Smaller",
+        "None",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will the following code output?\n\nx = [1, 2, 3]\ny = x.copy()\ny.append(4)\nprint(x)\n",
+      "answer": "[1, 2, 3]",
+      "choices": [
+        "[1, 2, 3]",
+        "[1, 2, 3, 4]",
+        "[4]",
+        "Error"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will the following code output?\n\nx = {1, 2, 3}\nprint(2 in x)\n",
+      "answer": "True",
+      "choices": [
+        "True",
+        "False",
+        "None",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will the output of `print(1 == True)` be?",
+      "answer": "True",
+      "choices": [
+        "True",
+        "False",
+        "None",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will happen if you do `print(0 / 0)` in Python?",
+      "answer": "ZeroDivisionError",
+      "choices": [
+        "0",
+        "ZeroDivisionError",
+        "None",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How do you concatenate two strings in Python?",
+      "answer": "Using + operator",
+      "choices": [
+        "Using + operator",
+        "Using join() method",
+        "Using append() method",
+        "Using concat() function"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the output of the following code?\n\nprint('Hello'.replace('l', ''))\n",
+      "answer": "Heo",
+      "choices": [
+        "Heo",
+        "Hello",
+        "Error",
+        "heLlo"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be printed out by this code?\n\nx = [1, 2, 3]  \nx.insert(1, 5)\nprint(x)\n",
+      "answer": "[1, 5, 2, 3]",
+      "choices": [
+        "[1, 2, 3]",
+        "[1, 5, 2, 3]",
+        "[5, 1, 2, 3]",
+        "[1, 2, 3, 5]"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is printed when this code is executed?\n\nfor i in range(3):  \n    print(i)\n",
+      "answer": "0\n1\n2",
+      "choices": [
+        "0\n1\n2",
+        "1\n2\n3",
+        "0\n1\n2\n3",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = [i for i in range(5)]  \nprint(x)\n",
+      "answer": "[0, 1, 2, 3, 4]",
+      "choices": [
+        "[0, 1, 2, 3, 4]",
+        "[1, 2, 3, 4, 5]",
+        "[5]",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the `sorted()` function do?\n",
+      "answer": "Returns a new sorted list from the elements of any iterable.",
+      "choices": [
+        "Sorts the list in place.",
+        "Returns a new sorted list from the elements of any iterable.",
+        "Sorts the array in ascending order.",
+        "None of the above."
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of this snippet?\n\n `x = [1, 2, 3]\n print(len(x))`",
+      "answer": "3",
+      "choices": [
+        "2",
+        "3",
+        "1",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will the following code print?\n\n\nclass Animal:\n    def speak(self):\n        return 'Roar'\n\nclass Dog(Animal):\n    def speak(self):\n        return 'Bark'\n\nmy_dog = Dog()\nprint(my_dog.speak())\n\n",
+      "answer": "Bark",
+      "choices": [
+        "Roar",
+        "Bark",
+        "None",
+        "Error"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What will be the output of the following code?\n\n\ndef foo(a=[]):\n    a.append(1)\n    return a\n\nprint(foo())\nprint(foo())\n\n",
+      "answer": "[1]\n[1, 1]",
+      "choices": [
+        "[1]\n[1]",
+        "[1]\n[1, 1]",
+        "[1, 1]\n[1]",
+        "[1, 1]\n[1, 1, 1]"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What will the following code output?\n\n\nfor i in range(5):\n    if i == 3:\n        break\n    print(i)\n\n",
+      "answer": "0\n1\n2",
+      "choices": [
+        "0\n1\n2",
+        "0\n1\n2\n3",
+        "1\n2",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does the `map()` function do?\n",
+      "answer": "Applies a function to all items in an input list.",
+      "choices": [
+        "Filters items in a list.",
+        "Applies a function to all items in an input list.",
+        "Duplicates items in a list.",
+        "Reduces the items in a list."
+      ],
+      "point": 7
+    },
+    {
+          "question": "What will be the output of the following Python code?\n\n\nx = {1: 'one', 2: 'two'}\ny = x.get(3, 'Not Found')\nprint(y)\n\n",
+          "answer": "Not Found",
+          "choices": [
+            "one",
+            "two",
+            "Not Found",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "Which Python keyword is used to define a class?",
+          "answer": "class",
+          "choices": [
+            "def",
+            "create",
+            "class",
+            "object"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will the following code output?\n\n\nmy_string = 'Python'\nprint(my_string.lower())\n\n",
+          "answer": "python",
+          "choices": [
+            "python",
+            "Python",
+            "PYTHON",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "How do you create a set in Python?",
+          "answer": "my_set = set()",
+          "choices": [
+            "my_set = []",
+            "my_set = {}",
+            "my_set = set()",
+            "my_set = <>"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What is the output of `bool('False')`?",
+          "answer": "True",
+          "choices": [
+            "True",
+            "False",
+            "None",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following code?\n\n\na = (1, 2, 3)\nb = list(a)\nprint(b)\n\n",
+          "answer": "[1, 2, 3]",
+          "choices": [
+            "[1, 2, 3]",
+            "(1, 2, 3)",
+            "[1; 2; 3]",
+            "None"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What output will the code below produce?\n\n\ndef add(a, b=3):\n    return a + b\nprint(add(2))\n\n",
+          "answer": "5",
+          "choices": [
+            "5",
+            "3",
+            "2",
+            "None"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What is the output of `print([0] * 5)`?",
+          "answer": "[0, 0, 0, 0, 0]",
+          "choices": [
+            "[0, 0, 0, 0, 0]",
+            "[0, 0, 5]",
+            "[5, 5, 5]",
+            "[0]"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What exception will the following code raise?\n\n\nx = [1, 2, 3]\ny = x[5]\n\n",
+          "answer": "IndexError",
+          "choices": [
+            "IndexError",
+            "ValueError",
+            "ListError",
+            "Error"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What will the following code output?\n\n\nfor i in range(3):\n    print(i**2)\n\n",
+          "answer": "0\n1\n4",
+          "choices": [
+            "0\n1\n2",
+            "0\n1\n4",
+            "1\n2\n3",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What does the `zip()` function do?\n",
+          "answer": "Groups elements from multiple iterables",
+          "choices": [
+            "Combines strings",
+            "Groups elements from multiple iterables",
+            "Sorts lists",
+            "Calculates lengths"
+          ],
+          "point": 3
+        },
+        {
+          "question": "Which of the following is the correct syntax for a list comprehension?",
+          "answer": "[x for x in iterable]",
+          "choices": [
+            "list(x for x in iterable)",
+            "[x for x in iterable]",
+            "iterable[x for x]",
+            "{x for x in iterable}"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What will the following code output?\n\n\nprint(3.14 // 2)\n\n",
+          "answer": "1.0",
+          "choices": [
+            "1",
+            "1.0",
+            "1.5",
+            "2"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How do you declare a global variable in a function?",
+          "answer": "global x",
+          "choices": [
+            "global x",
+            "declare x",
+            "x = global",
+            "set global x"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What is a generator in Python?",
+          "answer": "A function that yields values",
+          "choices": [
+            "A built-in data type",
+            "A function that yields values",
+            "A type of class",
+            "A special kind of list"
+          ],
+          "point": 5
+        },
+        {
+          "question": "Which built-in method is used to convert a string to a float?",
+          "answer": "float()",
+          "choices": [
+            "int()",
+            "string()",
+            "float()",
+            "convert()"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will the output of the following code be?\n\n\nprint(5 + 10 * 2)\n\n",
+          "answer": "25",
+          "choices": [
+            "25",
+            "20",
+            "15",
+            "10"
+          ],
+          "point": 2
+        },
+        {
+          "question": "Which method is used to add elements at the end of a list?",
+          "answer": "append()",
+          "choices": [
+            "insert()",
+            "add()",
+            "append()",
+            "extend()"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will this code print?\n\n\nprint(bool('False'))\n\n",
+          "answer": "True",
+          "choices": [
+            "True",
+            "False",
+            "None",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will the following code output?\n\n\nx = [1, 2, 3]\ny = x.pop()\nprint(y)\n\n",
+          "answer": "3",
+          "choices": [
+            "2",
+            "3",
+            "1",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What is the result of `print(1, 2, 3, sep='-')`?",
+          "answer": "1-2-3",
+          "choices": [
+            "1-2-3",
+            "1 2 3",
+            "1, 2, 3",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What is the output of `print({1: 'one', 2: 'two'}.get(3, 'not found'))`?",
+          "answer": "not found",
+          "choices": [
+            "not found",
+            "two",
+            "one",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How do you convert an integer to a string in Python?",
+          "answer": "str()",
+          "choices": [
+            "toString()",
+            "convert()",
+            "str()",
+            "int2str()"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will the output of the following code be?\n\n\nfor i in range(3):\n    print(i)\nprint('Done')\n\n",
+          "answer": "0\n1\n2\nDone",
+          "choices": [
+            "0\n1\n2\nDone",
+            "0\n1\n2",
+            "Done",
+            "Error"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What does `continue` do in a loop?",
+          "answer": "Skip the current iteration",
+          "choices": [
+            "Stop the loop",
+            "Terminate the program",
+            "Skip the current iteration",
+            "Exit the function"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What is the output of the following code?\n\n\nmy_set = {1, 2, 3, 3}\nprint(len(my_set))\n\n",
+          "answer": "3",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will the following code output?\n\n\nx = (1, 2, 3)\nprint(x[1])\n\n",
+          "answer": "2",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What is the output of this code?\n\n\nfor i in range(5):\n    if i == 3:\n        break\n    print(i)\n\n",
+          "answer": "0\n1\n2",
+          "choices": [
+            "0\n1\n2",
+            "0\n1\n2\n3",
+            "0\n1\n2\n3\n4",
+            "Error"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What will be the result of `print('Hello' + 'World')`?",
+          "answer": "HelloWorld",
+          "choices": [
+            "Hello World",
+            "HelloWorld",
+            "Error",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will the code below output?\n\n\nx = [1, 2, 3]\nprint(x[::-1])\n\n",
+          "answer": "[3, 2, 1]",
+          "choices": [
+            "[3, 2, 1]",
+            "[1, 2, 3]",
+            "Error",
+            "[1, 2, 3, 3, 2, 1]"
+          ],
+          "point": 4
+        }
+      ]

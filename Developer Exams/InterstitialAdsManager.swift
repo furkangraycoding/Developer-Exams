@@ -15,15 +15,15 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
     // Properties
    @Published var interstitialAdLoaded:Bool = false
     var interstitialAd:GADInterstitialAd?
+    static var withoutAdCounter : Int = 0
     
     override init() {
         super.init()
-        loadInterstitialAd()
     }
     
     // Load InterstitialAd
     func loadInterstitialAd() {
-        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-1995431888796304/4125756925", request: GADRequest()) { [weak self] add, error in
+        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-1995431888796304/8073267451", request: GADRequest()) { [weak self] add, error in
             guard let self = self else {return}
             if let error = error{
                 print("🔴: \(error.localizedDescription)")
@@ -44,14 +44,24 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
         guard let root = windowScene?.windows.first?.rootViewController else {
             return
         }
-        if let add = interstitialAd{
+        InterstitialAdsManager.withoutAdCounter += 1
+        if InterstitialAdsManager.withoutAdCounter == 3 {
+            if let add = interstitialAd {
+            print("🔵: interstitialAd withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
+            
             add.present(fromRootViewController: root)
             self.interstitialAdLoaded = true
-        }else{
-            print("🔵: Ad wasn't ready")
-            self.interstitialAdLoaded = false
-            self.loadInterstitialAd()
+            InterstitialAdsManager.withoutAdCounter = 0
         }
+        }
+            else{
+                print("🔵: Ad wasn't ready")
+                print("🔵: withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
+                if InterstitialAdsManager.withoutAdCounter == 2 {
+                    self.interstitialAdLoaded = false
+                    self.loadInterstitialAd()
+                }
+            }
     }
     
     // Failure notification

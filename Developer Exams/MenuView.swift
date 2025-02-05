@@ -7,13 +7,13 @@ struct MenuView: View {
     // New color palette using built-in SwiftUI colors
     let menuItems = [
         ("Swift", Color.purple),
-        ("JavaScript", Color.blue),
-        ("Python", Color.green),
-        ("Java", Color.orange),
-        ("C#", Color.red),
-        ("Ruby", Color.pink),
-        ("Go", Color.teal),
-        ("Rust", Color.yellow)
+        ("Java", Color.purple),
+        ("Javascript", Color.purple),
+        ("Ruby", Color.purple),
+        ("Python", Color.purple),
+        ("C#", Color.purple),
+        ("Go", Color.purple),
+        ("Solidty", Color.purple)
     ]
     
     private let columns = [
@@ -34,7 +34,7 @@ struct MenuView: View {
                             ForEach(0..<menuItems.count, id: \.self) { index in
                                 Button(action: {
                                     withAnimation {
-                                        globalViewModel.chosenMenu = menuItems[index].0
+                                        GlobalViewModel.shared.chosenMenu = menuItems[index].0
                                         isMenuVisible = false // Hide the menu when a choice is made
                                     }
                                 }) {
@@ -68,9 +68,3 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView(isMenuVisible: .constant(true))
-            .environmentObject(GlobalViewModel())
-    }
-}

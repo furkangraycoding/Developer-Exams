@@ -3,12 +3,13 @@ import Combine
 
 struct SplashScreenView: View {
     @State private var displayedText: String = ""
-    private let fullText = "Ready to improve your skills!"
+    private let fullText = "Welcome to CodeQuest"
     private let typingSpeed: TimeInterval = 0.085
     @State private var timer: Timer.TimerPublisher?
     @State private var index = 0
     
     @State private var navigateToMainScreen = false
+    @State private var isAppearing = true
     @State private var cancellables: Set<AnyCancellable> = []
     @Binding var isActive : String
     @EnvironmentObject var globalViewModel: GlobalViewModel
@@ -29,26 +30,22 @@ struct SplashScreenView: View {
                 Spacer()
 
                 // Logo/Icon Animation
-                Image(systemName: "app.fill") // Replace with your own logo
+                Image(.developer) // Replace with your own logo
                     .resizable()
-                    .frame(width: 80, height: 80)
+                    .frame(width: 270, height: 270)
                     .foregroundColor(.green) // Set the logo color to green
-                    .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition
-                    .offset(y: navigateToMainScreen ? -200 : 0) // Move the logo to the top during transition
-                    .animation(.easeOut(duration: 0.5), value: navigateToMainScreen)
+                    .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition (on navigation)
+                    .scaleEffect(isAppearing ? 0.5 : 1) // Scale up from 0.5 when appearing
+                    .rotationEffect(.degrees(navigateToMainScreen ? 360 : 0)) // Rotate 360 degrees when disappearing
+                    .offset(y: navigateToMainScreen ? -50 : 0) // Move up when disappearing (out of view)
+                    .animation(.easeInOut(duration: 0.5), value: navigateToMainScreen) // Animation for out transition
+                    .onAppear {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            isAppearing = false // Animate in (grow, fade in)
+                        }
+                    }
                     .padding()
 
-                // Display the typing text
-                Text(displayedText)
-                    .font(.custom("Courier New", size: 24))
-                    .fontWeight(.regular)
-                    .foregroundColor(.white) // Text in white for contrast
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .padding(40)
-                    .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition
-                    .offset(y: navigateToMainScreen ? -200 : 0) // Move the text to the top during transition
-                    .animation(.easeOut(duration: 1), value: navigateToMainScreen)
 
                 Spacer()
             }
@@ -58,7 +55,7 @@ struct SplashScreenView: View {
         }
         .onChange(of: navigateToMainScreen) { _ in
             if navigateToMainScreen {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
                     transitionToMainApp()
                 }
             }

@@ -1,0 +1,750 @@
+[
+    {
+      "question": "What is Solidity primarily used for?",
+      "answer": "Writing smart contracts for Ethereum",
+      "choices": [
+        "Creating user interfaces",
+        "Writing smart contracts for Ethereum",
+        "Developing mobile applications",
+        "Managing databases"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the keyword to declare a function in Solidity?",
+      "answer": "function",
+      "choices": [
+        "def",
+        "function",
+        "method",
+        "func"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which data type is not native to Solidity?",
+      "answer": "double",
+      "choices": [
+        "uint",
+        "int",
+        "double",
+        "address"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you define a state variable in Solidity?",
+      "answer": "uint public myVariable;",
+      "choices": [
+        "var myVariable = uint;",
+        "uint public myVariable;",
+        "myVariable uint;",
+        "public myVariable: uint"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the purpose of the `view` modifier in a Solidity function?",
+      "answer": "To indicate that the function does not modify state",
+      "choices": [
+        "To modify state",
+        "To indicate that the function does not modify state",
+        "To send Ether",
+        "To indicate a return type"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which keyword is used to declare a constant in Solidity?",
+      "answer": "constant",
+      "choices": [
+        "fixed",
+        "constant",
+        "final",
+        "immutable"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What type of variables can be used to store a Bitcoin address?",
+      "answer": "address",
+      "choices": [
+        "uint",
+        "string",
+        "address",
+        "coin"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will happen if `msg.sender` is used inside a contract?",
+      "answer": "It represents the address initiating the transaction",
+      "choices": [
+        "It gets the contract address",
+        "It represents the address initiating the transaction",
+        "It gives the time of the transaction",
+        "It returns the block number"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the default visibility of state variables in a Solidity contract?",
+      "answer": "Internal",
+      "choices": [
+        "Public",
+        "Private",
+        "Internal",
+        "External"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the purpose of the `require()` function?",
+      "answer": "To enforce conditions and check for errors",
+      "choices": [
+        "To return values",
+        "To enforce conditions and check for errors",
+        "To send funds",
+        "To define events"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What is a fallback function in Solidity?",
+      "answer": "A function called when no other function matches",
+      "choices": [
+        "A function that always fails",
+        "A function called when no other function matches",
+        "A function that forwards Ether",
+        "A function for return values"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which of the following is a valid constructor in Solidity?",
+      "answer": "Constructor() public { }",
+      "choices": [
+        "Constructor() { }",
+        "Constructor() public { }",
+        "function Constructor() { }",
+        "public Constructor() { }"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What data type can store multiple values in Solidity?",
+      "answer": "Array",
+      "choices": [
+        "String",
+        "Array",
+        "Mapping",
+        "Structure"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you emit an event in Solidity?",
+      "answer": "Emit EventName(parameters);",
+      "choices": [
+        "Emit EventName(parameters);",
+        "event EventName(parameters);",
+        "raise EventName(parameters);",
+        "dispatch EventName(parameters);"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What will the following code print?\n\nfunction example() public view returns (uint) {\n    return 1 + 1;\n}\n",
+      "answer": "2",
+      "choices": [
+        "Error",
+        "1 + 1",
+        "2",
+        "undefined"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which Solidity type is used for boolean values?",
+      "answer": "bool",
+      "choices": [
+        "boolean",
+        "bit",
+        "bool",
+        "integer"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you create an array of integers in Solidity?",
+      "answer": "uint[] myArray;",
+      "choices": [
+        "int[] myArray;",
+        "uint[] myArray;",
+        "myArray: int[];",
+        "array myArray = int[];"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the `selfdestruct()` function do?",
+      "answer": "Destroys the contract and sends its balance to an address",
+      "choices": [
+        "Destroys the contract and sends its balance to an address",
+        "Pauses the contract",
+        "Nullifies the contract's state",
+        "Makes the contract immutable"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What is a struct in Solidity?",
+      "answer": "A custom data type that groups related variables",
+      "choices": [
+        "A primitive data type",
+        "A custom data type that groups related variables",
+        "A function that returns multiple values",
+        "An array"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the keyword for creating a mapping in Solidity?",
+      "answer": "mapping",
+      "choices": [
+        "set",
+        "mapping",
+        "array",
+        "dict"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the `delete` keyword do in Solidity?",
+      "answer": "Resets a variable to its default value",
+      "choices": [
+        "Removes the variable entirely",
+        "Resets a variable to its default value",
+        "Deletes the entire contract",
+        "Makes a variable immutable"
+      ],
+      "point": 10
+    },
+    {
+      "question": "Which of the following is incorrect about events in Solidity?",
+      "answer": "Events cannot be indexed",
+      "choices": [
+        "Events are stored in the blockchain",
+        "Events can be indexed",
+        "Events cannot be indexed",
+        "Events provide log information"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which keyword is not used in Solidity for data visibility?",
+      "answer": "global",
+      "choices": [
+        "public",
+        "private",
+        "internal",
+        "global"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will the following code output?\n\nfunction add(uint a, uint b) public pure returns (uint) {\n    return a + b;\n}\n",
+      "answer": "The sum of a and b",
+      "choices": [
+        "The sum of a and b",
+        "The product of a and b",
+        "Nothing",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following code?\n\ncontract Example {\n    uint public x = 1;\n    function setX(uint _x) public {\n        x = _x;\n    }\n}\n",
+      "answer": "The value of x will change after calling setX",
+      "choices": [
+        "x is always 1",
+        "Nothing happens",
+        "The value of x will change after calling setX",
+        "It raises an error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the default visibility of functions in Solidity?",
+      "answer": "public",
+      "choices": [
+        "private",
+        "public",
+        "internal",
+        "external"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you signify an external function in Solidity?",
+      "answer": "external",
+      "choices": [
+        "public",
+        "external",
+        "private",
+        "internal"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of the following correctly describes view functions in Solidity?",
+      "answer": "Read state but cannot modify it",
+      "choices": [
+        "Read and modify state",
+        "Read state but cannot modify it",
+        "Always requires gas fees",
+        "Can only be called internally"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What does the `require()` function do in Solidity?",
+      "answer": "Throws an error if the condition is not met",
+      "choices": [
+        "Checks a condition; if not met, throws an error",
+        "Makes the contract immutable",
+        "Modifies state about transactions",
+        "Stops the execution of a contract"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the purpose of the function modifier?",
+      "answer": "To change the behavior of functions",
+      "choices": [
+        "To declare variables",
+        "To change the behavior of functions",
+        "To handle errors",
+        "To create events"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will the following code return?\n\nfunction getBlockNumber() public view returns (uint) {\n    return block.number;\n}\n",
+      "answer": "Current block number",
+      "choices": [
+        "Error",
+        "Current block number",
+        "Block number is not available",
+        "None"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the output of the following code?\n\nfunction check(uint a) public pure returns (string memory) {\n    if (a < 10) return 'Less';\n    return 'More';\n}\n",
+      "answer": "'Less' or 'More' based on a",
+      "choices": [
+        "'Less'",
+        "'More'",
+        "'Less' or 'More' based on a",
+        "Error"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will the output be for this code?\n\nfunction isEven(uint num) public pure returns (bool) {\n    return num % 2 == 0;\n}\n",
+      "answer": "True or False based on input",
+      "choices": [
+        "True or False based on input",
+        "Always returns True",
+        "Always returns False",
+        "Compile error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What happens if you call `selfdestruct()`?",
+      "answer": "The contract is destroyed and Ether is sent to an address",
+      "choices": [
+        "The contract is paused",
+        "The contract is destroyed and Ether is sent to an address",
+        "An event is emitted",
+        "Nothing happens"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will the following code output?\n\n\ncontract Test {\n    function multiply(uint a, uint b) public pure returns (uint) {\n        return a * b;\n    }\n}\n\n",
+      "answer": "The product of a and b",
+      "choices": [
+        "The product of a and b",
+        "The sum of a and b",
+        "Error",
+        "None"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will the output be for this code?\n\n\ncontract Example {\n    uint256 public counter = 0;\n    function increment() public {\n        counter++;\n    }\n}\n\n",
+      "answer": "Counter will increase by 1 every time increment is called",
+      "choices": [
+        "Counter will increase by 1 every time increment is called",
+        "Counter stays the same",
+        "Counter will reset to 0",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the keyword to define a global state property in Solidity?",
+      "answer": "global",
+      "choices": [
+        "this",
+        "self",
+        "global",
+        "msg"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will `msg.value` give you in a function?\n",
+      "answer": "The amount of Wei sent with the transaction",
+      "choices": [
+        "The sender's address",
+        "The gas cost",
+        "The amount of Wei sent with the transaction",
+        "The contract's balance"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you define a fallback function in Solidity?",
+      "answer": "function() external payable {}",
+      "choices": [
+        "function fallback() external {}",
+        "function() external payable {}",
+        "fallback() public {}",
+        "function default() external payable {}"
+      ],
+      "point": 9
+    },
+        {
+          "question": "What is Solidity primarily used for?",
+          "answer": "Writing smart contracts for Ethereum",
+          "choices": [
+            "Creating user interfaces",
+            "Writing smart contracts for Ethereum",
+            "Developing mobile applications",
+            "Managing databases"
+          ],
+          "point": 1
+        },
+        {
+          "question": "What is the keyword to declare a function in Solidity?",
+          "answer": "function",
+          "choices": [
+            "def",
+            "function",
+            "method",
+            "func"
+          ],
+          "point": 1
+        },
+        {
+          "question": "Which data type is not native to Solidity?",
+          "answer": "double",
+          "choices": [
+            "uint",
+            "int",
+            "double",
+            "address"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How do you define a state variable in Solidity?",
+          "answer": "uint public myVariable;",
+          "choices": [
+            "var myVariable = uint;",
+            "uint public myVariable;",
+            "myVariable uint;",
+            "public myVariable: uint"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What is the purpose of the `view` modifier in a Solidity function?",
+          "answer": "To indicate that the function does not modify state",
+          "choices": [
+            "To modify state",
+            "To indicate that the function does not modify state",
+            "To send Ether",
+            "To indicate a return type"
+          ],
+          "point": 5
+        },
+        {
+          "question": "Which keyword is used to declare a constant in Solidity?",
+          "answer": "constant",
+          "choices": [
+            "fixed",
+            "constant",
+            "final",
+            "immutable"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What type of variables can be used to store a Bitcoin address?",
+          "answer": "address",
+          "choices": [
+            "uint",
+            "string",
+            "address",
+            "coin"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will happen if `msg.sender` is used inside a contract?",
+          "answer": "It represents the address initiating the transaction",
+          "choices": [
+            "It gets the contract address",
+            "It represents the address initiating the transaction",
+            "It gives the time of the transaction",
+            "It returns the block number"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What is the default visibility of state variables in a Solidity contract?",
+          "answer": "Internal",
+          "choices": [
+            "Public",
+            "Private",
+            "Internal",
+            "External"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What is the purpose of the `require()` function?",
+          "answer": "To enforce conditions and check for errors",
+          "choices": [
+            "To return values",
+            "To enforce conditions and check for errors",
+            "To send funds",
+            "To define events"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What is a fallback function in Solidity?",
+          "answer": "A function called when no other function matches",
+          "choices": [
+            "A function that always fails",
+            "A function called when no other function matches",
+            "A function that forwards Ether",
+            "A function for return values"
+          ],
+          "point": 6
+        },
+        {
+          "question": "Which of the following is a valid constructor in Solidity?",
+          "answer": "Constructor() public { }",
+          "choices": [
+            "Constructor() { }",
+            "Constructor() public { }",
+            "function Constructor() { }",
+            "public Constructor() { }"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What data type can store multiple values in Solidity?",
+          "answer": "Array",
+          "choices": [
+            "String",
+            "Array",
+            "Mapping",
+            "Structure"
+          ],
+          "point": 5
+        },
+        {
+          "question": "How do you emit an event in Solidity?",
+          "answer": "Emit EventName(parameters);",
+          "choices": [
+            "Emit EventName(parameters);",
+            "event EventName(parameters);",
+            "raise EventName(parameters);",
+            "dispatch EventName(parameters);"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What will the following code print?\n\nfunction example() public view returns (uint) {\n    return 1 + 1;\n}\n",
+          "answer": "2",
+          "choices": [
+            "2",
+            "1 + 1",
+            "Nothing",
+            "Error"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What is the keyword for creating a mapping in Solidity?",
+          "answer": "mapping",
+          "choices": [
+            "set",
+            "mapping",
+            "array",
+            "dict"
+          ],
+          "point": 5
+        },
+        {
+          "question": "How do you define a contract in Solidity?",
+          "answer": "contract MyContract {}",
+          "choices": [
+            "contract MyContract {}",
+            "create contract MyContract {}",
+            "def contract MyContract",
+            "entity MyContract {}"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will happen if you call `selfdestruct()`?",
+          "answer": "The contract is destroyed and Ether is sent to an address",
+          "choices": [
+            "The contract is paused",
+            "The contract is destroyed and Ether is sent to an address",
+            "An event is emitted",
+            "Nothing happens"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What is the output of the following code snippet?\n\nfunction getBlockNumber() public view returns (uint) {\n    return block.number;\n}\n",
+          "answer": "Current block number",
+          "choices": [
+            "Current block number",
+            "Error",
+            "None",
+            "Block number is not available"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What is the default visibility of functions in Solidity?",
+          "answer": "public",
+          "choices": [
+            "private",
+            "public",
+            "internal",
+            "external"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What will the following function return?\n\nfunction increment() public returns (uint) {\n    count++;\n    return count;\n}\n",
+          "answer": "Current count + 1",
+          "choices": [
+            "Current count",
+            "Current count + 1",
+            "0",
+            "None"
+          ],
+          "point": 6
+        },
+        {
+          "question": "What is the output of this code snippet?\n\nfunction check(uint a) public view returns (string memory) {\n    if (a < 10) return 'Less';\n    return 'More';\n}\n",
+          "answer": "'Less' or 'More' based on input",
+          "choices": [
+            "'Less'",
+            "'More'",
+            "'Less' or 'More' based on input",
+            "Error"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What does the `delete` keyword do in Solidity?",
+          "answer": "Resets a variable to its default value",
+          "choices": [
+            "Removes the variable entirely",
+            "Resets a variable to its default value",
+            "Deletes the entire contract",
+            "Makes a variable immutable"
+          ],
+          "point": 9
+        },
+        {
+          "question": "Which of the following correctly describes view functions in Solidity?",
+          "answer": "Read state but cannot modify it",
+          "choices": [
+            "Read and modify state",
+            "Read state but cannot modify it",
+            "Always requires gas fees",
+            "Can only be called internally"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will the following code output?\n\nfunction add(uint a, uint b) public pure returns (uint) {\n    return a + b;\n}\n",
+          "answer": "The sum of a and b",
+          "choices": [
+            "The sum of a and b",
+            "The product of a and b",
+            "Error",
+            "None"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will the output be for this code?\n\nfunction increment() public {\n    counter++;\n}\n",
+          "answer": "Counter will increase by 1 every time increment is called",
+          "choices": [
+            "Counter will increase by 1 every time increment is called",
+            "Counter stays the same",
+            "Counter will reset to 0",
+            "Error"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will be the output of the following function?\n\n\nfunction getValue(uint a) public pure returns (uint) {\n    return a * 2;\n}\n\n",
+          "answer": "Twice the input value a",
+          "choices": [
+            "Error",
+            "Twice the input value a",
+            "Input value a",
+            "None"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What is the purpose of the `require()` function?",
+          "answer": "Checks a condition; if not met, throws an error",
+          "choices": [
+            "Checks a condition; if not met, throws an error",
+            "To stop execution",
+            "To allocate memory",
+            "To define a function"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will the following code output?\n\n\ncontract Test {\n    uint256 public counter = 0;\n    function increment() public {\n        counter++;\n    }\n}\n\n",
+          "answer": "Counter will increase by 1 every time increment is called",
+          "choices": [
+            "Counter stays the same",
+            "Counter will increase by 1 every time increment is called",
+            "Error",
+            "None"
+          ],
+          "point": 4
+        }
+  ]

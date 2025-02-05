@@ -1,0 +1,905 @@
+[
+    {
+      "question": "What method would you use to print text to the console in Ruby?",
+      "answer": "puts",
+      "choices": [
+        "print",
+        "echo",
+        "puts",
+        "write"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the `class` keyword do in Ruby?",
+      "answer": "Defines a new class",
+      "choices": [
+        "Starts a function",
+        "Defines a new class",
+        "Initializes an object",
+        "Creates a module"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How would you define a variable in Ruby?",
+      "answer": "$my_variable = 10",
+      "choices": [
+        "$my_variable = 10",
+        "my_variable: 10",
+        "var my_variable = 10",
+        "let my_variable = 10"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the correct way to create an array in Ruby?",
+      "answer": "my_array = []",
+      "choices": [
+        "my_array = ()",
+        "my_array = []",
+        "my_array = {}",
+        "my_array = array[]"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the `.length` method do in Ruby?",
+      "answer": "Returns the number of elements",
+      "choices": [
+        "Returns the number of characters",
+        "Returns the number of elements",
+        "Checks if the array is empty",
+        "Calculates the size in bytes"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you define a method in Ruby?",
+      "answer": "def my_method",
+      "choices": [
+        "function my_method",
+        "method my_method",
+        "def my_method",
+        "create my_method"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the `initialize` method in Ruby?",
+      "answer": "It sets up a new object",
+      "choices": [
+        "It initializes global variables",
+        "It sets up a new object",
+        "It runs on every method call",
+        "It's a reserved keyword"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which of the following is a valid way to comment in Ruby?",
+      "answer": "# This is a comment",
+      "choices": [
+        "// This is a comment",
+        "# This is a comment",
+        "<!-- This is a comment -->",
+        ":: This is a comment"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the output of `3 * 'abc'` in Ruby?",
+      "answer": "abcabcabc",
+      "choices": [
+        "abc",
+        "abcabc",
+        "abcabcabc",
+        "Error"
+      ],
+      "point": 20
+    },
+    {
+      "question": "In Ruby, how do you create a hash?",
+      "answer": "my_hash = { key: 'value' }",
+      "choices": [
+        "my_hash = { key: 'value' }",
+        "my_hash = []",
+        "my_hash = dict(key => 'value')",
+        "my_hash = Hash.new()"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following code?\n\nx = 10\nif x > 5\n  puts 'Greater'\nelse\n  puts 'Smaller'\nend\n",
+      "answer": "Greater",
+      "choices": [
+        "Greater",
+        "Smaller",
+        "10",
+        "5"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you iterate through an array in Ruby?",
+      "answer": "Using each method",
+      "choices": [
+        "Using for loop",
+        "Using each method",
+        "Using while loop",
+        "Using do-while loop"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the result of this code:\n\n`my_array = [1, 2, 3]\nmy_array.push(4)`?",
+      "answer": "[1, 2, 3, 4]",
+      "choices": [
+        "[1, 2, 3]",
+        "[1, 2, 3, 4]",
+        "[4]",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the `map` method do in Ruby?",
+      "answer": "Transforms each element in the array",
+      "choices": [
+        "Filters elements",
+        "Transforms each element in the array",
+        "Sorts elements in the array",
+        "Returns the first element"
+      ],
+      "point": 20
+    },
+    {
+      "question": "Which operator checks for equality in Ruby?",
+      "answer": "==",
+      "choices": [
+        "=",
+        "==",
+        "===",
+        "equals"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How would you raise an exception in Ruby?",
+      "answer": "raise 'Error message'",
+      "choices": [
+        "throw 'Error message'",
+        "raise 'Error message'",
+        "raise Exception('Error message')",
+        "fail 'Error message'"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What is the significance of `self` in Ruby?",
+      "answer": "Refers to the current instance of the class",
+      "choices": [
+        "Refers to the superclass",
+        "Refers to the current instance of the class",
+        "Refers to the global variable",
+        "It has no significance"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the result of `nil.nil?`?",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "nil",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will the following code print?\n\n\narr = [1, 2, 3]\nputs arr.include?(2)\n\n",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "nil",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which method is used to convert a string into an integer in Ruby?",
+      "answer": "to_i",
+      "choices": [
+        "to_int",
+        "to_integer",
+        "to_i",
+        "convert_to_i"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you define a block in Ruby?",
+      "answer": "Using do...end or braces {}",
+      "choices": [
+        "Using do...end or braces {}",
+        "Using { } only",
+        "Using ( ) only",
+        "Using [] only"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does the `each` method perform on an array?",
+      "answer": "Iterates through each element",
+      "choices": [
+        "Counts elements",
+        "Filters elements",
+        "Iterates through each element",
+        "Returns the first element"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be printed by this code?\n\n\nx = [1, 2, 3]\nputs x.last\n\n",
+      "answer": "3",
+      "choices": [
+        "1",
+        "2",
+        "3",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will the following code output?\n\n\nx = 5\nputs x += 1\n\n",
+      "answer": "6",
+      "choices": [
+        "5",
+        "6",
+        "Error",
+        "None"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the output of the following code?\n\n\narr = [1, 2, 3]\narr.delete(2)\nputs arr.inspect\n\n",
+      "answer": "[1, 3]",
+      "choices": [
+        "[1, 2, 3]",
+        "[1, 3]",
+        "[2, 3]",
+        "Error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does the `find` method do in Ruby?",
+      "answer": "Returns the first element that matches the condition",
+      "choices": [
+        "Returns the first element that matches the condition",
+        "Returns all elements matching a condition",
+        "Sorts the array",
+        "Removes duplicates"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will `puts '1' + 1` result in?",
+      "answer": "TypeError",
+      "choices": [
+        "1",
+        "TypeError",
+        "11",
+        "None"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What will the following code output?\n\n\nx = { a: 1, b: 2 }\nputs x[:a]\n\n",
+      "answer": "1",
+      "choices": [
+        "1",
+        "2",
+        "a",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How can you check for nil values in Ruby?",
+      "answer": "Using `nil?` method",
+      "choices": [
+        "Using `empty?` method",
+        "Using `exists?` method",
+        "Using `nil?` method",
+        "By checking type"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What will the output of `print([1, 2, 3].map { |x| x * 2 })` be?",
+      "answer": "[2, 4, 6]",
+      "choices": [
+        "[2, 4, 6]",
+        "[2, 4]",
+        "[3, 6]",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the purpose of `super` in Ruby?",
+      "answer": "To call a method in the superclass",
+      "choices": [
+        "To initialize a new object",
+        "To call a method in the superclass",
+        "To stop execution",
+        "To define a method"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What does the `break` keyword do in Ruby?",
+      "answer": "Exits from the loop",
+      "choices": [
+        "Exits from the loop",
+        "Pauses the loop",
+        "Skips an iteration",
+        "Continues to the next loop"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the following code?\n\n\nputs 10.0.class\n\n",
+      "answer": "Float",
+      "choices": [
+        "Integer",
+        "Float",
+        "String",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What type of loop can you use to execute code a set number of times in Ruby?",
+      "answer": "for loop",
+      "choices": [
+        "while loop",
+        "each loop",
+        "for loop",
+        "loop do"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will the output of the following code be?\n\n\nx = nil\nputs x.nil?\n\n",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "nil",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you create a new instance of an object in Ruby?",
+      "answer": "my_object = MyClass.new",
+      "choices": [
+        "my_object = MyClass.new",
+        "MyClass my_object",
+        "my_object = new MyClass",
+        "instance my_object = MyClass"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will the following code print?\n\n\narr = [1, 2, 3]\narr.each { |n| puts n * 2 }\n\n",
+      "answer": "2\n4\n6",
+      "choices": [
+        "No output",
+        "1\n2\n3",
+        "2\n4\n6",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you define a hash in Ruby?",
+      "answer": "my_hash = { key: 'value' }",
+      "choices": [
+        "my_hash = {}",
+        "my_hash = []",
+        "my_hash = new Hash()",
+        "my_hash = { key: 'value' }"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of `print('Hello ' * 3)`?",
+      "answer": "Hello Hello Hello ",
+      "choices": [
+        "Hello Hello Hello",
+        "HelloHelloHello",
+        "Hello Hello Hello ",
+        "Hello 3"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of this code snippet?\n\n\nputs [1, 2, 3].select { |n| n > 1 }\n\n",
+      "answer": "[2, 3]",
+      "choices": [
+        "[1]",
+        "[2, 3]",
+        "[1, 2, 3]",
+        "Error"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What will be the output of this code?\n\n\nputs 'Hello '.strip + 'World'\n\n",
+      "answer": "Hello World",
+      "choices": [
+        "Hello World",
+        "HelloWorld",
+        "Hello ",
+        "Error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the result of `5.is_a?(Integer)`?",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "nil",
+        "Error"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What does the `scan` method do in Ruby?",
+      "answer": "Finds all occurrences of a pattern in a string",
+      "choices": [
+        "Finds a single occurrence",
+        "Returns the length of a string",
+        "Finds all occurrences of a pattern in a string",
+        "Replaces a substring"
+      ],
+      "point": 10
+    },
+    {
+      "question": "What will be the output of the following code?\n\n\nputs 5.between?(1, 10)\n\n",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "1",
+        "0"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which statement is used to raise exceptions in Ruby?",
+      "answer": "raise",
+      "choices": [
+        "throw",
+        "raise",
+        "error",
+        "exception"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of this code?\n\n\nx = [5, 2, 3]\nx.sort!\nputs x\n\n",
+      "answer": "[2, 3, 5]",
+      "choices": [
+        "[5, 2, 3]",
+        "[2, 3, 5]",
+        "[5, 3, 2]",
+        "Error"
+      ],
+      "point": 9
+    }
+    ,
+    {
+          "question": "What is the default visibility of class methods in Ruby?",
+          "answer": "public",
+          "choices": [
+            "private",
+            "public",
+            "protected",
+            "internal"
+          ],
+          "point": 5
+        },
+        {
+          "question": "How can you freeze an object in Ruby to prevent modifications?",
+          "answer": "x.freeze",
+          "choices": [
+            "x.lock",
+            "x.freeze",
+            "x.const",
+            "x.protect"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What does the `collect` method do in Ruby?",
+          "answer": "Transforms each element in an array",
+          "choices": [
+            "Filters elements",
+            "Transforms each element in an array",
+            "Sorts elements in the array",
+            "Remove duplicates"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What is the output of this code?\n\n\nx = [1, 2, 3].map { |i| i ** 2 }\nputs x.inspect\n\n",
+          "answer": "[1, 4, 9]",
+          "choices": [
+            "[1, 4, 9]",
+            "[1, 2, 3]",
+            "[1, 2, 3, 4, 5]",
+            "[2, 3, 4]"
+          ],
+          "point": 9
+        },
+        {
+          "question": "Which operator is used for string interpolation in Ruby?",
+          "answer": "#{}",
+          "choices": [
+            "#{ }",
+            "[ ]",
+            "{ }",
+            "< >"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will the following code output?\n\n\nputs 10 % 3\n\n",
+          "answer": "1",
+          "choices": [
+            "1",
+            "3",
+            "10",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will `print 'a' + 1` produce?",
+          "answer": "TypeError",
+          "choices": [
+            "TypeError",
+            "a1",
+            "Error",
+            "a"
+          ],
+          "point": 5
+        },
+        {
+          "question": "Which method is used to convert a string into an array in Ruby?",
+          "answer": "split()",
+          "choices": [
+            "slice()",
+            "split()",
+            "to_a()",
+            "arrayify()"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What is a Ruby block?",
+          "answer": "A piece of code that can accept arguments",
+          "choices": [
+            "An error handler",
+            "A piece of code that can accept arguments",
+            "A way to define a class",
+            "None of the above"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will the output be of the following code?\n\n\narr = [1, 2, 3]\nputs arr.pop\n\n",
+          "answer": "3",
+          "choices": [
+            "1",
+            "2",
+            "3",
+            "Error"
+          ],
+          "point": 5
+        },
+        {
+          "question": "How do you define an inline comment in Ruby?",
+          "answer": "#",
+          "choices": [
+            "#",
+            "//",
+            "/*",
+            "<!--"
+          ],
+          "point": 1
+        },
+        {
+          "question": "What does the `nil?` method check for?",
+          "answer": "Whether an object is nil",
+          "choices": [
+            "Whether an object is nil",
+            "Whether a variable exists",
+            "Whether a class is defined",
+            "Whether a method is available"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What is the correct way to require a library in Ruby?",
+          "answer": "require 'library_name'",
+          "choices": [
+            "import library_name",
+            "include 'library_name'",
+            "require 'library_name'",
+            "require(library_name)"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following code?\n\n\nx = [1, 2, 3]\nputs x.join('-')\n\n",
+          "answer": "1-2-3",
+          "choices": [
+            "1,2,3",
+            "1-2-3",
+            "123",
+            "Error"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What data structure would you use for key-value pairs in Ruby?",
+          "answer": "Hash",
+          "choices": [
+            "Array",
+            "Hash",
+            "Set",
+            "List"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What is the syntax to create a symbol in Ruby?",
+          "answer": ":my_symbol",
+          "choices": [
+            "my_symbol:",
+            ":my_symbol",
+            "symbol :my_symbol",
+            "symbol(my_symbol)"
+          ],
+          "point": 1
+        },
+        {
+          "question": "What will `puts [1, 2, 3].reduce(:+)` output?",
+          "answer": "6",
+          "choices": [
+            "6",
+            "123",
+            "Error",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will the output of `puts 'a' * 3` be?",
+          "answer": "aaa",
+          "choices": [
+            "aaa",
+            "a a a",
+            "Error",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How do you define a simple class in Ruby?",
+          "answer": "class MyClass; end",
+          "choices": [
+            "class MyClass; end",
+            "define MyClass; end",
+            "class MyClass(){}",
+            "new MyClass()"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How can you check if an object is an instance of a class?",
+          "answer": "Using is_a?",
+          "choices": [
+            "Using is_instance?",
+            "Using is_a?",
+            "Using check_instance?",
+            "Using instance_of?"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What does `each_with_index` do in Ruby?",
+          "answer": "Iterates through elements with their index",
+          "choices": [
+            "Iterates through elements with their index",
+            "Returns pairs of value and index",
+            "Creates an indexed array",
+            "Resets index number"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What is the output of `puts [1, 2, 3].map { |x| x * 2 }`?",
+          "answer": "2\n4\n6",
+          "choices": [
+            "1\n2\n3",
+            "2\n4\n6",
+            "Error",
+            "[2, 4, 6]"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will be printed by this snippet?\n\n\nhash = {a: 1, b: 2}\nputs hash[:c]\n\n",
+          "answer": "nil",
+          "choices": [
+            "nil",
+            "0",
+            "Error",
+            "None"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What is Ruby's approach to object-oriented programming?",
+          "answer": "Everything is an object",
+          "choices": [
+            "Only classes are objects",
+            "Everything is an object",
+            "Only functions are objects",
+            "Not object-oriented"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What will the output of the following code be?\n\n\nprint 5.class\n\n",
+          "answer": "Integer",
+          "choices": [
+            "Integer",
+            "Float",
+            "String",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will `puts('1' + '2')` output?",
+          "answer": "12",
+          "choices": [
+            "3",
+            "12",
+            "Error",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "Which syntax describes a module in Ruby?",
+          "answer": "module MyModule; end",
+          "choices": [
+            "MyModule = module",
+            "module MyModule",
+            "module MyModule; end",
+            "module: MyModule;"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What will the following code output?\n\n\nputs 'Hello, World!'.reverse\n\n",
+          "answer": "!dlroW ,olleH",
+          "choices": [
+            "Hello, World!",
+            "!dlroW ,olleH",
+            "Error",
+            "None"
+          ],
+          "point": 5
+        },
+        {
+          "question": "How do you define a private method in Ruby?",
+          "answer": "private def my_method; end",
+          "choices": [
+            "protected def my_method; end",
+            "private my_method; end",
+            "private def my_method; end",
+            "def my_method; private"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What does the `first` method return from an array?",
+          "answer": "The first element",
+          "choices": [
+            "The last element",
+            "The first element",
+            "All elements",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What type of error is raised when you try to access an index that is out of bounds?",
+          "answer": "IndexError",
+          "choices": [
+            "ValueError",
+            "KeyError",
+            "IndexError",
+            "TypeError"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will the output of `puts({a: 1, b: 2})` be?",
+          "answer": "{:a=>1, :b=>2}",
+          "choices": [
+            "{:a=>1, :b=>2}",
+            "a: 1, b: 2",
+            "Error",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will `print([1, 2] + [3, 4])` return?",
+          "answer": "[1, 2, 3, 4]",
+          "choices": [
+            "[1, 2, 3, 4]",
+            "[1,2][3,4]",
+            "[3, 4, 1, 2]",
+            "[1, 2, 3], [4]"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What is the purpose of the `super` keyword in Ruby?",
+          "answer": "To call methods from the parent class",
+          "choices": [
+            "To create a parent class",
+            "To call methods from the parent class",
+            "To access superclass properties",
+            "To override methods"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What is the result of this code?\n\n\nx = (1..5).\ncount;\nputs x\n\n",
+          "answer": "5",
+          "choices": [
+            "5",
+            "1",
+            "0",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "How does Ruby handle memory management?",
+          "answer": "Automatic garbage collection",
+          "choices": [
+            "Manual memory management",
+            "Automatic garbage collection",
+            "Track and free memory manually",
+            "None"
+          ],
+          "point": 8
+        }
+  ]

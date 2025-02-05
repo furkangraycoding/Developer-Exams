@@ -1,0 +1,959 @@
+[
+    {
+      "question": "Which keyword is used to define a class in Java?",
+      "answer": "class",
+      "choices": [
+        "define",
+        "class",
+        "struct",
+        "object"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which method is the entry point of any Java program?",
+      "answer": "main",
+      "choices": [
+        "init",
+        "main",
+        "start",
+        "run"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the default value of a boolean in Java?",
+      "answer": "false",
+      "choices": [
+        "true",
+        "0",
+        "null",
+        "false"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which keyword is used to prevent a class from being subclassed?",
+      "answer": "final",
+      "choices": [
+        "static",
+        "final",
+        "void",
+        "abstract"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the size of an int in Java?",
+      "answer": "32 bits",
+      "choices": [
+        "8 bits",
+        "16 bits",
+        "32 bits",
+        "64 bits"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which data type is used to create a variable that should store text?",
+      "answer": "String",
+      "choices": [
+        "String",
+        "char",
+        "text",
+        "Character"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is the process of converting a primitive type into a reference type called?",
+      "answer": "Boxing",
+      "choices": [
+        "Casting",
+        "Wrapping",
+        "Boxing",
+        "Bunding"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which exception is thrown by the main method of a program that takes too long to execute?",
+      "answer": "TimeoutException",
+      "choices": [
+        "InterruptedException",
+        "TimeoutException",
+        "ExecutionException",
+        "OverFlowException"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which of the following is not a Java keyword?",
+      "answer": "include",
+      "choices": [
+        "interface",
+        "throw",
+        "include",
+        "extends"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which method of the Object class returns the runtime class of an object?",
+      "answer": "getClass()",
+      "choices": [
+        "getName()",
+        "getClass()",
+        "getObject()",
+        "getType()"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which operator is used to compare two values, for equality?",
+      "answer": "==",
+      "choices": [
+        "=",
+        "==",
+        "!=",
+        "<>"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the keyword used to inherit a class in Java?",
+      "answer": "extends",
+      "choices": [
+        "inherits",
+        "super",
+        "extends",
+        "this"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which Java collection maintains unique elements?",
+      "answer": "Set",
+      "choices": [
+        "List",
+        "Queue",
+        "Set",
+        "ArrayList"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What is the default value of an object reference declared as an instance variable?",
+      "answer": "null",
+      "choices": [
+        "0",
+        "null",
+        "undefined",
+        "empty"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What is the result of 3 + 2 + \"8\" in Java?",
+      "answer": "58",
+      "choices": [
+        "38",
+        "58",
+        "11",
+        "error"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the base class for all classes in Java?",
+      "answer": "Object",
+      "choices": [
+        "Object",
+        "Base",
+        "Parent",
+        "Root"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which Java statement is used to handle exceptions?",
+      "answer": "try-catch",
+      "choices": [
+        "try-catch",
+        "throw-catch",
+        "error-handler",
+        "try-except"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the term used for JVM's capability to execute byte code?",
+      "answer": "Java Virtual Machine",
+      "choices": [
+        "Java Virtual Environment",
+        "Java Virtual Machine",
+        "Java Code Runner",
+        "Java Byte Executor"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What does the 'static' keyword mean when applied to a method?",
+      "answer": "Method belongs to the class, not instances",
+      "choices": [
+        "Method belongs to the class, not instances",
+        "Method cannot be overridden",
+        "Method is a private function",
+        "Method is slow"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which access modifier makes a method or field visible to all classes in all packages?",
+      "answer": "public",
+      "choices": [
+        "private",
+        "public",
+        "protected",
+        "default"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which operator is used to create an object in Java?",
+      "answer": "new",
+      "choices": [
+        "create",
+        "object",
+        "new",
+        "instantiate"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which interface does java.util.Collection extend?",
+      "answer": "Iterable",
+      "choices": [
+        "List",
+        "Serializable",
+        "Iterable",
+        "Map"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which Java package is automatically imported into every Java program?",
+      "answer": "java.lang",
+      "choices": [
+        "java.utils",
+        "java.core",
+        "java.base",
+        "java.lang"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which keyword is used in Java to import packages?",
+      "answer": "import",
+      "choices": [
+        "include",
+        "import",
+        "package",
+        "using"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the use of 'this' keyword in Java?",
+      "answer": "Refers to the current object instance",
+      "choices": [
+        "Imports packages",
+        "Refers to the superclass",
+        "Refers to the current object instance",
+        "Calls a method"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is it called if an object has its own state and behavior?",
+      "answer": "Encapsulation",
+      "choices": [
+        "Inheritance",
+        "Abstraction",
+        "Encapsulation",
+        "Polymorphism"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which keyword in Java is used for explicit conversion?",
+      "answer": "(type)",
+      "choices": [
+        "(type)",
+        "to",
+        "convert",
+        "cast"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What statement is used to test multiple conditions in Java?",
+      "answer": "switch",
+      "choices": [
+        "switch",
+        "if-else",
+        "check",
+        "match"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which loop in Java is best used when the number of iterations is known?",
+      "answer": "for",
+      "choices": [
+        "while",
+        "do-while",
+        "foreach",
+        "for"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is stored in the Stack memory in Java?",
+      "answer": "Method calls and local variables",
+      "choices": [
+        "Objects",
+        "Classes",
+        "Method calls and local variables",
+        "Static variables"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which Java keyword creates a loop that executes at least once?",
+      "answer": "do-while",
+      "choices": [
+        "while",
+        "for",
+        "do-while",
+        "foreach"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the default access level for class members in Java?",
+      "answer": "package-private",
+      "choices": [
+        "public",
+        "protected",
+        "private",
+        "package-private"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How can you describe polymorphism in Java?",
+      "answer": "Ability to take many forms",
+      "choices": [
+        "Ability to hold methods",
+        "Readiness for changes",
+        "Ability to take many forms",
+        "Inheritance pattern"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which Java keyword is used to define a constant variable?",
+      "answer": "final",
+      "choices": [
+        "const",
+        "final",
+        "constant",
+        "immutable"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you define an interface in Java?",
+      "answer": "interface InterfaceName { }",
+      "choices": [
+        "interface InterfaceName ",
+        "Interface InterfaceName { }",
+        "define InterfaceName { }",
+        "interface InterfaceName { }"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which is not a feature of Java?",
+      "answer": "Manual memory management",
+      "choices": [
+        "Automatic memory management",
+        "Platform independence",
+        "Object-oriented",
+        "Manual memory management"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which garbage collection method is started first during the process?",
+      "answer": "Mark and sweep",
+      "choices": [
+        "Compacting",
+        "Mark and copy",
+        "Mark and sweep",
+        "Reference counting"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which method returns the length of a string in Java?",
+      "answer": "length()",
+      "choices": [
+        "size()",
+        "length()",
+        "getCount()",
+        "count()"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is multithreading in Java?",
+      "answer": "Executing multiple threads simultaneously",
+      "choices": [
+        "Compiling multiple files at once",
+        "Executing multiple threads simultaneously",
+        "Running on different platforms",
+        "Handling multiple exceptions"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How are string literals typically represented in Java?",
+      "answer": "Double quotes",
+      "choices": [
+        "Single quotes",
+        "Double quotes",
+        "Triple quotes",
+        "Backticks"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What kind of exception is thrown when dividing a number by zero in Java?",
+      "answer": "ArithmeticException",
+      "choices": [
+        "NullPointerException",
+        "MathException",
+        "ArithmeticException",
+        "DivideByZeroException"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the main purpose of the Java FileReader class?",
+      "answer": "To read character files",
+      "choices": [
+        "To read binary files",
+        "To write character files",
+        "To read character files",
+        "To write binary files"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is encapsulation in Java?",
+      "answer": "Wrapping variables and methods together",
+      "choices": [
+        "Wr4apping variables and methods together",
+        "Creating subclasses",
+        "Overriding methods",
+        "Implementing multiple inheritance"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is an abstract class in Java?",
+      "answer": "A class with one or more abstract methods",
+      "choices": [
+        "A class that can't be subclassed",
+        "A class without methods",
+        "A class with one or more abstract methods",
+        "A class with final methods"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which concept allows different classes to be treated as instances of the same class in Java?",
+      "answer": "Polymorphism",
+      "choices": [
+        "Inheritance",
+        "Abstraction",
+        "Polymorphism",
+        "Encapsulation"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What kind of variable can be shared between all instances of a Java class?",
+      "answer": "static",
+      "choices": [
+        "public",
+        "private",
+        "instance",
+        "static"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the method reference in Java?",
+      "answer": "A shorthand for a lambda expression",
+      "choices": [
+        "An alias for a method",
+        "A way to serialize a method",
+        "A shorthand for a lambda expression",
+        "A pointer to a method"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the use of 'java.util.HashMap'?",
+      "answer": "To store key-value pairs",
+      "choices": [
+        "To store unique values",
+        "To create arrays",
+        "To store key-value pairs",
+        "To manage memory"
+      ],
+      "point": 9
+    },
+    {
+      "question": "How do you handle an exception in Java?",
+      "answer": "Using catch blocks",
+      "choices": [
+        "try-except",
+        "try-catch-finally",
+        "try-catch",
+        "throw-catch"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the purpose of the 'transient' keyword in Java?",
+      "answer": "To exclude a field from serialization",
+      "choices": [
+        "To indicate a temporary method",
+        "To mark a class as non-inheritable",
+        "To exclude a field from serialization",
+        "To enable garbage collection"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which collection allows elements to be accessed by a zero-based index?",
+      "answer": "List",
+      "choices": [
+        "Set",
+        "Queue",
+        "List",
+        "Map"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How would you describe an interface in Java?",
+      "answer": "A contract with method signatures but no implementations",
+      "choices": [
+        "A subclass of an abstract class",
+        "A specialized object",
+        "A contract with method signatures but no implementations",
+        "A method reference definition"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the result of '10 >> 1' in Java?",
+      "answer": "5",
+      "choices": [
+        "10",
+        "20",
+        "5",
+        "1"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What is the role of 'synchronized' in Java?",
+      "answer": "To control access to a block by a single thread at a time",
+      "choices": [
+        "To speed up execution",
+        "To convert code to assembler",
+        "To control access to a block by a single thread at a time",
+        "To make variables immutable"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which type of garbage collector is used by default in the JVM?",
+      "answer": "Garbage First (G1)",
+      "choices": [
+        "Serial",
+        "Parallel",
+        "Garbage First (G1)",
+        "CMS"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the 'lambda expression' in Java?",
+      "answer": "A way to provide the implementation of a functional interface",
+      "choices": [
+        "A built-in function",
+        "A type of constant",
+        "A way to provide the implementation of a functional interface",
+        "A code optimization method"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the CompletableFuture class used for in Java?",
+      "answer": "A tool to handle asynchronous computations",
+      "choices": [
+        "A database connector",
+        "A graph analyzer",
+        "A tool to handle asynchronous computations",
+        "A search engine interface"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the purpose of the 'volatile' keyword in Java?",
+      "answer": "Indicate that a variable may be changed by different threads",
+      "choices": [
+        "Increase variable lifespan",
+        "Indicate high precision calculations",
+        "Indicate that a variable may be changed by different threads",
+        "Show importance of method calls"
+      ],
+      "point": 9
+    },
+    {
+      "question": "In which package can we find Java's core collections framework?",
+      "answer": "java.util",
+      "choices": [
+        "java.lang",
+        "java.collections",
+        "java.core",
+        "java.util"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the purpose of the ThreadPoolExecutor class?",
+      "answer": "To manage multiple threads efficiently",
+      "choices": [
+        "To manage database connections",
+        "To execute complex math operations",
+        "To manage multiple threads efficiently",
+        "To oversee memory allocation"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which Java version introduced the 'Stream API'?",
+      "answer": "Java 8",
+      "choices": [
+        "Java 7",
+        "Java 8",
+        "Java 11",
+        "Java 9"
+      ],
+      "point": 9
+    },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int x = 5;\n        System.out.println(++x);\n    }\n}\n\n",
+          "answer": "6",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "Error"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int[] numbers = {1, 2, 3, 4};\n        System.out.println(numbers[2]);\n    }\n}\n\n",
+          "answer": "3",
+          "choices": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        String text = \"Hello\";\n        System.out.println(text.charAt(0));\n    }\n}\n\n",
+          "answer": "H",
+          "choices": [
+            "H",
+            "e",
+            "l",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int a = 10;\n        int b = 20;\n        System.out.println(a > b ? a : b);\n    }\n}\n\n",
+          "answer": "20",
+          "choices": [
+            "10",
+            "20",
+            "30",
+            "Error"
+          ],
+          "point": 5
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        for (int i = 0; i < 3; i++) {\n            System.out.print(i);\n        }\n    }\n}\n\n",
+          "answer": "012",
+          "choices": [
+            "012",
+            "123",
+            "01",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int x = 0;\n        while (x < 3) {\n            x++;\n       }\n        System.out.println(x);\n    }\n}\n\n",
+          "answer": "3",
+          "choices": [
+            "0",
+            "1",
+            "2",
+            "3"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        String str = \"Java\" + 1 + 2 + \"3\";\n        System.out.println(str);\n    }\n}\n\n",
+          "answer": "Java123",
+          "choices": [
+            "Java123",
+            "Java33",
+            "Java6",
+            "123Java"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int num = 7;\n        if (num % 2 == 0) {\n            System.out.println(\"Even\");\n        } else {\n            System.out.println(\"Odd\");\n        }\n    }\n}\n\n",
+          "answer": "Odd",
+          "choices": [
+            "Even",
+            "Odd",
+            "7",
+            "Error"
+          ],
+          "point": 7
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int result = multiply(2, 3);\n        System.out.println(result);\n    }\n\n    public static int multiply(int a, int b) {\n        return a * b;\n    }\n}\n\n",
+          "answer": "6",
+          "choices": [
+            "5",
+            "6",
+            "7",
+            "Error"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\nimport java.util.Arrays;\n\npublic class Test {\n    public static void main(String[] args) {\n        int[] array = {3, 1, 4, 1, 5};\n        Arrays.sort(array);\n        System.out.println(array[0]);\n    }\n}\n\n",
+          "answer": "1",
+          "choices": [
+            "1",
+            "3",
+            "4",
+            "5"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int total = 0;\n        for (int i = 1; i <= 5; i++) {\n            total += i;\n        }\n        System.out.println(total);\n    }\n}\n\n",
+          "answer": "15",
+          "choices": [
+            "10",
+            "15",
+            "20",
+            "25"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        System.out.println(test(5));\n    }\n\n    static int test(int n) {\n        return n == 1 ? 1 : n * test(n - 1);\n    }\n}\n\n",
+          "answer": "120",
+          "choices": [
+            "24",
+            "25",
+            "120",
+            "Error"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        for (int i = 0; i < 3; i++) {\n            for (int j = 0; j <= i; j++) {\n                System.out.print(\"*\");\n            }\n            System.out.println();\n        }\n    }\n}\n\n",
+          "answer": "*\n**\n***",
+          "choices": [
+            "***\n**\n*",
+            "*\n**\n***",
+            "**\n***\n****",
+            "Error"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int[] numbers = {10, 20, 30};\n        for (int number : numbers) {\n            System.out.print(number + \" \");\n        }\n    }\n}\n\n",
+          "answer": "10 20 30 ",
+          "choices": [
+            "30 20 10 ",
+            "10 20 30 ",
+            "10 30 20 ",
+            "Error"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int x = 5;\n        System.out.println(x++);\n        System.out.println(x);\n    }\n}\n\n",
+          "answer": "5\n6",
+          "choices": [
+            "6\n5",
+            "5\n6",
+            "6\n6",
+            "5\n5"
+          ],
+          "point": 7
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        String hello = \"HELLO\";\n        String world = \"world\";\n        System.out.println(hello.toLowerCase() + world.toUpperCase());\n    }\n}\n\n",
+          "answer": "helloworld",
+          "choices": [
+            "Helloworld",
+            "HELLOworld",
+            "helloworld",
+            "Error"
+          ],
+          "point": 7
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int num = 10;\n        do {\n            System.out.println(num);\n            num++;\n        } while (num < 10);\n    }\n}\n\n",
+          "answer": "10",
+          "choices": [
+            "10",
+            "11",
+            "None",
+            "Error"
+          ],
+          "point": 9
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int i = 1;\n        while (i <= 3) {\n            System.out.print(i++ + \",\");\n        }\n    }\n}\n\n",
+          "answer": "1,2,3,",
+          "choices": [
+            "1, 2, 3",
+            "123",
+            "1,2,3,",
+            "Error"
+          ],
+          "point": 7
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int a = 5;\n        int b = 2;\n        double result = a / b;\n        System.out.println(result);\n    }\n}\n\n",
+          "answer": "2.0",
+          "choices": [
+            "2",
+            "2.0",
+            "2.5",
+            "Error"
+          ],
+          "point": 7
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        String str = \"abcd\";\n        str.concat(\"ef\");\n        System.out.print(str);\n    }\n}\n\n",
+          "answer": "abcd",
+          "choices": [
+            "abcdef",
+            "abcd",
+            "ef",
+            "Error"
+          ],
+          "point": 4
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int[] arr = {2, 4, 6, 8};\n        System.out.println(arr[1] + arr[3]);\n    }\n}\n\n",
+          "answer": "12",
+          "choices": [
+            "10",
+            "12",
+            "14",
+            "Error"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int i = 10, j = 20;\n        System.out.println(i < j);\n    }\n}\n\n",
+          "answer": "true",
+          "choices": [
+            "true",
+            "false",
+            "10",
+            "Error"
+          ],
+          "point": 2
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int sum = 0;\n        for (int i = 1; i <= 5; i++)\n            sum += i;\n\n        System.out.print(sum);\n    }\n}\n\n",
+          "answer": "15",
+          "choices": [
+            "10",
+            "15",
+            "20",
+            "25"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder(\"ABCD\");\n        sb.reverse();\n        System.out.println(sb.toString());\n    }\n}\n\n",
+          "answer": "DCBA",
+          "choices": [
+            "ABCD",
+            "DCBA",
+            "abcd",
+            "None"
+          ],
+          "point": 3
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        int x = 5;\n        if (++x > 5) {\n            System.out.println(x);\n        }\n    }\n}\n\n",
+          "answer": "6",
+          "choices": [
+            "5",
+            "6",
+            "None",
+            "Error"
+          ],
+          "point": 8
+        },
+        {
+          "question": "What will be the output of the following Java code?\n\n\npublic class Test {\n    public static void main(String[] args) {\n        String s = \"hello\";\n        String t = new String(s);\n        if (s == t) {\n            System.out.println(\"Equal\");\n        } else {\n            System.out.println(\"Not Equal\");\n        }\n    }\n}\n\n",
+          "answer": "Not Equal",
+          "choices": [
+            "Equal",
+            "Not Equal",
+            "Error",
+            "hello"
+          ],
+          "point": 9
+        }
+  ]

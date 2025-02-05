@@ -1,0 +1,926 @@
+[
+    {
+      "question": "Which keyword is used to declare a variable in modern JavaScript?",
+      "answer": "let",
+      "choices": [
+        "var",
+        "let",
+        "const",
+        "variable"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you create a function in JavaScript?",
+      "answer": "function myFunction() {}",
+      "choices": [
+        "def myFunction() {}",
+        "function myFunction = {}",
+        "create myFunction() {}",
+        "function myFunction() {}"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which of the following is not a JavaScript data type?",
+      "answer": "character",
+      "choices": [
+        "string",
+        "number",
+        "character",
+        "boolean"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you add a comment in a JavaScript?",
+      "answer": "// This is a comment",
+      "choices": [
+        "// This is a comment",
+        "\" This is a comment",
+        "/* This is a comment */",
+        "<!-- This is a comment -->"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which method calls a function for each element in the array?",
+      "answer": "forEach()",
+      "choices": [
+        "forEach()",
+        "every()",
+        "filter()",
+        "map()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which company developed JavaScript?",
+      "answer": "Netscape",
+      "choices": [
+        "Microsoft",
+        "Netscape",
+        "Sun Microsystems",
+        "Apple"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you write 'Hello World' in an alert box?",
+      "answer": "alert('Hello World');",
+      "choices": [
+        "msgBox('Hello World');",
+        "alertBox('Hello World');",
+        "alert('Hello World');",
+        "msg('Hello World');"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which symbol is used for comments in JavaScript?",
+      "answer": "//",
+      "choices": [
+        "/*",
+        "//",
+        "<!--",
+        "&"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the correct syntax for referring to an external script called 'app.js'?",
+      "answer": "<script src='app.js'></script>",
+      "choices": [
+        "<script src='app.js'>",
+        "<script href='app.js'>",
+        "<script source='app.js'>",
+        "<script src='app.js'></script>"
+      ],
+      "point": 8
+    },
+    {
+      "question": "How do you create an array in JavaScript?",
+      "answer": "let arr = [];",
+      "choices": [
+        "let arr = ();",
+        "let arr = {};",
+        "let arr = [];",
+        "array arr = ();"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What value is printed out by this code: `console.log(typeof NaN);`",
+      "answer": "number",
+      "choices": [
+        "undefined",
+        "object",
+        "NaN",
+        "number"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which operator is used to assign a value to a variable?",
+      "answer": "=",
+      "choices": [
+        "x",
+        "-",
+        "=",
+        "*"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which event occurs when a user clicks on an HTML element?",
+      "answer": "onclick",
+      "choices": [
+        "onmouseover",
+        "onmouseclick",
+        "onclick",
+        "onchange"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which syntax is correct to convert a string '123' to a number in JavaScript?",
+      "answer": "Number('123')",
+      "choices": [
+        "parseInt('123')",
+        "Number('123')",
+        "stringToNumber('123')",
+        "convertToNumber('123')"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What would `console.log('9' - '5');` output?",
+      "answer": "4",
+      "choices": [
+        "NaN",
+        "95",
+        "4",
+        "TypeError"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of the following is a ternary operator?",
+      "answer": "?:",
+      "choices": [
+        "&&",
+        "||",
+        "?",
+        "?:"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the correct syntax to change the content of an HTML element with id 'demo'?",
+      "answer": "document.getElementById('demo').innerHTML = 'Hello';",
+      "choices": [
+        "#demo.innerHTML = 'Hello';",
+        "document.querySelector('#demo').innerHTML = 'Hello';",
+        "document.getElementById('demo').innerHTML = 'Hello';",
+        "doc.getElementById('demo').innerHTML = 'Hello';"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What does JSON stand for?",
+      "answer": "JavaScript Object Notation",
+      "choices": [
+        "JavaScript Orientation",
+        "JavaScript Object Notation",
+        "JavaScript Object Network",
+        "JavaScript Online Notation"
+      ],
+      "point": 2
+    },
+    {
+      "question": "In JavaScript, how can you add an element at the end of an array?",
+      "answer": "arr.push(element)",
+      "choices": [
+        "arr.put(element)",
+        "arr.push(element)",
+        "arr.append(element)",
+        "arr.add(element)"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which built-in method removes the last element from an array and returns that element?",
+      "answer": "pop()",
+      "choices": [
+        "pop()",
+        "last()",
+        "get()",
+        "removeLast()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How would you write an arrow function in JavaScript?",
+      "answer": "() => {}",
+      "choices": [
+        "func() -> {}",
+        "() => {}",
+        "function() => {}",
+        "() ==> {}"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will the following code output: `console.log(0.1 + 0.2);`?",
+      "answer": "0.30000000000000004",
+      "choices": [
+        "0.3",
+        "0.30000000000000004",
+        "0.30000004",
+        "Error"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which array method sorts the elements of an array in place?",
+      "answer": "sort()",
+      "choices": [
+        "order()",
+        "arrange()",
+        "sort()",
+        "organize()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which keyword is used to define a constant in JavaScript?",
+      "answer": "const",
+      "choices": [
+        "var",
+        "let",
+        "constant",
+        "const"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the `===` operator do?",
+      "answer": "Checks for equality without type conversion",
+      "choices": [
+        "Checks for equality with type conversion",
+        "Assigns a value",
+        "Checks for equality without type conversion",
+        "Combines strings"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How is a JavaScript object created?",
+      "answer": "let obj = {};",
+      "choices": [
+        "let obj = [];",
+        "let obj = ();",
+        "let obj = {};",
+        "let obj = <>;"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the result of `typeof null`?",
+      "answer": "object",
+      "choices": [
+        "null",
+        "undefined",
+        "object",
+        "boolean"
+      ],
+      "point": 8
+    },
+    {
+      "question": "How can you detect the client's browser name using JavaScript?",
+      "answer": "navigator.appName",
+      "choices": [
+        "browser.name",
+        "navigator.appName",
+        "client.browserName",
+        "window.browser"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of the following methods can be used to select a single element with a specific class?",
+      "answer": "document.querySelector('.class')",
+      "choices": [
+        "document.querySelector('.class')",
+        "document.getElementByClass('class')",
+        "document.getSingleClass('class')",
+        "document.querySelectorAll('.class')"
+      ],
+      "point": 8
+    },
+    {
+      "question": "In JavaScript, how do you convert a number to a string?",
+      "answer": "n.toString()",
+      "choices": [
+        "String(n)",
+        "n.toString()",
+        "convert(n, 'string')",
+        "n.toStr()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you declare an async function in JavaScript?",
+      "answer": "async function myFunction() {}",
+      "choices": [
+        "async function myFunction() {}",
+        "function async myFunction() {}",
+        "function myFunction async() {}",
+        "function myFunction() async {}"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which method in JavaScript returns a string in uppercase letters?",
+      "answer": "toUpperCase()",
+      "choices": [
+        "toUpperCase()",
+        "toUpper()",
+        "convertUpper()",
+        "toCapital()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the purpose of the `Array.isArray()` method?",
+      "answer": "Determines whether the passed value is an Array",
+      "choices": [
+        "Converts a value to an Array",
+        "Copies values into a new Array",
+        "Sorts values inside an Array",
+        "Determines whether the passed value is an Array"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What would `console.log(false == '0');` return?",
+      "answer": "true",
+      "choices": [
+        "false",
+        "true",
+        "undefined",
+        "Error"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which of the following can be used to escape special characters in JavaScript strings?",
+      "answer": "\\",
+      "choices": [
+        "&",
+        "\\",
+        "//",
+        "?"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How is strict equality (===) different from regular equality (==)?",
+      "answer": "Strict equality checks value and type",
+      "choices": [
+        "Strict equality allows type coercion",
+        "Strict equality only checks the value",
+        "Strict equality checks value and type",
+        "Strict equality never equals"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which statement creates a new Promise in JavaScript?",
+      "answer": "new Promise((resolve, reject) => {});",
+      "choices": [
+        "new Async(resolve, reject) => {};",
+        "Promise.create((resolve, reject) => {});",
+        "new Promise((resolve, reject) => {});",
+        "Async.promise(resolve, reject) => {};"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which built-in method in JavaScript sorts the elements of an array?",
+      "answer": "sort()",
+      "choices": [
+        "changeOrder(order)",
+        "sort()",
+        "order()",
+        "orderArray()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which JavaScript function of an array joins all elements of an array into a string?",
+      "answer": "join()",
+      "choices": [
+        "concat()",
+        "pop()",
+        "join()",
+        "map()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the purpose of the `reduce()` method?",
+      "answer": "Applies a function against an accumulator and each array value",
+      "choices": [
+        "Maps each element to a new array",
+        "Applies a function against an accumulator and each array value",
+        "Reduces the array size",
+        "Removes duplicates from an array"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which JavaScript keyword is used to declare a block-scoped variable?",
+      "answer": "let",
+      "choices": [
+        "var",
+        "let",
+        "block",
+        "scoped"
+      ],
+      "point": 3
+    },
+    {
+      "question": "In event handling, how would you stop an event from propagating?",
+      "answer": "event.stopPropagation()",
+      "choices": [
+        "event.cancel()",
+        "event.remove()",
+        "event.stopPropagation()",
+        "event.preventDefault()"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which function is used to parse a string to an integer in JavaScript?",
+      "answer": "parseInt()",
+      "choices": [
+        "parseInt()",
+        "toInt()",
+        "strToInt()",
+        "convertToNumber()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the purpose of `use strict` in JavaScript?",
+      "answer": "Enforces stricter parsing and error handling",
+      "choices": [
+        "Makes the code run faster",
+        "Allows using older syntax",
+        "Enforces stricter parsing and error handling",
+        "Increases compatibility with browsers"
+      ],
+      "point": 9
+    },
+    {
+      "question": "Which method removes the first element from an array and returns that element?",
+      "answer": "shift()",
+      "choices": [
+        "unshift()",
+        "shift()",
+        "pop()",
+        "first()"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which operator is used to spread items in an iterable?",
+      "answer": "...",
+      "choices": [
+        "*",
+        "+",
+        "...",
+        "/"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What does destructuring allow in JavaScript?",
+      "answer": "Unpacking values from arrays or properties from objects",
+      "choices": [
+        "Combining methods",
+        "Unpacking values from arrays or properties from objects",
+        "Restructuring data",
+        "Encrypting text"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you declare a default parameter in a function?",
+      "answer": "function test(a, b = 1) {}",
+      "choices": [
+        "function test(a, b = 1) {}",
+        "function test(a, b: default 1) {}",
+        "function test(a, default b = 1) {}",
+        "function test(a, b default = 1) {}"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which JavaScript data type represents a lack of a value?",
+      "answer": "null",
+      "choices": [
+        "NaN",
+        "0",
+        "undefined",
+        "null"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What method would you use to round 2.5 to the nearest integer?",
+      "answer": "Math.round(2.5)",
+      "choices": [
+        "Math.ceil(2.5)",
+        "Math.floor(2.5)",
+        "Math.round(2.5)",
+        "round(2.5)"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the purpose of the `finally` clause in a `try...catch` statement?",
+      "answer": "To execute code after try and catch, regardless of the result",
+      "choices": [
+        "To handle additional errors",
+        "To return a value",
+        "To execute code after try and catch, regardless of the result",
+        "To terminate the program"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which JavaScript method returns the calling string value converted to lowercase?",
+      "answer": "toLowerCase()",
+      "choices": [
+        "toLowerCase()",
+        "changeCaseToLower()",
+        "lower()",
+        "downCase()"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How can you check if a variable is an array in JavaScript?",
+      "answer": "Array.isArray(variable)",
+      "choices": [
+        "typeof variable === 'array'",
+        "Array.isArray(variable)",
+        "variable instanceof Array",
+        "Both 2 and 3"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which statement is used to declare a class in JavaScript?",
+      "answer": "class MyClass {}",
+      "choices": [
+        "class MyClass() {}",
+        "class MyClass = {}",
+        "class MyClass {}",
+        "create class MyClass {}"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is the purpose of the `Promise.all()` method?",
+      "answer": "Wait for all promises to be resolved or any to be rejected",
+      "choices": [
+        "Resolves a list of promises sequentially",
+        "Waits for all promises to resolve, ignoring rejections",
+        "Wait for all promises to be resolved or any to be rejected",
+        "Converts promises to async functions"
+      ],
+      "point": 9
+    },
+    {
+      "question": "How can you make a request to a server using JavaScript?",
+      "answer": "fetch()",
+      "choices": [
+        "get()",
+        "fetch()",
+        "request()",
+        "retrieve()"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How do you create a new object with `Object.create()`?",
+      "answer": "Object.create(prototype)",
+      "choices": [
+        "Object.create()",
+        "Object.create(new Prototype())",
+        "Object.create(prototype)",
+        "Object.create({}, properties)"
+      ],
+      "point": 7
+    },
+    {
+      "question": "In JavaScript, how do you find the number of characters in a string?",
+      "answer": "string.length",
+      "choices": [
+        "string.getLength()",
+        "string.size()",
+        "string.length",
+        "string.count()"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which statement can be used to terminate a loop, switch, or label statement?",
+      "answer": "break",
+      "choices": [
+        "terminate",
+        "exit",
+        "break",
+        "continue"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How do you check if a value is a number in JavaScript?",
+      "answer": "typeof value === 'number'",
+      "choices": [
+        "toNumber(value)",
+        "typeof value === 'number'",
+        "value.isNumber()",
+        "isNaN(value)"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which template literal would correctly substitute a variable in a string?",
+      "answer": "`${variable}`",
+      "choices": [
+        "$variable",
+        "#{variable}",
+        "`variable`",
+        "${variable}"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you convert JSON string into a JavaScript object?",
+      "answer": "JSON.parse()",
+      "choices": [
+        "JSON.toObject()",
+        "JSON.parse()",
+        "JSON.stringify()",
+        "Object.toJSON()"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet x = 10;\nlet y = '5';\nconsole.log(x + +y);\n\n\n",
+      "answer": "15",
+      "choices": [
+        "105",
+        "15",
+        "NaN",
+        "TypeError"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(typeof null);\n\n\n",
+      "answer": "object",
+      "choices": [
+        "null",
+        "undefined",
+        "object",
+        "string"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet a = [1, 2, 3];\nlet b = [1, 2, 3];\nconsole.log(a === b);\n\n\n",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "undefined",
+        "ReferenceError"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(0.1 + 0.2 === 0.3);\n\n\n",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "NaN",
+        "TypeError"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet x = 'Hello';\nconsole.log((x.substring(0, 2)).toUpperCase());\n\n\n",
+      "answer": "HE",
+      "choices": [
+        "He",
+        "HE",
+        "hello",
+        "H"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log([1, 2, 3].map(x => x * 2));\n\n\n",
+      "answer": "[2, 4, 6]",
+      "choices": [
+        "[1, 4, 9]",
+        "[2, 4, 6]",
+        "[3, 6, 9]",
+        "[1, 2, 3]"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet y = new Set([1, 2, 2, 3]);\nconsole.log(y.size);\n\n\n",
+      "answer": "3",
+      "choices": [
+        "4",
+        "3",
+        "2",
+        "SyntaxError"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(Boolean(0));\n\n\n",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "0",
+        "null"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(typeof []);\n\n\n",
+      "answer": "object",
+      "choices": [
+        "array",
+        "object",
+        "undefined",
+        "string"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet arr = [1, 2, 3];\narr.length = 0;\nconsole.log(arr);\n\n\n",
+      "answer": "[]",
+      "choices": [
+        "[1, 2, 3]",
+        "[]",
+        "[0, 0, 0]",
+        "undefined"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log('5' - 3);\n\n\n",
+      "answer": "2",
+      "choices": [
+        "53",
+        "2",
+        "8",
+        "TypeError"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log('5' + 3);\n\n\n",
+      "answer": "53",
+      "choices": [
+        "53",
+        "8",
+        "15",
+        "Error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log([...'hello'].length);\n\n\n",
+      "answer": "5",
+      "choices": [
+        "4",
+        "5",
+        "undefined",
+        "SyntaxError"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet obj = { a: 1 };\nconsole.log('a' in obj);\n\n\n",
+      "answer": "true",
+      "choices": [
+        "true",
+        "false",
+        "undefined",
+        "null"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log([...new Set([1, 2, 2, 3])]);\n\n\n",
+      "answer": "[1, 2, 3]",
+      "choices": [
+        "[1, 2, 2, 3]",
+        "[]",
+        "[1, 2, 3]",
+        "[3, 2, 1]"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet x = { '1': 'a', '2': 'b' };\nconsole.log(Object.keys(x));\n\n\n",
+      "answer": "['1', '2']",
+      "choices": [
+        "['a', 'b']",
+        "['1', '2']",
+        "['2', '1']",
+        "Error"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet x = 42;\nconsole.log(globalThis.x);\n\n\n",
+      "answer": "undefined",
+      "choices": [
+        "42",
+        "undefined",
+        "null",
+        "ReferenceError"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(typeof (function() {}));\n\n\n",
+      "answer": "function",
+      "choices": [
+        "object",
+        "function",
+        "undefined",
+        "string"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet a = [1, 2];\na.push(...[3, 4]);\nconsole.log(a);\n\n\n",
+      "answer": "[1, 2, 3, 4]",
+      "choices": [
+        "[1, 2, [3, 4]]",
+        "[1, 2, 3, 4]",
+        "[1, 3, 4]",
+        "[3, 4, 1, 2]"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log([] + []);\n\n\n",
+      "answer": "''",
+      "choices": [
+        "'[]'",
+        "undefined",
+        "' '",
+        "''"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nlet a = [1];\nlet b = [1];\nconsole.log(a == b);\n\n\n",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "undefined",
+        "ReferenceError"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What will be the output of the following JavaScript code?\n\n\nconsole.log(0 == null);\n\n\n",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "null",
+        "TypeError"
+      ],
+      "point": 6
+    }
+  ]

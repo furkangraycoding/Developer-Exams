@@ -1,0 +1,783 @@
+[
+    {
+      "question": "Which keyword is used to declare a class in C#?",
+      "answer": "class",
+      "choices": [
+        "class",
+        "def",
+        "struct",
+        "module"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you define a method in C#?",
+      "answer": "public void MyMethod() {}",
+      "choices": [
+        "function MyMethod() {}",
+        "def MyMethod() {}",
+        "public void MyMethod() {}",
+        "method void MyMethod() {}"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which of the following is the correct way to declare a variable in C#?",
+      "answer": "int number = 42;",
+      "choices": [
+        "let number = 42;",
+        "var number = 42;",
+        "int number = 42;",
+        "number = int 42;"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the default value of a bool in C#?",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "null",
+        "0"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How is a constant declared in C#?",
+      "answer": "const int x = 10;",
+      "choices": [
+        "constant int x = 10;",
+        "let x = 10;",
+        "const int x = 10;",
+        "define x 10;"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which method is used to output text to the console in C#?",
+      "answer": "Console.WriteLine()",
+      "choices": [
+        "print()",
+        "echo()",
+        "Console.WriteLine()",
+        "write()"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What keyword in C# is used to inherit from a base class?",
+      "answer": ":",
+      "choices": [
+        ":",
+        "extends",
+        "implements",
+        "inherits"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which keyword is used to create an instance of a class in C#?",
+      "answer": "new",
+      "choices": [
+        "create",
+        "instantiate",
+        "new",
+        "make"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is an interface in C#?",
+      "answer": "A contract that defines a set of methods",
+      "choices": [
+        "A class with no methods",
+        "An abstract class",
+        "A contract that defines a set of methods",
+        "A type of delegate"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the purpose of the 'using' directive in C#?",
+      "answer": "To import namespaces",
+      "choices": [
+        "To create aliases",
+        "To handle exceptions",
+        "To import namespaces",
+        "To manage resources"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you declare a single-line comment in C#?",
+      "answer": "// comment",
+      "choices": [
+        "// comment",
+        "# comment",
+        "' comment",
+        "-- comment"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What does the 'static' keyword denote in C#?",
+      "answer": "Belongs to the type itself rather than an instance",
+      "choices": [
+        "The method can be overridden",
+        "Belongs to the type itself rather than an instance",
+        "The method is private",
+        "The method is immutable"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the default access modifier for a class member in C#?",
+      "answer": "private",
+      "choices": [
+        "public",
+        "private",
+        "internal",
+        "protected"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of the following is a reference type in C#?",
+      "answer": "Array",
+      "choices": [
+        "int",
+        "char",
+        "Array",
+        "bool"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is a delegate in C#?",
+      "answer": "A type that represents references to methods",
+      "choices": [
+        "A type used for exception handling",
+        "A method prototype",
+        "A type that represents references to methods",
+        "An inherited constructor"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you prevent a class from being inherited in C#?",
+      "answer": "Mark it as sealed",
+      "choices": [
+        "Use the static keyword",
+        "Mark it as sealed",
+        "Use internal",
+        "Use private"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you handle exceptions in C#?",
+      "answer": "Using try-catch blocks",
+      "choices": [
+        "Using on-catch blocks",
+        "Using error-handling",
+        "Using try-catch blocks",
+        "Using handle-except"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the 'override' keyword in C#?",
+      "answer": "To modify a virtual or abstract method in a derived class",
+      "choices": [
+        "To alter methods privately",
+        "To modify a virtual or abstract method in a derived class",
+        "To conceal base class methods",
+        "To define interfaces"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the function of the 'params' keyword in C# methods?",
+      "answer": "Allows methods to accept a variable number of parameters",
+      "choices": [
+        "Sets default parameters",
+        "Ensures parameters are objects",
+        "Allows methods to accept a variable number of parameters",
+        "Links parameter values"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which LINQ method is used to sort data in C#?",
+      "answer": "OrderBy()",
+      "choices": [
+        "SortBy()",
+        "OrderBy()",
+        "ArrangeBy()",
+        "DataSort()"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is a property in C#?",
+      "answer": "A member that provides a flexible mechanism to read, write, or compute the value of a private field",
+      "choices": [
+        "A flexible list",
+        "An inherited field",
+        "A method proxy",
+        "A member that provides a flexible mechanism to read, write, or compute the value of a private field"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the output of this C# code: `Console.WriteLine(3 + 5 * 2);`?",
+      "answer": "13",
+      "choices": [
+        "16",
+        "13",
+        "10",
+        "Error in expression"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What type is a 'string' in C#?",
+      "answer": "Reference type",
+      "choices": [
+        "Value type",
+        "Enumeration type",
+        "Reference type",
+        "Primitive type"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which keyword is used to access the base class constructor in C#?",
+      "answer": "base",
+      "choices": [
+        "super",
+        "inherit",
+        "base",
+        "parent"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What output is generated by this C# loop: `for(int i = 0; i < 3; i++) { Console.Write(i); }`?",
+      "answer": "012",
+      "choices": [
+        "123",
+        "012",
+        "321",
+        "Error"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which symbol is used to define lambda expressions in C#?",
+      "answer": "=>",
+      "choices": [
+        "->",
+        ":>",
+        "=>",
+        "~>"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is a collection in C#?",
+      "answer": "A group of related objects",
+      "choices": [
+        "A type inference system",
+        "An abstract method",
+        "A group of related objects",
+        "A static placeholder"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the default case for switch statement in C#?",
+      "answer": "default",
+      "choices": [
+        "case 0",
+        "else",
+        "default",
+        "fallback"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What term describes restricting access to some of an object's components in C#?",
+      "answer": "Encapsulation",
+      "choices": [
+        "Polymorphism",
+        "Abstraction",
+        "Inheritance",
+        "Encapsulation"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which operator is used to test for null conditional access in C#?",
+      "answer": "?.",
+      "choices": [
+        "?.",
+        "??",
+        "::",
+        "->"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which keyword is used to create a read-only property in C#?",
+      "answer": "get",
+      "choices": [
+        "set",
+        "readonly",
+        "get",
+        "const"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is IEnumerable in C#?",
+      "answer": "An interface defining a single method to return an IEnumerator",
+      "choices": [
+        "A collection class",
+        "A data parser",
+        "An iterator",
+        "An interface defining a single method to return an IEnumerator"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you specify a method that does not return a value in C#?",
+      "answer": "void",
+      "choices": [
+        "null",
+        "empty",
+        "void",
+        "nothing"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which method in C# converts an object to a string representation?",
+      "answer": "ToString()",
+      "choices": [
+        "ConvertToString()",
+        "ObjectToString()",
+        "ToString()",
+        "Stringify()"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which of the following is a value type in C#?",
+      "answer": "int",
+      "choices": [
+        "string",
+        "object",
+        "int",
+        "array"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is the keyword for adding a new interface to a class?",
+      "answer": "interface",
+      "choices": [
+        "add",
+        "include",
+        "interface",
+        "implements"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which collection is used for dynamically resizing arrays in C#?",
+      "answer": "List",
+      "choices": [
+        "Dictionary",
+        "Array",
+        "List",
+        "Hashtable"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which access modifier makes a method accessible to any other code in the same assembly or another assembly that references it?",
+      "answer": "public",
+      "choices": [
+        "private",
+        "protected",
+        "internal",
+        "public"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which keyword is used for inheritance in C#?",
+      "answer": ":",
+      "choices": [
+        "->",
+        "inherit",
+        ":",
+        "extends"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which of the following is a type of loop in C#?",
+      "answer": "foreach",
+      "choices": [
+        "flip",
+        "fetch",
+        "doloop",
+        "foreach"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which function is used to read from the console in C#?",
+      "answer": "Console.ReadLine()",
+      "choices": [
+        "Console.Read()",
+        "Console.Input()",
+        "Console.ReadLine()",
+        "Console.Get()"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the 'abstract' keyword in C#?",
+      "answer": "To define a method or class that cannot be instantiated",
+      "choices": [
+        "To secure classes",
+        "To define constants",
+        "To define interfaces",
+        "To define a method or class that cannot be instantiated"
+      ],
+      "point": 3
+    },
+    {
+      "question": "In C#, what is the output type of division between two integers?",
+      "answer": "int",
+      "choices": [
+        "double",
+        "decimal",
+        "int",
+        "float"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you check if an object instance is of a certain type in C#?",
+      "answer": "Using the is keyword",
+      "choices": [
+        "Using typeOf()",
+        "Using the as keyword",
+        "Using the check() function",
+        "Using the is keyword"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which keyword is used to refer to the current instance of a class?",
+      "answer": "this",
+      "choices": [
+        "base",
+        "init",
+        "this",
+        "const"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the 'virtual' keyword in C#?",
+      "answer": "To allow a method to be overridden in a derived class",
+      "choices": [
+        "To prevent inheritance",
+        "To secure a method",
+        "To place an alias",
+        "To allow a method to be overridden in a derived class"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is encapsulation in C#?",
+      "answer": "Hiding the internal state and requiring all interaction to occur through methods",
+      "choices": [
+        "Sharing classes and methods",
+        "Overriding methods",
+        "Inheriting classes",
+        "Hiding the internal state and requiring all interaction to occur through methods"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of these is a feature of C# for enhancing code readability and maintenance?",
+      "answer": "Properties",
+      "choices": [
+        "Properties",
+        "Global variables",
+        "GoTo statements",
+        "Inline assembly"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the result of the C# expression `true && false`?",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "0",
+        "null"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you ensure a method in a base class is overridden in a derived class?",
+      "answer": "Use the abstract modifier in the base class",
+      "choices": [
+        "Use the sealed modifier in the derived class",
+        "Use the static modifier in the base class",
+        "Use the virtual modifier in the derived class",
+        "Use the abstract modifier in the base class"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which of these types can have only two possible values: true or false?",
+      "answer": "bool",
+      "choices": [
+        "byte",
+        "int",
+        "bool",
+        "char"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is the main purpose of using delegates in C#?",
+      "answer": "To define callback methods",
+      "choices": [
+        "Enhance security",
+        "Define classes",
+        "To define callback methods",
+        "Store data"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you explicitly convert a larger data type to a smaller type in C#?",
+      "answer": "Casting using ()",
+      "choices": [
+        "Casting using ()",
+        "Convert function",
+        "Using type alias",
+        "Using convert tool"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the result of the expression `10 % 3` in C#?",
+      "answer": "1",
+      "choices": [
+        "3",
+        "7",
+        "1",
+        "10"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which is NOT a keyword in C#?",
+      "answer": "goto",
+      "choices": [
+        "goto",
+        "switch",
+        "integer",
+        "enum"
+      ],
+      "point": 1
+    },
+    {
+      "question": "In C#, which method is used to pause a program until a key is pressed?",
+      "answer": "Console.ReadKey()",
+      "choices": [
+        "Console.Wait()",
+        "Console.Pause()",
+        "Console.ReadKey()",
+        "Console.Input()"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you define an empty constructor in C#?",
+      "answer": "public MyClass() {}",
+      "choices": [
+        "public void MyClass() {}",
+        "public MyClass() {}",
+        "void constructor() {}",
+        "void MyClass() {}"
+      ],
+      "point": 2
+    },
+    {
+      "question": "An array index starts from which value in C#?",
+      "answer": "0",
+      "choices": [
+        "0",
+        "1",
+        "2",
+        "10"
+      ],
+      "point": 1
+    },
+    {
+      "question": "What is the main function of the hashCode() method?",
+      "answer": "Returns an integer hash code value for an object",
+      "choices": [
+        "Generates random numbers",
+        "Returns object size",
+        "returns object ID",
+        "Returns an integer hash code value for an object"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which loop structure in C# executes the code block at least once, regardless of the condition?",
+      "answer": "do-while",
+      "choices": [
+        "for",
+        "while",
+        "do-while",
+        "foreach"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is polymorphism in C#?",
+      "answer": "A concept where one interface is used for general class actions",
+      "choices": [
+        "A way to define multiple methods",
+        "A design pattern",
+        "A concept where one interface is used for general class actions",
+        "A technique for handling exceptions"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you define an array of integers with five elements?",
+      "answer": "int[] array = new int[5];",
+      "choices": [
+        "int[] array = new int[5];",
+        "array[] int = {5};",
+        "integer array = 5[];",
+        "int array[] = (5);"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which collection is associated with key-value pairs in C#?",
+      "answer": "Dictionary",
+      "choices": [
+        "List",
+        "Queue",
+        "Stack",
+        "Dictionary"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the continue statement do in a loop?",
+      "answer": "Skips the current iteration and continues with the next one",
+      "choices": [
+        "Exits the loop",
+        "Pauses the loop",
+        "Skips the current iteration and continues with the next one",
+        "Resets the loop counter"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What keyword is used to force a derived class to implement a method in C#?",
+      "answer": "abstract",
+      "choices": [
+        "final",
+        "abstract",
+        "interface",
+        "sealed"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you declare an enumeration in C#?",
+      "answer": "enum Colors { Red, Green, Blue };",
+      "choices": [
+        "enum Colors : { Red, Green, Blue };",
+        "enum Colors { Red, Green, Blue };",
+        "enum Colors = { Red, Green, Blue };",
+        "enum Colors [Red, Green, Blue];"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which of these is a way to concatenate strings in C#?",
+      "answer": "+",
+      "choices": [
+        "&",
+        "+",
+        "concat",
+        "merge"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you force garbage collection in C#?",
+      "answer": "GC.Collect()",
+      "choices": [
+        "Collect()",
+        "GC.Dispose()",
+        "GC.Collect()",
+        "Garbage.Collect()"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which exception is thrown when there's an attempt to access an array element beyond its limit?",
+      "answer": "IndexOutOfRangeException",
+      "choices": [
+        "ArrayIndexException",
+        "IndexOutOfRangeException",
+        "OverflowException",
+        "BoundaryException"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you declare a nullable type in C#?",
+      "answer": "int?",
+      "choices": [
+        "maybe int",
+        "int nullable",
+        "nullable int",
+        "int?"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the 'lock' statement in C#?",
+      "answer": "To prevent multiple threads from accessing a block of code",
+      "choices": [
+        "To pause the program",
+        "To ensure race conditions",
+        "To store data persistently",
+        "To prevent multiple threads from accessing a block of code"
+      ],
+      "point": 2
+    }
+  ]

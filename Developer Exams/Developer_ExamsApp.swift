@@ -14,6 +14,8 @@ struct Developer_ExamsApp: App {
     @State private var username: String = "" // Kullanıcının girdiği takma ad
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @StateObject private var globalViewModel = GlobalViewModel()
+    @State private var chosenMenu : String = ""
+    
 
     var body: some Scene {
         WindowGroup {
@@ -21,7 +23,7 @@ struct Developer_ExamsApp: App {
                 if globalViewModel.isMenuVisible {
                             MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
                         } else {
-                            if globalViewModel.chosenMenu == "Swift" {
+                            if GlobalViewModel.shared.chosenMenu != "" {
                                 ContentView(username: username, chosenMenu: globalViewModel.chosenMenu).environmentObject(globalViewModel)
                             }
                         }

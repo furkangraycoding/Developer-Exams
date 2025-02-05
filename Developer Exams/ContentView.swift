@@ -2,64 +2,65 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var username: String
+    var username: String = ""
     @StateObject private var flashcardViewModel = FlashcardViewModel()
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
-    @State private var isLoadedAds: Bool
-    @State private var backgroundColor: Color = .black  // Arka plan rengi
+    @State private var isLoadedAds: Bool = false
+    @State private var backgroundColor: Color = .black
     @State private var gameOverBackgroundColor: Color = .green
     @State private var showMessage = false
     @State private var messagePosition: [CGPoint] = [
-        CGPoint(x: 0.5, y: 0.5) // Dairenin merkezi
+        CGPoint(x: 0.5, y: 0.5)
     ]
-    @State private var currentMessage: String = "Correct!"  // Veya "Yanlış"
-    @State private var showCorrectMessage: Bool = false // Doğru cevap için
-    @State private var showWrongMessage: Bool = false // Yanlış cevap için
-    @State private var highScores: [UserScore] = [] // Yüksek skorları tutacak değişken
+    @State private var currentMessage: String = "Correct!"
+    @State private var showCorrectMessage: Bool = false
+    @State private var showWrongMessage: Bool = false
+    @State private var highScores: [UserScore] = []
     @State private var highestUserScore: Int = 0
+    @State private var chosenMenu: String = ""
     @EnvironmentObject var globalViewModel: GlobalViewModel
     
-    let originalBackgroundColor: Color = .black  // Orijinal arka plan rengi
+    let originalBackgroundColor: Color = .black
     
-    // Yüksek skorları uygulama başlarken yükle
     init(username: String, chosenMenu: String) {
+        self.chosenMenu = GlobalViewModel.shared.chosenMenu
         self.username = username
         self.isLoadedAds = false
         _highScores = State(initialValue: ScoreManager.shared.loadScores())
         _highestUserScore = State(initialValue: ScoreManager.shared.loadScores().max(by: { $0.score < $1.score })?.score ?? 0)
     }
     
-    func showAd(){interstitialAdsManager.displayInterstitialAd()}
-    func loadAd() {interstitialAdsManager.loadInterstitialAd()}
+    func showAd() { interstitialAdsManager.displayInterstitialAd() }
+    func loadAd() { interstitialAdsManager.loadInterstitialAd() }
     
     var body: some View {
         ZStack {
             Color.black
                 .edgesIgnoringSafeArea(.all)
             
-            NavigationView{
+            NavigationView {
                 VStack {
                     HStack {
                         Button(action: {
-                            globalViewModel.isMenuVisible = true;
-                            MenuView(isMenuVisible: $globalViewModel.isMenuVisible)})
-                            {
-                                Text("<")
-                                    .background(.white)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.black)
-                                    .padding(5)
-                                    .cornerRadius(10)
-                            }
-                            .cornerRadius(5)
-                            .background(.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(.white, lineWidth: 12) // Apply border with corner radius
-                            )
-                            .background(.white)
-                            .padding(.trailing, 5)
+                            globalViewModel.isMenuVisible = true
+                        }) {
+                            Text("<")
+                                .background(.white)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .padding(5)
+                                .cornerRadius(10)
+                        }
+                        .cornerRadius(5)
+                        .background(.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(.white, lineWidth: 12)
+                        )
+                        .background(.white)
+                        .padding(.trailing, 5)
+                        
                         Text("\(username)")
                             .font(.headline)
                             .padding()
@@ -68,9 +69,8 @@ struct ContentView: View {
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         
-                        Spacer().frame(width: 5) // Arada boşluk bırakmak için Spacer ekledim
+                        Spacer().frame(width: 5)
                         
-                        // Skor Bilgisi
                         Text("Score: \(flashcardViewModel.correctAnswersCount)")
                             .font(.headline)
                             .padding()
@@ -80,7 +80,7 @@ struct ContentView: View {
                             .shadow(radius: 5)
                         
                         Spacer().frame(width: 5)
-                        // En Yüksek Skor Bilgisi
+                        
                         Text("Best: \(highestUserScore)")
                             .font(.headline)
                             .padding()
@@ -91,14 +91,11 @@ struct ContentView: View {
                     }
                     .padding(.top, 10)
                     .padding(.horizontal)
-                    // HStack'in etrafında yatay padding
                     
+                    Spacer()
                     
-                    
-                    // Oyun bitti durumunda "Oyun Bitti" ve yüksek skorlar gösterimi
                     if flashcardViewModel.gameOver {
                         VStack {
-                            // Oyun Bitti animasyonu
                             Text("Game Over!")
                                 .font(.title)
                                 .foregroundColor(gameOverBackgroundColor)
@@ -106,7 +103,6 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                                 .padding()
                             
-                            // Yüksek Skorlar Listesini ekliyoruz
                             VStack {
                                 Text("Highest Scores")
                                     .font(.title2)
@@ -130,7 +126,6 @@ struct ContentView: View {
                             }
                             .padding(.top, 30)
                             
-                            // Oyun Yenileme ve Kalp Yenileme butonları
                             HStack(spacing: 40) {
                                 Button(action: {
                                     flashcardViewModel.restartGame()
@@ -142,9 +137,9 @@ struct ContentView: View {
                                         .background(originalBackgroundColor)
                                         .clipShape(Circle())
                                         .shadow(radius: 5)
-                                        .overlay( // Add border around the circle
+                                        .overlay(
                                             Circle()
-                                                .stroke(gameOverBackgroundColor, lineWidth: 4) // Border color and thickness
+                                                .stroke(gameOverBackgroundColor, lineWidth: 4)
                                         )
                                 }
                                 .accessibilityLabel("Restart Game")
@@ -152,8 +147,8 @@ struct ContentView: View {
                                 Button(action: {
                                     loadAd()
                                     flashcardViewModel.restoreHearts()
-                                    showAd()}
-                                ) {
+                                    showAd()
+                                }) {
                                     Image(systemName: "heart.fill")
                                         .font(.system(size: 50))
                                         .foregroundColor(gameOverBackgroundColor)
@@ -161,9 +156,9 @@ struct ContentView: View {
                                         .background(originalBackgroundColor)
                                         .clipShape(Circle())
                                         .shadow(radius: 5)
-                                        .overlay( // Add border around the circle
+                                        .overlay(
                                             Circle()
-                                                .stroke(gameOverBackgroundColor, lineWidth: 4) // Border color and thickness
+                                                .stroke(gameOverBackgroundColor, lineWidth: 4)
                                         )
                                 }
                                 .accessibilityLabel("Refill Hearts")
@@ -171,8 +166,7 @@ struct ContentView: View {
                             .padding(.top, 50)
                         }
                         .padding()
-                    }
-                    else {
+                    } else {
                         if flashcardViewModel.loadingNewQuestions {
                             VStack {
                                 Text("New questions are loading...")
@@ -183,8 +177,7 @@ struct ContentView: View {
                             .onAppear {
                                 showMessage = true
                             }
-                        }
-                        else if flashcardViewModel.currentQuestions.isEmpty {
+                        } else if flashcardViewModel.currentQuestions.isEmpty {
                             Text("Loading...")
                                 .font(.title)
                                 .foregroundStyle(Color.white)
@@ -210,7 +203,7 @@ struct ContentView: View {
                                                 .opacity(showMessage ? 1 : 0)
                                                 .animation(
                                                     .easeInOut(duration: 0.3)
-                                                    .repeatCount(2, autoreverses: true),
+                                                        .repeatCount(2, autoreverses: true),
                                                     value: showMessage
                                                 )
                                         }
@@ -236,45 +229,41 @@ struct ContentView: View {
                                         }
                                     }
                                 } else {
-                                    VStack(spacing: 10) {
-                                        Text(flashcard.question)
-                                            .foregroundStyle(Color.white)
-                                            .font(.title)
-                                            .fontWeight(.semibold)
-                                            .padding(.top,20)
-                                            .transition(.scale)
-                                            .animation(.easeInOut(duration: 0.5))
-                                            .padding(.vertical ,5)
-                                            .padding(.top, 20)
-                                            .padding(.horizontal ,20)
-                                        
-                                        VStack{
-                                            ForEach(flashcard.choices, id: \.self) { choice in
-                                                Button(action: {
-                                                    flashcardViewModel.checkAnswer(choice, for: flashcard)
-                                                }) {
-                                                    Text(choice)
-                                                        .font(.headline)
-                                                        .padding()
-                                                        .frame(maxWidth: .infinity)
-                                                        .background(Color.blue)
-                                                        .foregroundColor(.white)
-                                                        .cornerRadius(10)
+                                        ScrollView{
+                                            VStack(spacing: 10) {
+                                                Text("(\(flashcard.point) points) \n \n\(flashcard.question)")
+                                                    .foregroundStyle(Color.white)
+                                                    .font(.headline)
+                                                    .fontWeight(.semibold)
+                                                    .multilineTextAlignment(.center)
+                                                    .frame(maxWidth: .infinity)
+                                                    .minimumScaleFactor(0.5)
+                                                    .padding(.top, 20)
+                                                
+                                                VStack {
+                                                    ForEach(flashcard.choices, id: \.self) { choice in
+                                                        Button(action: {
+                                                            flashcardViewModel.checkAnswer(choice, for: flashcard)
+                                                        }) {
+                                                            Text(choice)
+                                                                .font(.headline)
+                                                                .padding()
+                                                                .frame(maxWidth: .infinity)
+                                                                .minimumScaleFactor(0.5)
+                                                                .background(Color.blue)
+                                                                .foregroundColor(.white)
+                                                                .cornerRadius(10)
+                                                        }
+                                                        .buttonStyle(PlainButtonStyle())
+                                                    }
                                                 }
-                                                .buttonStyle(PlainButtonStyle())
-                                                .transition(.scale)
-                                                .animation(.easeInOut(duration: 0.5))
+                                                .padding(.top, 40)
                                             }
+                                            .padding()
                                         }
-                                        .padding(.top, 40)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .transition(.scale)
-                                    .animation(.easeInOut(duration: 0.5))
                                 }
                             }
-                            .padding()
-                            .animation(.easeInOut)
+                            .frame(maxWidth: .infinity)
                         }
                     }
                     
@@ -298,18 +287,17 @@ struct ContentView: View {
         }
         .onChange(of: flashcardViewModel.gameOver) { newValue in
             if newValue {
-                // Oyun bittiğinde skoru ekle
                 let newScore = UserScore(username: username, score: flashcardViewModel.correctAnswersCount)
                 ScoreManager.shared.addNewScore(newScore)
-                highScores = ScoreManager.shared.loadScores() // Güncellenmiş skorları tekrar yükle
+                highScores = ScoreManager.shared.loadScores()
             }
             updateHighestUserScore()
         }
     }
-        func updateHighestUserScore() {
-                if let highestScoreUser = highScores.max(by: { $0.score < $1.score }) {
-                    highestUserScore = highestScoreUser.score
-                }
-            }
+    
+    func updateHighestUserScore() {
+        if let highestScoreUser = highScores.max(by: { $0.score < $1.score }) {
+            highestUserScore = highestScoreUser.score
         }
-
+    }
+}

@@ -1,0 +1,882 @@
+[
+    {
+      "question": "Which keyword is used to declare a package in Go?",
+      "answer": "package",
+      "choices": [
+        "package",
+        "import",
+        "include",
+        "namespace"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you declare a variable in Go?",
+      "answer": "var a int",
+      "choices": [
+        "var a int",
+        "int a",
+        "declare a int",
+        "let a int"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the entry point of a Go program?",
+      "answer": "func main()",
+      "choices": [
+        "func main()",
+        "start()",
+        "init()",
+        "begin()"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which package is used to print to the console in Go?",
+      "answer": "fmt",
+      "choices": [
+        "fmt",
+        "console",
+        "output",
+        "print"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you import a package in Go?",
+      "answer": "import \"package_name\"",
+      "choices": [
+        "import \"package_name\"",
+        "#include <package_name>",
+        "using package_name",
+        "require package_name"
+      ],
+      "point": 4
+    },
+    {
+      "question": "In Go, how do you declare a constant?",
+      "answer": "const PI = 3.14",
+      "choices": [
+        "const PI = 3.14",
+        "final PI = 3.14",
+        "#define PI 3.14",
+        "let PI = 3.14"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the default value of an uninitialized integer in Go?",
+      "answer": "0",
+      "choices": [
+        "undefined",
+        "0",
+        "nil",
+        "-1"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which of the following types represents a collection of unique elements in Go?",
+      "answer": "map",
+      "choices": [
+        "array",
+        "slice",
+        "map",
+        "set"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the zero value of a boolean in Go?",
+      "answer": "false",
+      "choices": [
+        "true",
+        "false",
+        "none",
+        "undefined"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you create a new goroutine in Go?",
+      "answer": "go myFunction()",
+      "choices": [
+        "go myFunction()",
+        "new goroutine myFunction()",
+        "goroutine myFunction()",
+        "start myFunction()"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does `:=` represent in Go?",
+      "answer": "Short variable declaration",
+      "choices": [
+        "Assignment",
+        "Increment",
+        "Short variable declaration",
+        "Type assertion"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What mechanism does Go use for concurrency?",
+      "answer": "Goroutines",
+      "choices": [
+        "Threads",
+        "Coroutines",
+        "Goroutines",
+        "Promises"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you handle errors in Go?",
+      "answer": "By returning an error value",
+      "choices": [
+        "By throwing exceptions",
+        "By returning an error value",
+        "Using try-catch",
+        "Using panic-recover"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the purpose of the `defer` statement in Go?",
+      "answer": "To ensure that a function call is performed later in a program’s execution",
+      "choices": [
+        "To delay a variable initialization",
+        "To define an abstract method",
+        "To ensure that a function call is performed later in a program’s execution",
+        "To pause a for loop"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which built-in function is used to append elements to a slice?",
+      "answer": "append()",
+      "choices": [
+        "add()",
+        "append()",
+        "push()",
+        "insert()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you check the type of an interface variable in Go?",
+      "answer": "Using a type assertion",
+      "choices": [
+        "Using reflection",
+        "Using a type assertion",
+        "Using type inference",
+        "Using a cast"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which of the following is a composite type in Go?",
+      "answer": "Array",
+      "choices": [
+        "Array",
+        "Integer",
+        "Float",
+        "String"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the purpose of the `select` statement in Go?",
+      "answer": "To wait on multiple channel operations",
+      "choices": [
+        "To iterate over slices",
+        "To handle error conditions",
+        "To wait on multiple channel operations",
+        "To define abstract functions"
+      ],
+      "point": 8
+    },
+    {
+      "question": "How do you declare a slice in Go?",
+      "answer": "var s []int",
+      "choices": [
+        "var s []int",
+        "slice s int",
+        "int s[]",
+        "let s [int]"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you declare a map in Go?",
+      "answer": "map[string]int",
+      "choices": [
+        "var m map[string]int",
+        "map[string]int",
+        "dictionary<string, int>",
+        "map(string, int)"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you handle run-time panic in Go?",
+      "answer": "Using recover() function",
+      "choices": [
+        "Try-catch block",
+        "Using recover() function",
+        "Using panic-catch block",
+        "Ignoring it"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which built-in function is used to get the capacity of a slice?",
+      "answer": "cap()",
+      "choices": [
+        "cap()",
+        "length()",
+        "capacity()",
+        "len()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you iterate over key-value pairs in a map?",
+      "answer": "Using range",
+      "choices": [
+        "Using map.forEach",
+        "Using for loop",
+        "Using range",
+        "Using while loop"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will happen if you read from a closed channel in Go?",
+      "answer": "Receive the zero value for the channel’s type",
+      "choices": [
+        "Panic occurs",
+        "Receive a nil value",
+        "Receive the zero value for the channel’s type",
+        "The program halts"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which keyword is used to terminate a goroutine?",
+      "answer": "There is no keyword; goroutine exits after completing its function",
+      "choices": [
+        "stop",
+        "break",
+        "exit",
+        "There is no keyword; goroutine exits after completing its function"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the difference between slice and array in Go?",
+      "answer": "Slice is dynamic, array is of fixed size",
+      "choices": [
+        "Array supports dynamic sizing, slice does not",
+        "Slice is dynamic, array is of fixed size",
+        "Slice holds references, array holds values",
+        "Array is more efficient than slice"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the result of dividing an integer by zero in Go?",
+      "answer": "Panic",
+      "choices": [
+        "Infinity",
+        "NaN",
+        "Panic",
+        "Zero"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What will `len()` function return when called on a nil slice?",
+      "answer": "0",
+      "choices": [
+        "nil",
+        "0",
+        "nil slice",
+        "negative value"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you define a method for a type in Go?",
+      "answer": "func (t Type) methodName() {}",
+      "choices": [
+        "func methodName(t Type) {}",
+        "Type.methodName() {}",
+        "func methodName(Type t) {}",
+        "func (t Type) methodName() {}"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is a struct in Go?",
+      "answer": "A composite data type that groups together variables",
+      "choices": [
+        "A simple data type",
+        "A composite data type that groups together variables",
+        "A method handler",
+        "A numeric data type"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which symbol is used for the Go comment?",
+      "answer": "//",
+      "choices": [
+        "#",
+        "//",
+        "--",
+        "/*"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you create an instance of a struct?",
+      "answer": "structVariable := StructType{}",
+      "choices": [
+        "structVariable = new StructType()",
+        "structVariable := StructType{}",
+        "structVariable = StructType('values')",
+        "create struct StructType"
+      ],
+      "point": 3
+    },
+    {
+      "question": "In Go, what does the `panic` function do?",
+      "answer": "Halts the execution of the current goroutine",
+      "choices": [
+        "Halts the execution of the current goroutine",
+        "Creates a runtime error",
+        "Logs a warning",
+        "Continues without executing more code"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What keyword defines an interface in Go?",
+      "answer": "interface",
+      "choices": [
+        "properties",
+        "interface",
+        "func",
+        "method"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How can you convert a string with a number to an integer in Go?",
+      "answer": "strconv.Atoi()",
+      "choices": [
+        "int()",
+        "float64()",
+        "strconv.Atoi()",
+        "parseInt()"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which keyword is used to indicate a package is imported but not used?",
+      "answer": "_",
+      "choices": [
+        "*",
+        "&",
+        "_",
+        "#"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you declare a pointer in Go?",
+      "answer": "var p *int",
+      "choices": [
+        "int *p",
+        "let p = &x",
+        "var p *int",
+        "int p &"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What will `cap()` function return for a nil slice?",
+      "answer": "0",
+      "choices": [
+        "nil",
+        "0",
+        "nil slice",
+        "negative value"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you access a field of a struct through a pointer?",
+      "answer": "(*p).field or p.field",
+      "choices": [
+        "*p.field",
+        "p->field",
+        "p.&field",
+        "(*p).field or p.field"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you perform integer division in Go?",
+      "answer": "Using / operator",
+      "choices": [
+        "Using div() function",
+        "Using / operator",
+        "Using // operator",
+        "Using math.Div()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you test if a channel is closed in Go?",
+      "answer": "Check the second value from a receive operation",
+      "choices": [
+        "Check if channel is nil",
+        "Use a isClosed() method",
+        "Check the second value from a receive operation",
+        "Use a closed() function"
+      ],
+      "point": 9
+    },
+    {
+      "question": "How do you declare a read-only channel in Go?",
+      "answer": "Using <-chan int",
+      "choices": [
+        "Using chan<- int",
+        "Using <-chan int",
+        "Using chan int readonly",
+        "Using int<-chan"
+      ],
+      "point": 10
+    },
+    {
+      "question": "How do you declare a fixed-size array in Go?",
+      "answer": "var arr [5]int",
+      "choices": [
+        "var arr []int",
+        "var arr [5]int",
+        "let arr [5]int",
+        "int arr[5]"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What command is used to compile a Go program?",
+      "answer": "go build",
+      "choices": [
+        "go compile",
+        "go make",
+        "go build",
+        "go run"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which function is used to convert a string to uppercase in Go?",
+      "answer": "strings.ToUpper()",
+      "choices": [
+        "upper()",
+        "strings.ToUpper()",
+        "string.toUpper()",
+        "ToUpper()"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which keyword is used to define a new type based on an existing one?",
+      "answer": "type",
+      "choices": [
+        "new",
+        "define",
+        "type",
+        "extend"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which is the proper way to create a buffered channel?",
+      "answer": "make(chan int, 10)",
+      "choices": [
+        "make(chan int, 10)",
+        "make(chan 10, int)",
+        "make(chan byte, 10)",
+        "new(chan int, 10)"
+      ],
+      "point": 5
+    },
+    {
+      "question": "Which syntax is correct for declaring a variadic function?",
+      "answer": "func myFunction(args ...int) {}",
+      "choices": [
+        "func myFunction(...int args) {}",
+        "func myFunction(args int...) {}",
+        "func myFunction(args ...int) {}",
+        "func myFunction(...args int) {}"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is `iota` used for in Go?",
+      "answer": "To create constants that increment in value",
+      "choices": [
+        "To count loop iterations",
+        "To declare types",
+        "To create constants that increment in value",
+        "To define functions"
+      ],
+      "point": 20
+    },
+    {
+      "question": "What is `go get` used for?",
+      "answer": "To download and install a package",
+      "choices": [
+        "To compile a Go package",
+        "To test packages",
+        "To download and install a package",
+        "To delete a package"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the zero value of a string in Go?",
+      "answer": "\"\"",
+      "choices": [
+        "\"nil\"",
+        "undefined",
+        "\" \"",
+        "\"\""
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you initialize an empty struct?",
+      "answer": "var data struct{}",
+      "choices": [
+        "var data struct{}",
+        "data = new struct()",
+        "struct{} data = {}",
+        "emptyStruct() data"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does the `cap()` function do?",
+      "answer": "Returns the capacity of a slice",
+      "choices": [
+        "Counts bytes of a string",
+        "Calculates integer capacity",
+        "Returns the memory address",
+        "Returns the capacity of a slice"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you return multiple values from a function?",
+      "answer": "return value1, value2",
+      "choices": [
+        "return {value1, value2}",
+        "return [value1, value2]",
+        "return value1, value2",
+        "return <value1, value2>"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What does the `strconv` package provide?",
+      "answer": "Functions for converting data types",
+      "choices": [
+        "Network interfaces",
+        "JSON parsing capabilities",
+        "Functions for converting data types",
+        "String manipulation"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which tool provides simple and efficient documentation for Go packages?",
+      "answer": "godoc",
+      "choices": [
+        "godoc",
+        "jsdoc",
+        "docgen",
+        "typedoc"
+      ],
+      "point": 2
+    },
+    {
+      "question": "How do you calculate the length of a slice in Go?",
+      "answer": "len(slice)",
+      "choices": [
+        "length(slice)",
+        "slice.length()",
+        "cap(slice)",
+        "len(slice)"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which syntax correctly defines an anonymous function?",
+      "answer": "func() { /* code */ }",
+      "choices": [
+        "function() {}",
+        "func() { /* code */ }",
+        "def () { /* code */ }",
+        "() -> { /* code */ }"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which symbol is used for type assertions?",
+      "answer": ".(TargetType)",
+      "choices": [
+        ".(TargetType)",
+        "<TargetType>",
+        "[TargetType]",
+        "*<&TargetType>"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is a module in Go?",
+      "answer": "A collection of packages",
+      "choices": [
+        "A single interface",
+        "An external library",
+        "A collection of packages",
+        "A testing environment"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What command is used to download dependencies in a Go module?",
+      "answer": "go mod tidy",
+      "choices": [
+        "go requirements install",
+        "go mod tidy",
+        "go install deps",
+        "go download modules"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What does the `_` (underscore) do when used as a variable name?",
+      "answer": "It ignores the value (blank identifier)",
+      "choices": [
+        "Replaces a keyword",
+        "Throws a compilation error",
+        "Creates a package alias",
+        "It ignores the value (blank identifier)"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How do you specify a fixed maximum buffer size for goroutines?",
+      "answer": "There is no specific way; you usually control concurrency with channels or sync package",
+      "choices": [
+        "Set GOROUTINES_LIMIT environment variable",
+        "Declare buffer size in go main function",
+        "Use a function call: setMaxGoroutines(size)",
+        "There is no specific way; you usually control concurrency with channels or sync package"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    defer fmt.Println(\"world\")\n    fmt.Print(\"Hello \")\n}\n\n\n",
+      "answer": "Hello world",
+      "choices": [
+        "world",
+        "Hello",
+        "Hello world",
+        "Compile-time error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    fmt.Println(1 << 2)\n}\n\n\n",
+      "answer": "4",
+      "choices": [
+        "1",
+        "2",
+        "4",
+        "8"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    i := 2\n    a := [...]string{\"a\", \"b\", \"c\", \"d\", \"e\"}\n    fmt.Println(a[i])\n}\n\n\n",
+      "answer": "c",
+      "choices": [
+        "b",
+        "d",
+        "c",
+        "error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    x := []int{10, 20, 30}\n    x = append(x, 40)\n    fmt.Println(x[0])\n}\n\n\n",
+      "answer": "10",
+      "choices": [
+        "30",
+        "20",
+        "40",
+        "10"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    if x := 5; x > 3 {\n        fmt.Println(\"Greater\")\n    }\n}\n\n\n",
+      "answer": "Greater",
+      "choices": [
+        "5",
+        "Greater",
+        "Compile error",
+        "Nothing"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    m := map[string]int{\"a\": 1, \"b\": 2}\n    fmt.Println(m[\"b\"])\n}\n\n\n",
+      "answer": "2",
+      "choices": [
+        "0",
+        "1",
+        "2",
+        "None"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    s := \"hello\"\n    fmt.Println(len(s))\n}\n\n\n",
+      "answer": "5",
+      "choices": [
+        "4",
+        "5",
+        "6",
+        "Compile error"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    a := make([]int, 5)\n    a[3] = 42\n    fmt.Println(a[3])\n}\n\n\n",
+      "answer": "42",
+      "choices": [
+        "0",
+        "42",
+        "5",
+        "Compile error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    a := 5\n    b := float64(a)\n    fmt.Println(b)\n}\n\n\n",
+      "answer": "5",
+      "choices": [
+        "5.0",
+        "5.00",
+        "5",
+        "Compile error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    x := map[string]string{\"A\": \"Apple\", \"B\": \"Banana\"}\n    delete(x, \"A\")\n    fmt.Println(len(x))\n}\n\n\n",
+      "answer": "1",
+      "choices": [
+        "0",
+        "1",
+        "2",
+        "None"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    fmt.Println(cap([]int{}))\n}\n\n\n",
+      "answer": "0",
+      "choices": [
+        "nil",
+        "None",
+        "0",
+        "Compile error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    a := []int{1, 2, 3}\n    fmt.Println(len(a))\n}\n\n\n",
+      "answer": "3",
+      "choices": [
+        "2",
+        "3",
+        "4",
+        "None"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    var x *int\n    fmt.Println(x == nil)\n}\n\n\n",
+      "answer": "true",
+      "choices": [
+        "false",
+        "true",
+        "nil",
+        "None"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    for i := 0; i < 5; i++ {\n        defer fmt.Print(i)\n    }\n}\n\n\n",
+      "answer": "43210",
+      "choices": [
+        "12345",
+        "54321",
+        "43210",
+        "None"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    s := make(map[string]int)\n    s[\"hello\"] = 1\n    fmt.Println(s[\"hi\"])\n}\n\n\n",
+      "answer": "0",
+      "choices": [
+        "nil",
+        "1",
+        "0",
+        "undefined"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc add(a, b int) int {\n    return a + b\n}\nfunc main() {\n    fmt.Println(add(2, 3))\n}\n\n\n",
+      "answer": "5",
+      "choices": [
+        "2",
+        "3",
+        "5",
+        "None"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What will be the output of the following Go code?\n\n\ngo\npackage main\nimport \"fmt\"\nfunc main() {\n    a := []int{10, 20, 30, 40}[1:3]\n    fmt.Println(a[0], a[1])\n}\n\n\n",
+      "answer": "20 30",
+      "choices": [
+        "10 20",
+        "30 40",
+        "20 30",
+        "Compile error"
+      ],
+      "point": 7
+    }
+  ]

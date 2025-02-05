@@ -1,1 +1,1134 @@
-[{"question":"Swift programlama dilinde değişken tanımlamak için hangi anahtar kelime kullanılır?","answer":"var","choices":["val","let","var","const"],"point":2},{"question":"Swift dilinde sabit bir değer tanımlamak için hangi anahtar kelime kullanılır?","answer":"let","choices":["var","let","def","static"],"point":3},{"question":"Swift dilinde bir dizinin uzunluğunu öğrenmek için hangi property kullanılır?","answer":"count","choices":["length","size","count","total"],"point":1},{"question":"Swift dilinde bir fonksiyon nasıl tanımlanır?","answer":"func","choices":["define","function","func","method"],"point":4},{"question":"Swift dilinde string birleştirmek için hangi operatör kullanılır?","answer":"+","choices":["&","+","||","concat"],"point":3},{"question":"Swift dilinde bir tuple nasıl tanımlanır?","answer":"(value1, value2)","choices":["[value1, value2]","(value1, value2)","{value1, value2}","<value1, value2>"],"point":2},{"question":"Swift dilinde hata yakalama işlemi için hangi yapı kullanılır?","answer":"do-catch","choices":["try-catch","guard-try","do-catch","on-error"],"point":5},{"question":"Swift dilinde aynı anahtar kelime ile hem sabit hem de değişken tanımlanabilir mi?","answer":"Hayır","choices":["Evet","Hayır"],"point":4},{"question":"Swift dilinde koşullu ifadeleri kontrol etmek için hangi anahtar kelime kullanılır?","answer":"if","choices":["when","if","switch","check"],"point":1},{"question":"Swift dilinde bir dizi içerisinde elemanların sırasını nasıl tersine çevirebilirsiniz?","answer":"reverse()","choices":["invert()","flip()","turn()","reverse()"],"point":4},{"question":"Swift dilinde bir sınıf tanımlarken hangi anahtar kelime kullanılır?","answer":"class","choices":["object","class","struct","enum"],"point":4},{"question":"Swift dilinde bir karakterin sayısal mı olduğunu kontrol etmek için kullanılan metot nedir?","answer":"isNumber","choices":["isDigit","isNumeric","isNumber","isCharacter"],"point":3},{"question":"Swift dilinde bir opsiyonelin değeri olup olmadığını kontrol etmek için hangi method kullanılır?","answer":"isEmpty","choices":["isEmpty","isNil","isNone","isVoid"],"point":3},{"question":"Swift dilinde bir opsiyonelin güvenli bir şekilde açılmasına ne ad verilir?","answer":"optional binding","choices":["force unwrapping","optional chaining","conditional unwrapping","optional binding"],"point":6},{"question":"Swift dilinde sınıfın bir özelliğini değiştirilebilir yapmak için hangi anahtar kelime kullanılır?","answer":"var","choices":["let","var","mutating","modifiable"],"point":5},{"question":"Swift dilinde, birden fazla olası değer durumunu temsil etmek için kullanılan yapı nedir?","answer":"enum","choices":["class","struct","enum","protocol"],"point":5},{"question":"Swift dilinde hata yönetimi yapılırken hangi anahtar kelime kullanılır?","answer":"try","choices":["catch","throw","try","handle"],"point":6},{"question":"Swift dilinde iki string'in aynı olup olmadığını nasıl kontrol edebilirsiniz?","answer":"==","choices":[">=","==","<=","~="],"point":4},{"question":"Swift dilinde string interpolasyonu için hangi sembol kullanılır?","answer":"\\()","choices":["${}","\\{}","\\()","<>"],"point":5},{"question":"Swift'te döngü oluşturmak için kullanılan iki temel yapı nedir?","answer":"for ve while","choices":["for ve repeat","for ve while","while ve until","repeat ve until"],"point":6},{"question":"Swift dilinde bir dizinin ilk elemanını almak için hangi property kullanılır?","answer":"first","choices":["top","first","head","initial"],"point":4},{"question":"Swift dilinde bir sınıf başka bir sınıftan nasıl miras alır?","answer":":","choices":["::","<",":","="],"point":5},{"question":"Swift dilinde doğrudan bellek yönetimi için hangi yapılar kullanılır?","answer":"UnsafePointer","choices":["RawPointer","UnsafePointer","MemoryPointer","DirectPointer"],"point":7},{"question":"Swift dilinde bir değişkenin value'sunu yazdırmak için hangi komut kullanılır?","answer":"print()","choices":["write()","printf()","print()","echo()"],"point":2},{"question":"Swift dilinde bir diziye yeni bir eleman eklemek için hangi fonksiyon kullanılır?","answer":"append()","choices":["add()","insert()","append()","push()"],"point":3},{"question":"Swift dilinde bir sözlükten bir anahtara karşılık gelen değeri almak için hangi syntax kullanılır?","answer":"[key]","choices":["{key}","[key]","(key)","<key>"],"point":2},{"question":"Swift dilinde bir dizinin elemanlarını tersten sıralamak için hangi fonksiyon kullanılır?","answer":"reversed()","choices":["reverse()","inverted()","reversed()","backwards()"],"point":6},{"question":"Swift dilinde bir protokolden başka bir protokol türetmek için hangi yapı kullanılır?","answer":"protocol inheritance","choices":["protocol inheritance","protocol extension","protocol delegation","protocol implementation"],"point":7},{"question":"Swift dilinde bir set üzerinde döngü yapmak için hangi yapı kullanılır?","answer":"for-in döngüsü","choices":["while döngüsü","repeat-while döngüsü","for-in döngüsü","for-it döngüsü"],"point":5},{"question":"Swift dilinde çok satırlı bir yorum nasıl yapılır?","answer":"/* */","choices":["--","//","/* */","#"],"point":4},{"question":"Swift dilinde eşzamanlı işlemler için hangi kütüphane kullanılır?","answer":"Dispatch","choices":["Thread","Concurrent","Dispatch","Async"],"point":7},{"question":"Swift dilinde belirsizlik içeren bir tür nasıl tanımlanır?","answer":"Any","choices":["General","Any","Undefined","Universal"],"point":6},{"question":"Swift dilinde bir sınıfın birden fazla protokolü uygulayabilmesi için hangi belirtilim kullanılır?","answer":",","choices":[",","&","|","+"],"point":8},{"question":"Swift dilinde yapılması planlanan ancak henüz tanımlanmamış işlemler için hangi yapı kullanılır?","answer":"TODO","choices":["FIXME","TODO","NOTE","PENDING"],"point":9},{"question":"Swift dilinde opsiyonel bağlama yapmak için hangi anahtar kelime kullanılır?","answer":"if let","choices":["optional let","guard","if let","unwrap"],"point":7},{"question":"Swift dilinde ortak kullanılan bir kalıtım verme düzeni nedir?","answer":"Protocol Oriented Programming","choices":["Object Oriented Programming","Function Oriented Programming","Protocol Oriented Programming","Procedural Programming"],"point":8},{"question":"Swift dilinde utf-8 kodlayan bir string'e nasıl elde edersiniz?","answer":".utf8","choices":[".encode",".utf8",".stringify",".bytes"],"point":6},{"question":"Swift dilinde bir karakter setinde olup olmadığını kontrol etmek için hangi metod kullanılır?","answer":"contains()","choices":["isInSet()","isContained()","contains()","isPart()"],"point":3},{"question":"Swift dilinde özel bir sıra (enumerations) tanımlamak için hangi anahtar kelime kullanılır?","answer":"enum","choices":["case","enum","list","sequence"],"point":5},{"question":"Swift dilinde genel bir kod bloğunda ikinci kez eklenmek istenen ekstra işlevsellik sağlayan yapı nedir?","answer":"Closure","choices":["Delegate","Protocol","Closure","Block"],"point":6},{"question":"Swift dilinde bir hata ayıklama işlemi sırasında çıkış almak için hangi yapı yaygın olarak kullanılır?","answer":"fatalError()","choices":["break()","halt()","fatalError()","terminate()"],"point":8},{"question":"Swift dilinde bir türün tür sınırlamaları için hangi sınırlayıcı kullanılır?","answer":"where","choices":["if","case","where","that"],"point":9},{"question":"Swift dilinde, bir işlevin hata üretebileceği olasılığı hangi anahtar kelime belirtir?","answer":"throws","choices":["catch","try","throws","error"],"point":7},{"question":"Swift dilinde, kendisiyle aynı adı taşıyan bir değişkeni referanslamak için hangi yapı kullanılır?","answer":"self","choices":["instance","self","this","object"],"point":5},{"question":"Swift dilinde, bir sınıfın tüm varlıklarının indis operatörüyle erişilebilmesi için hangi protokol uygulanmalıdır?","answer":"Collection","choices":["Collection","Iterable","Enumeratable","Accessible"],"point":8},{"question":"Swift dilinde başlatıcı (initializer) hangi sembol ile tanımlanır?","answer":"init()","choices":["start()","init()","new()","create()"],"point":6},{"question":"Swift dilinde string'in belirli bir deseni içerip içermediği kontrol etmek için hangi metod kullanılır?","answer":"range(of:)","choices":["contains()","hasPattern()","range(of:)","match()"],"point":9},{"question":"Swift dilinde bir protokolü genişletmek için hangi anahtar kelime kullanılır?","answer":"extension","choices":["impl","extend","extension","expand"],"point":7},{"question":"Swift dilinde, birden fazla opsiyonel değer birleştirirken hangi operatör kullanılır?","answer":"nil coalescing","choices":["merge","append","nil coalescing","join"],"point":9},{"question":"Swift dilinde, bellek yönetimi sırasında saklayıcı olmayan bir referans türünü tanımlamak için hangi anahtar kelime kullanılır?","answer":"unowned","choices":["weak","unowned","unsafe","transient"],"point":9},{"question":"Swift dilinde, belirli bir özelliği başka bir işlevin içinde kilitlemek için hangi anahtar kelime kullanılır?","answer":"synchronized","choices":["locked","synchronized","atomic","exclusive"],"point":8},{"question":"Swift dilinde bir diziye başka bir diziyi eklemek için hangi fonksiyon kullanılır?","answer":"append(contentsOf:)","choices":["addAll()","merge()","append(contentsOf:)","concat()"],"point":6},{"question":"Swift dilinde geri dönüş sağlayan her fonksiyonun geri dönüş tipini belirtmek için hangi sembol kullanılır?","answer":"->","choices":["<-","->","=>",":>"],"point":5},{"question":"Swift dilinde referans tiplerini kontrol etmek için hangi yapı kullanılır?","answer":"is","choices":["is","as","instanceof","typeof"],"point":7},{"question":"Swift dilinde veri akışlarını kontrol etmek için hangi anahtar kelime kullanılır?","answer":"guard","choices":["protect","guard","check","ensure"],"point":6},{"question":"Swift dilinde kodun tekrar yürütülmesini sağlamak için hangi yapı kullanılır?","answer":"recursion","choices":["loop","repeat","recursion","cycle"],"point":10}]
+    
+[
+    {
+      "question": "Which keyword is used to define a variable in Swift?",
+      "answer": "var",
+      "choices": [
+        "let",
+        "const",
+        "var",
+        "mut"
+      ],
+      "point": 1
+    },
+    {
+      "question": "Which keyword is used to define a constant in Swift?",
+      "answer": "let",
+      "choices": [
+        "var",
+        "let",
+        "const",
+        "fix"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you declare an optional integer in Swift?",
+      "answer": "Int?",
+      "choices": [
+        "Int!",
+        "Optional<Int>",
+        "Int?",
+        "optional Int"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the method to safely unwrap an optional in Swift?",
+      "answer": "if let",
+      "choices": [
+        "unwrap",
+        "if var",
+        "if let",
+        "guard"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which collection is used for ordered lists in Swift?",
+      "answer": "Array",
+      "choices": [
+        "Set",
+        "Dictionary",
+        "Array",
+        "Map"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is the correct syntax to declare a computed property?",
+      "answer": "var propertyName: Type { return value }",
+      "choices": [
+        "func propertyName() -> Type {}",
+        "var propertyName: Type { return value }",
+        "let propertyName: Type = value",
+        "propertyName -> Type { get }"
+      ],
+      "point": 5
+    },
+    {
+      "question": "In Swift, which loop guarantees the loop body executes at least once?",
+      "answer": "repeat-while",
+      "choices": [
+        "for-in",
+        "while",
+        "repeat-while",
+        "do-until"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What Swift feature allows you to modify a function argument within the function?",
+      "answer": "inout",
+      "choices": [
+        "var",
+        "const",
+        "inout",
+        "mut"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How can you define a protocol in Swift?",
+      "answer": "protocol ProtocolName {}",
+      "choices": [
+        "interface ProtocolName {}",
+        "protocol ProtocolName {}",
+        "class ProtocolName {}",
+        "struct ProtocolName {}"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which keyword is used to handle errors in Swift?",
+      "answer": "do-catch",
+      "choices": [
+        "try-catch",
+        "do-catch",
+        "check-except",
+        "try-throw"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is a closure in Swift?",
+      "answer": "A self-contained block of functionality",
+      "choices": [
+        "A type of variable",
+        "A block of code that can be passed around",
+        "A function return type",
+        "None of the above"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you define a singleton class in Swift?",
+      "answer": "Use a static property to hold the instance",
+      "choices": [
+        "Use a private constructor",
+        "Use a static property to hold the instance",
+        "Use final class keyword",
+        "Use static class keyword"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the default value of an uninitialized variable in Swift?",
+      "answer": "nil (for optionals)",
+      "choices": [
+        "nil",
+        "0",
+        "undefined",
+        "false"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the main use of Protocols in Swift?",
+      "answer": "To define a blueprint of methods, properties, and other requirements",
+      "choices": [
+        "For inheritance",
+        "To define a blueprint of methods, properties, and other requirements",
+        "For type casting",
+        "To handle errors"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you create an immutable array in Swift?",
+      "answer": "Using 'let'",
+      "choices": [
+        "Using 'let'",
+        "Using 'const'",
+        "Using 'var'",
+        "Using 'immutable'"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which operator is used for range in Swift?",
+      "answer": "...",
+      "choices": [
+        "..",
+        "...",
+        "..<",
+        "<.."
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is a 'mutating' function in Swift?",
+      "answer": "A function that can change the properties of the struct it belongs to",
+      "choices": [
+        "A function that can't be overridden",
+        "A function that mutates itself",
+        "A function that can change the properties of the struct it belongs to",
+        "A function that throws an error"
+      ],
+      "point": 7
+    },
+    {
+      "question": "How does Swift handle memory management?",
+      "answer": "Automatic Reference Counting (ARC)",
+      "choices": [
+        "Garbage Collection",
+        "Automatic Reference Counting (ARC)",
+        "Manual Memory Management",
+        "None of the above"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is a deinitializer in Swift?",
+      "answer": "A method called just before an instance is deallocated",
+      "choices": [
+        "A method for initializing resources",
+        "A method called just before an instance is deallocated",
+        "A method for resetting values",
+        "A method for building objects"
+      ],
+      "point": 7
+    },
+    {
+      "question": "Which keyword is used to make a class inherit from another class in Swift?",
+      "answer": ":",
+      "choices": [
+        "extends",
+        "implements",
+        ":",
+        "inherit"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is Type Inference in Swift?",
+      "answer": "Swift's ability to automatically deduce types",
+      "choices": [
+        "The process of converting data types",
+        "Swift's ability to automatically deduce types",
+        "Assigning types manually",
+        "Runtime type checking"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the 'super' keyword in Swift refer to?",
+      "answer": "The superclass implementation of a method",
+      "choices": [
+        "The superclass implementation of a method",
+        "The latest version of instance",
+        "A new object creation",
+        "Parent instance of a class"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How do you handle optional values safely in Swift?",
+      "answer": "Using optional binding",
+      "choices": [
+        "Using exception handling",
+        "Using optional chaining",
+        "Using optional binding",
+        "Using try-catch blocks"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What keyword is used to create an enumerated type in Swift?",
+      "answer": "enum",
+      "choices": [
+        "enumeration",
+        "enum",
+        "enums",
+        "enumType"
+      ],
+      "point": 3
+    },
+    {
+      "question": "Which operator is used for nil-coalescing in Swift?",
+      "answer": "??",
+      "choices": [
+        "?",
+        "??",
+        "?.",
+        "?:-"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is a tuple in Swift?",
+      "answer": "A group of multiple values in a single compound value",
+      "choices": [
+        "A type of list",
+        "A function collection",
+        "A group of multiple values in a single compound value",
+        "None of the above"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What is the significance of 'self' in Swift?",
+      "answer": "Refers to the instance of the class or struct",
+      "choices": [
+        "Refers to the superclass",
+        "Creates a new object",
+        "Refers to the instance of the class or struct",
+        "Initializes the object"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What operator is used to concatenate strings in Swift?",
+      "answer": "+",
+      "choices": [
+        "&",
+        "+",
+        "||",
+        "*"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you mark a class as final so that it cannot be subclassed?",
+      "answer": "final",
+      "choices": [
+        "sealed",
+        "final",
+        "locked",
+        "immutable"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the function of 'guard' statement in Swift?",
+      "answer": "To check and require conditions to be true before proceeding",
+      "choices": [
+        "To terminate a loop",
+        "To check and require conditions to be true before proceeding",
+        "To handle errors",
+        "None of the above"
+      ],
+      "point": 4
+    },
+    {
+      "question": "Which keyword is used for denoting dynamic-dispatch in Swift?",
+      "answer": "dynamic",
+      "choices": [
+        "dynamic",
+        "override",
+        "dispatch",
+        "final"
+      ],
+      "point": 5
+    },
+    {
+      "question": "How is a dictionary initialized in Swift?",
+      "answer": "[KeyType: ValueType]()",
+      "choices": [
+        "[KeyType, ValueType]{}",
+        "[KeyType: ValueType]{}",
+        "Dictionary<KeyType, ValueType>()",
+        "[KeyType: ValueType]()"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What access control keyword in Swift restricts the use to the same module?",
+      "answer": "internal",
+      "choices": [
+        "open",
+        "public",
+        "internal",
+        "private"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What keyword allows overriding a method in Swift?",
+      "answer": "override",
+      "choices": [
+        "super",
+        "overload",
+        "override",
+        "extensible"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you define a custom init method in a Swift class?",
+      "answer": "Using the 'init' keyword",
+      "choices": [
+        "Using the 'configure' keyword",
+        "Using the 'setup' keyword",
+        "Using the 'init' keyword",
+        "Using 'start' keyword"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What does the term 'lazy' in a Swift property mean?",
+      "answer": "Property value is computed only when first accessed",
+      "choices": [
+        "Property is non-mutable",
+        "Property value is computed only when first accessed",
+        "Property can't be overridden",
+        "Property is secured"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What syntax is used for multi-line comments in Swift?",
+      "answer": "/* */",
+      "choices": [
+        "//",
+        "#",
+        "<!-- -->",
+        "/* */"
+      ],
+      "point": 2
+    },
+    {
+      "question": "What does 'typealias' do in Swift?",
+      "answer": "Creates a new name for an existing type",
+      "choices": [
+        "Creates a new instance of a type",
+        "Renames a variable",
+        "Creates a new name for an existing type",
+        "Converts one type to another"
+      ],
+      "point": 3
+    },
+    {
+      "question": "What is a benefit of using 'extension' in Swift?",
+      "answer": "Adds new functionality to existing classes, structs, or enums",
+      "choices": [
+        "Makes the code run faster",
+        "Reduces memory usage",
+        "Adds new functionality to existing classes, structs, or enums",
+        "Secures the data"
+      ],
+      "point": 5
+    },
+    {
+      "question": "In Swift, which keyword is required to adopt a protocol?",
+      "answer": "protocol",
+      "choices": [
+        "adopt",
+        "interface",
+        "protocol",
+        "include"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the meaning of 'subscript' in Swift?",
+      "answer": "Adds computed properties to query elements from a collection",
+      "choices": [
+        "Defines a static function",
+        "Adds computed properties to query elements from a collection",
+        "Implements a dynamic method",
+        "Declares a private method"
+      ],
+      "point": 6
+    },
+    {
+      "question": "How do you denote a function that may throw an error in Swift?",
+      "answer": "With the 'throws' keyword",
+      "choices": [
+        "With the 'try' keyword",
+        "With the 'catch' keyword",
+        "With the 'throws' keyword",
+        "With the 'error' keyword"
+      ],
+      "point": 3
+    },
+    {
+      "question": "How do you convert a string to an integer in Swift?",
+      "answer": "Int(string)",
+      "choices": [
+        "string.toInt()",
+        "Int(string)",
+        "parseInt(string)",
+        "string.toInteger()"
+      ],
+      "point": 2
+    },
+    {
+      "question": "Which swift statement is used for pattern matching?",
+      "answer": "switch",
+      "choices": [
+        "match",
+        "switch",
+        "case",
+        "pattern"
+      ],
+      "point": 4
+    },
+    {
+      "question": "What is the result of 'nil-coalescing' operator if the optional has a value?",
+      "answer": "The unwrapped value of the optional",
+      "choices": [
+        "The default value",
+        "An error message",
+        "The unwrapped value of the optional",
+        "Nil"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the purpose of 'dispatch queue' in Swift?",
+      "answer": "Manages the execution of tasks in a specific order",
+      "choices": [
+        "Stores and retrieves data",
+        "Manages the execution of tasks in a specific order",
+        "Synchronizes threads",
+        "Increases application speed"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is 'optional chaining' in Swift?",
+      "answer": "A process to call properties, methods, and subscripts on optionals",
+      "choices": [
+        "Linking multiple optionals together",
+        "Ensuring all optionals are non-nil",
+        "A process to call properties, methods, and subscripts on optionals",
+        "Combining multiple optionals"
+      ],
+      "point": 4
+    },
+    {
+      "question": "How is 'JSON data' usually handled in Swift?",
+      "answer": "Using the Codable protocol",
+      "choices": [
+        "Using CoreData",
+        "Using the NSCoding protocol",
+        "Using the JSONParser utility",
+        "Using the Codable protocol"
+      ],
+      "point": 6
+    },
+    {
+      "question": "Which operator is used for logical 'and' in Swift?",
+      "answer": "&&",
+      "choices": [
+        "and",
+        "||",
+        "&",
+        "&&"
+      ],
+      "point": 1
+    },
+    {
+      "question": "How do you define a function in Swift that returns multiple values?",
+      "answer": "By returning a tuple",
+      "choices": [
+        "By returning a dictionary",
+        "By returning an array",
+        "By returning a tuple",
+        "By returning an optional"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the main benefit of using 'SwiftUI'?",
+      "answer": "Allows declarative syntax for building UI",
+      "choices": [
+        "Faster application loading",
+        "Allows declarative syntax for building UI",
+        "More efficient memory usage",
+        "Works on older iOS versions"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the role of 'SceneDelegate' in a Swift app?",
+      "answer": "Manages the lifecycle of a UI scene",
+      "choices": [
+        "Manages application data",
+        "Tracks memory usage",
+        "Controls user permissions",
+        "Manages the lifecycle of a UI scene"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the significance of 'ViewModifier' in SwiftUI?",
+      "answer": "Encapsulates a view's appearance and behavior",
+      "choices": [
+        "Adjusts the app's memory settings",
+        "Adds additional methods to a view",
+        "Encapsulates a view's appearance and behavior",
+        "Interacts with the device's hardware"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is a major advantage of using 'Combine' framework?",
+      "answer": "Processes asynchronous events efficiently",
+      "choices": [
+        "Reduces app size",
+        "Processes asynchronous events efficiently",
+        "Increases battery life",
+        "Improves UI responsiveness"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the preferred method for data persistence in Swift?",
+      "answer": "CoreData",
+      "choices": [
+        "XML files",
+        "CoreData",
+        "UserDefaults",
+        "Text files"
+      ],
+      "point": 6
+    },
+    {
+      "question": "What is the function of 'AppDelegate' in a Swift app?",
+      "answer": "Responds to application-level events",
+      "choices": [
+        "Handles device updates",
+        "Tracks user interactions",
+        "Responds to application-level events",
+        "Manages network connections"
+      ],
+      "point": 5
+    },
+    {
+      "question": "What is the purpose of 'SceneKit' in Swift?",
+      "answer": "Allows creating 3D graphics in apps",
+      "choices": [
+        "Optimizes app speed",
+        "Provides 2D graphical effects",
+        "Allows creating 3D graphics in apps",
+        "Enables microphone usage"
+      ],
+      "point": 8
+    },
+    {
+      "question": "Which keyword in Swift allows for dynamically calling a method or property?",
+      "answer": "dynamic",
+      "choices": [
+        "dynamic",
+        "override",
+        "abstract",
+        "virtual"
+      ],
+      "point": 9
+    },
+    {
+      "question": "What is the primary use of the 'ARKit' framework in Swift?",
+      "answer": "Creates augmented reality experiences",
+      "choices": [
+        "Improves network connection",
+        "Creates virtual keyboard experiences",
+        "Allows GPS tracking",
+        "Creates augmented reality experiences"
+      ],
+      "point": 8
+    },
+    {
+      "question": "What is a key feature of 'SpriteKit' in Swift?",
+      "answer": "Supports 2D game development",
+      "choices": [
+        "Handles machine learning models",
+        "Optimizes battery performance",
+        "Supports 2D game development",
+        "Manages user accounts"
+      ],
+      "point": 7
+    },
+    {
+      "question": "What is the advantage of using 'MVVM' architecture in Swift apps?",
+      "answer": "Separates concerns to manage complex UI",
+      "choices": [
+        "Speeds up development",
+        "Integrates machine learning better",
+        "Separates concerns to manage complex UI",
+        "Supports faster hardware access"
+      ],
+      "point": 9
+    }
+    ,
+    {
+        "question": "What is the output of the following Swift code?\n\nlet greeting = \"Hello, World!\"\nprint(greeting)\n\n",
+        "answer": "Hello, World!",
+        "choices": ["greeting", "\"Hello, World!\"", "Hello", "World!"],
+        "point": 1
+    },
+    {
+        "question": "What will be printed by the following Swift code?\n\nlet numbers = [1, 2, 3, 4, 5]\nlet doubled = numbers.map { $0 * 2 }\nprint(doubled)\n\n",
+        "answer": "[2, 4, 6, 8, 10]",
+        "choices": ["[1, 2, 3, 4, 5]", "[2, 4, 6, 8, 10]", "[3, 6, 9, 12, 15]", "Error"],
+        "point": 2
+    },
+    {
+        "question": "What is the output of the following Swift code?\n\nvar optionalNumber: Int? = 10\nif let number = optionalNumber {\n    print(number)\n} else {\n    print(\"Nil\")\n}\n\n",
+        "answer": "10",
+        "choices": ["Optional(10)", "10", "Nil", "Error"],
+        "point": 3
+    },
+    {
+        "question": "What will the following Swift code print?\n\nfor i in 1...3 {\n    print(i)\n}\n\n",
+        "answer": "1\n2\n3",
+        "choices": ["1\n2", "1\n2\n3", "0\n1\n2", "Error"],
+        "point": 2
+    },
+    {
+        "question": "What does the following Swift code output?\n\nlet tuple = (name: \"Alice\", age: 30)\nprint(tuple.name)\n\n",
+        "answer": "Alice",
+        "choices": ["Tuple", "30", "Alice", "Error"],
+        "point": 3
+    },
+    {
+        "question": "What is the result of the following Swift code?\n\nlet a = 5\nlet b = 10\nlet result = a > b ? a : b\nprint(result)\n\n",
+        "answer": "10",
+        "choices": ["5", "10", "nil", "Error"],
+        "point": 4
+    },
+    {
+        "question": "What will be the output of the following Swift code?\n\nstruct Person {\n    var name: String\n}\n\nvar person = Person(name: \"Bob\")\nperson.name = \"Charlie\"\nprint(person.name)\n\n",
+        "answer": "Charlie",
+        "choices": ["Bob", "Charlie", "Person", "Error"],
+        "point": 5
+    },
+    {
+        "question": "What is printed by the following Swift code?\n\nlet numbers = [1, 2, 3, 4, 5]\nlet sum = numbers.reduce(0, +)\nprint(sum)\n\n",
+        "answer": "15",
+        "choices": ["10", "15", "5", "Error"],
+        "point": 5
+    },
+    {
+        "question": "What is the output of the following Swift closure?\n\nlet multiply: (Int, Int) -> Int = { $0 * $1 }\nprint(multiply(3, 4))\n\n",
+        "answer": "12",
+        "choices": ["7", "12", "34", "Error"],
+        "point": 6
+    },
+    {
+        "question": "What does the following Swift code print?\n\nenum Direction {\n    case north, south, east, west\n}\n\nlet dir: Direction = .east\nswitch dir {\ncase .north:\n    print(\"North\")\ncase .south:\n    print(\"South\")\ncase .east, .west:\n    print(\"Either East or West\")\n}\n\n",
+        "answer": "Either East or West",
+        "choices": ["North", "South", "Either East or West", "Error"],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code?\n\nclass Animal {\n    func speak() {\n        print(\"Animal speaks\")\n    }\n}\n\nclass Dog: Animal {\n    override func speak() {\n        print(\"Dog barks\")\n    }\n}\n\nlet animal: Animal = Dog()\nanimal.speak()\n\n",
+        "answer": "Dog barks",
+        "choices": ["Animal speaks", "Dog barks", "Animal speaks Dog barks", "Error"],
+        "point": 8
+    },
+    {
+        "question": "What will the following Swift code output?\n\nfunc greet(name: String?) {\n    guard let name = name else {\n        print(\"No name provided\")\n        return\n    }\n    print(\"Hello, \\(name)!\")\n}\n\ngreet(name: \"Diana\")\ngreet(name: nil)\n\n",
+        "answer": "Hello, Diana!\nNo name provided",
+        "choices": [
+            "Hello, Diana!\nHello, nil!",
+            "Hello, Diana!\nNo name provided",
+            "No name provided\nHello, Diana!",
+            "Error"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code involving optional chaining?\n\nclass Address {\n    var city: String\n    init(city: String) {\n        self.city = city\n    }\n}\n\nclass Person {\n    var address: Address?\n}\n\nlet person = Person()\nprint(person.address?.city ?? \"No Address\")\n\n\n",
+        "answer": "No Address",
+        "choices": ["nil", "No Address", "Error", "Empty string"],
+        "point": 6
+    },
+    {
+        "question": "What does the following Swift code print?\n\nlet numbers = [10, 20, 30, 40, 50]\nif let first = numbers.first(where: { $0 > 25 }) {\n    print(first)\n} else {\n    print(\"No match\")\n}\n\n",
+        "answer": "30",
+        "choices": ["10", "20", "30", "No match"],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code using a computed property?\n\nstruct Rectangle {\n    var width: Double\n    var height: Double\n    var area: Double {\n        return width * height\n    }\n}\n\nlet rect = Rectangle(width: 5, height: 10)\nprint(rect.area)\n\n",
+        "answer": "50.0",
+        "choices": ["15.0", "50.0", "Error", "105.0"],
+        "point": 6
+    },
+    {
+        "question": "What will be printed by the following Swift code using a defer statement?\n\nfunc testDefer() {\n    defer { print(\"Defer block\") }\n    print(\"Function body\")\n}\n\ntestDefer()\n\n",
+        "answer": "Function body\nDefer block",
+        "choices": [
+            "Function body",
+            "Defer block",
+            "Defer block\nFunction body",
+            "Error"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What is the result of the following Swift code involving type casting?\n\nlet anyValue: Any = \"Swift\"\nif let stringValue = anyValue as? String {\n    print(stringValue.uppercased())\n} else {\n    print(\"Not a string\")\n}\n\n",
+        "answer": "SWIFT",
+        "choices": ["Swift", "SWIFT", "Not a string", "Error"],
+        "point": 7
+    },
+    {
+        "question": "What does the following Swift code output using a generic function?\n\nfunc swapValues<T>(_ a: inout T, _ b: inout T) {\n    let temp = a\n    a = b\n    b = temp\n}\n\nvar x = 5\nvar y = 10\nswapValues(&x, &y)\nprint(\"x: \\(x), y: \\(y)\")\n\n",
+        "answer": "x: 10, y: 5",
+        "choices": [
+            "x: 5, y: 10",
+            "x: 10, y: 5",
+            "x: 10, y: 10",
+            "Error"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What will the following Swift code print?\n\nprotocol Greetable {\n    func greet()\n}\n\nextension Greetable {\n    func greet() {\n        print(\"Hello from Greetable\")\n    }\n}\n\nstruct User: Greetable {}\nlet user = User()\nuser.greet()\n\n",
+        "answer": "Hello from Greetable",
+        "choices": [
+            "Hello from User",
+            "Hello from Greetable",
+            "Error",
+            "No output"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code using an asynchronous function?\n\nfunc fetchNumber() async -> Int {\n    return 42\n}\n\nTask {\n    let number = await fetchNumber()\n    print(number)\n}\n\n",
+        "answer": "42",
+        "choices": ["Error", "nil", "42", "No output"],
+        "point": 10
+    },
+    {
+        "question": "What does the following Swift code print when using a closure with a capture list?\n\nclass Counter {\n    var count = 0\n    func increment() -> () -> Void {\n        return { [weak self] in\n            self?.count += 1\n            print(self?.count ?? 0)\n        }\n    }\n}\n\nlet counter = Counter()\nlet increment = counter.increment()\nincrement()\nincrement()\n\n",
+        "answer": "1\n2",
+        "choices": [
+            "0\n1",
+            "1\n2",
+            "2\n3",
+            "Error"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What is the output of the following Swift code using a singleton pattern?\n\nclass Logger {\n    static let shared = Logger()\n    private init() {}\n    func log(message: String) {\n        print(\"Log: \\(message)\")\n    }\n}\n\nLogger.shared.log(message: \"Test message\")\n\n",
+        "answer": "Log: Test message",
+        "choices": [
+            "Test message",
+            "Log: Test message",
+            "Error",
+            "No output"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What does the following Swift code print using a DispatchQueue?\n\nDispatchQueue.global().async {\n    print(\"Async Task\")\n}\nprint(\"Main Thread\")\n\n",
+        "answer": "Main Thread\nAsync Task",
+        "choices": [
+            "Async Task\nMain Thread",
+            "Main Thread\nAsync Task",
+            "Main Thread",
+            "Async Task"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code involving property wrappers?\n\n@propertyWrapper\nstruct Capitalized {\n    private var value: String = \"\"\n    var wrappedValue: String {\n        get { value }\n        set { value = newValue.capitalized }\n    }\n}\n\nstruct User {\n    @Capitalized var name: String\n}\n\nvar user = User()\nuser.name = \"john doe\"\nprint(user.name)\n\n",
+        "answer": "John Doe",
+        "choices": [
+            "\"john doe\"",
+            "\"John doe\"",
+            "\"John Doe\"",
+            "Error"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What will the following Swift code print using an extension with a where clause?\n\nextension Array where Element: Numeric {\n    func sum() -> Element {\n        return self.reduce(0, +)\n    }\n}\n\nlet numbers = [1, 2, 3, 4, 5]\nprint(numbers.sum())\n\n",
+        "answer": "15",
+        "choices": ["10", "15", "20", "Error"],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code using type erasure?\n\nprotocol Shape {\n    func area() -> Double\n}\n\nstruct AnyShape: Shape {\n    private let _area: () -> Double\n    init<S: Shape>(_ shape: S) {\n        _area = shape.area\n    }\n    func area() -> Double {\n        return _area()\n    }\n}\n\nstruct Circle: Shape {\n    var radius: Double\n    func area() -> Double {\n        return Double.pi * radius * radius\n    }\n}\n\nlet circle = Circle(radius: 3)\nlet anyShape: Shape = AnyShape(circle)\nprint(anyShape.area())\n\n",
+        "answer": "28.274333882308138",
+        "choices": [
+            "18.84955592153876",
+            "28.274333882308138",
+            "Error",
+            "0.0"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What does the following Swift code print when using a throwing initializer?\n\nenum InitializationError: Error {\n    case invalidValue\n}\n\nstruct Config {\n    init(value: Int) throws {\n        if value < 0 {\n            throw InitializationError.invalidValue\n        }\n    }\n}\n\ndo {\n    try Config(value: -1)\n    print(\"Config initialized\")\n} catch {\n    print(\"Failed to initialize Config\")\n}\n\n",
+        "answer": "Failed to initialize Config",
+        "choices": [
+            "Config initialized",
+            "Failed to initialize Config",
+            "Error",
+            "No output"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code using DispatchSemaphore?\n\nlet semaphore = DispatchSemaphore(value: 0)\nDispatchQueue.global().async {\n    sleep(2)\n    print(\"Async Task Complete\")\n    semaphore.signal()\n}\nprint(\"Waiting for async task...\")\nsemaphore.wait()\nprint(\"Proceeding after async task\")\n\n",
+        "answer": "Waiting for async task...\nAsync Task Complete\nProceeding after async task",
+        "choices": [
+            "Async Task Complete\nWaiting for async task...\nProceeding after async task",
+            "Waiting for async task...\nProceeding after async task\nAsync Task Complete",
+            "Waiting for async task...\nAsync Task Complete\nProceeding after async task",
+            "Error"
+        ],
+        "point": 10
+    },
+    {
+        "question": "What does the following Swift code print when using a generic struct?\n\nstruct Pair<T, U> {\n    var first: T\n    var second: U\n}\n\nlet pair = Pair(first: \"Swift\", second: 5)\nprint(pair.first)\nprint(pair.second)\n\n",
+        "answer": "Swift\n5",
+        "choices": [
+            "\"Swift\"\n5",
+            "Swift\n5",
+            "\"Swift\"\n\"5\"",
+            "Error"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code using async/await with error handling?\n\nenum DataError: Error {\n    case fetchFailed\n}\n\nfunc fetchData() async throws -> String {\n    throw DataError.fetchFailed\n}\n\nTask {\n    do {\n        let data = try await fetchData()\n        print(data)\n    } catch {\n        print(\"Error fetching data\")\n    }\n}\n\n",
+        "answer": "Error fetching data",
+        "choices": [
+            "Data",
+            "Error fetching data",
+            "No output",
+            "Error"
+        ],
+        "point": 10
+    },
+    {
+        "question": "What does the following Swift code print using a nested loop?\n\nfor i in 1...2 {\n    for j in 1...2 {\n        print(\"\\(i), \\(j)\")\n    }\n}\n\n",
+        "answer": "1, 1\n1, 2\n2, 1\n2, 2",
+        "choices": [
+            "1, 1\n1, 2",
+            "1, 1\n1, 2\n2, 1",
+            "1, 1\n1, 2\n2, 1\n2, 2",
+            "Error"
+        ],
+        "point": 4
+    },
+    {
+        "question": "What is the output of the following Swift code using a property observer?\n\nclass Temperature {\n    var celsius: Double {\n        didSet {\n            print(\"Temperature changed to \\(celsius)°C\")\n        }\n    }\n    init(celsius: Double) {\n        self.celsius = celsius\n    }\n}\n\nlet temp = Temperature(celsius: 25)\ntemp.celsius = 30\n\n",
+        "answer": "Temperature changed to 30.0°C",
+        "choices": [
+            "Temperature changed to 25.0°C\nTemperature changed to 30.0°C",
+            "Temperature changed to 30.0°C",
+            "25.0°C\n30.0°C",
+            "Error"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What does the following Swift code print when using a defer statement inside a loop?\n\nfor i in 1...2 {\n    defer { print(\"Deferred \\(i)\") }\n    print(\"Loop \\(i)\")\n}\n\n",
+        "answer": "Loop 1\nLoop 2\nDeferred 2\nDeferred 1",
+        "choices": [
+            "Deferred 1\nDeferred 2\nLoop 1\nLoop 2",
+            "Loop 1\nDeferred 1\nLoop 2\nDeferred 2",
+            "Loop 1\nLoop 2\nDeferred 2\nDeferred 1",
+            "Loop 1\nLoop 2\nDeferred 1\nDeferred 2"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code using a recursive function?\n\nfunc factorial(_ n: Int) -> Int {\n    if n <= 1 { return 1 }\n    return n * factorial(n - 1)\n}\n\nprint(factorial(5))\n\n",
+        "answer": "120",
+        "choices": ["24", "60", "120", "Error"],
+        "point": 7
+    },
+    {
+        "question": "What does the following Swift code print when using typealias?\n\ntypealias CompletionHandler = (Bool) -> Void\n\nfunc performTask(completion: CompletionHandler) {\n    completion(true)\n}\n\nperformTask { success in\n    print(success)\n}\n\n",
+        "answer": "true",
+        "choices": ["true", "false", "1", "Error"],
+        "point": 5
+    },
+    {
+        "question": "What is the output of the following Swift code using an extension and protocol?\n\nprotocol Describable {\n    func describe()\n}\n\nextension Describable {\n    func describe() {\n        print(\"This is Describable\")\n    }\n}\n\nstruct Item: Describable {}\n\nlet item = Item()\nitem.describe()\n\n",
+        "answer": "This is Describable",
+        "choices": [
+            "Item description",
+            "This is Describable",
+            "Describable",
+            "Error"
+        ],
+        "point": 6
+    },
+    {
+        "question": "What will the following Swift code print using a dictionary?\n\nlet capitals = [\"France\": \"Paris\", \"Spain\": \"Madrid\", \"Italy\": \"Rome\"]\nif let capital = capitals[\"Spain\"] {\n    print(capital)\n} else {\n    print(\"Unknown\")\n}\n\n",
+        "answer": "Madrid",
+        "choices": ["Paris", "Madrid", "Rome", "Unknown"],
+        "point": 3
+    },
+    {
+        "question": "What is the output of the following Swift code using a guard statement with an optional?\n\nfunc printName(_ name: String?) {\n    guard let name = name else {\n        print(\"No name provided\")\n        return\n    }\n    print(\"Name is \\(name)\")\n}\n\nprintName(\"Eve\")\nprintName(nil)\n\n",
+        "answer": "Name is Eve\nNo name provided",
+        "choices": [
+            "Name is Eve\nName is nil",
+            "Name is Eve\nNo name provided",
+            "No name provided\nName is Eve",
+            "Error"
+        ],
+        "point": 6
+    },
+    {
+        "question": "What does the following Swift code print when using an enumeration with associated values?\n\nenum Result {\n    case success(String)\n    case failure(String)\n}\n\nlet outcome = Result.success(\"Data loaded\")\nswitch outcome {\ncase .success(let message):\n    print(message)\ncase .failure(let error):\n    print(error)\n}\n\n",
+        "answer": "Data loaded",
+        "choices": ["success", "failure", "Data loaded", "Error"],
+        "point": 7
+    },
+    {
+        "question": "What will the following Swift code print using an asynchronous task and DispatchGroup?\n\nlet group = DispatchGroup()\n\nDispatchQueue.global().async(group: group) {\n    sleep(1)\n    print(\"Task 1 Complete\")\n}\n\nDispatchQueue.global().async(group: group) {\n    sleep(2)\n    print(\"Task 2 Complete\")\n}\n\ngroup.notify(queue: .main) {\n    print(\"All tasks complete\")\n}\n\n",
+        "answer": "Task 1 Complete\nTask 2 Complete\nAll tasks complete",
+        "choices": [
+            "All tasks complete",
+            "Task 1 Complete\nAll tasks complete\nTask 2 Complete",
+            "Task 1 Complete\nTask 2 Complete\nAll tasks complete",
+            "Error"
+        ],
+        "point": 10
+    },
+    {
+        "question": "What is the output of the following Swift code using a computed property with a setter?\n\nstruct Circle {\n    var radius: Double\n    var area: Double {\n        get {\n            return Double.pi * radius * radius\n        }\n        set {\n            radius = sqrt(newValue / Double.pi)\n        }\n    }\n}\n\nvar circle = Circle(radius: 3)\nprint(circle.area)\ncircle.area = 50\nprint(circle.radius)\n\n",
+        "answer": "28.274333882308138\n3.989422804014327",
+        "choices": [
+            "28.274333882308138\n3.989422804014327",
+            "28.274333882308138\nNaN",
+            "28.27\n3.99",
+            "Error"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What does the following Swift code print when using optional chaining and nil coalescing?\n\nclass Engine {\n    var horsepower: Int\n    init(horsepower: Int) {\n        self.horsepower = horsepower\n    }\n}\n\nclass Car {\n    var engine: Engine?\n}\n\nlet car = Car()\nprint(car.engine?.horsepower ?? 100)\n\n",
+        "answer": "100",
+        "choices": ["Engine?", "0", "100", "nil"],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code using a generic protocol and extension?\n\nprotocol Summable {\n    associatedtype T\n    func sum() -> T\n}\n\nextension Array: Summable where Element: Numeric {\n    func sum() -> Element {\n        return self.reduce(0, +)\n    }\n}\n\nlet numbers = [1, 2, 3, 4, 5]\nprint(numbers.sum())\n\n",
+        "answer": "15",
+        "choices": [
+            "10",
+            "15",
+            "Undefined",
+            "Error"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What does the following Swift code print when using type erasure with AnyShape?\n\nprotocol Drawable {\n    func draw()\n}\n\nstruct AnyDrawable: Drawable {\n    private let _draw: () -> Void\n    init<D: Drawable>(_ drawable: D) {\n        _draw = drawable.draw\n    }\n    func draw() {\n        _draw()\n    }\n}\n\nstruct Square: Drawable {\n    func draw() {\n        print(\"Drawing Square\")\n    }\n}\n\nlet square = Square()\nlet drawable: Drawable = AnyDrawable(square)\ndrawable.draw()\n\n",
+        "answer": "Drawing Square",
+        "choices": [
+            "Drawing Square",
+            "Square",
+            "Error",
+            "No output"
+        ],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code using a recursive enumeration?\n\nindirect enum BinaryTree {\n    case empty\n    case node(Int, BinaryTree, BinaryTree)\n}\n\nlet tree = BinaryTree.node(1, .empty, .node(2, .empty, .node(3, .empty, .empty)))\n\nfunc traverse(_ tree: BinaryTree) {\n    switch tree {\n    case .empty:\n        break\n    case .node(let value, let left, let right):\n        traverse(left)\n        print(value)\n        traverse(right)\n    }\n}\n\ntraverse(tree)\n\n",
+        "answer": "1\n2\n3",
+        "choices": [
+            "3\n2\n1",
+            "1\n2\n3",
+            "1\n3\n2",
+            "Error"
+        ],
+        "point": 9
+    },
+    {
+        "question": "What does the following Swift code print when using a multi-line closure?\n\nlet concatenate: (String, String) -> String = { first, second in\n    return first + \" \" + second\n}\nprint(concatenate(\"Hello\", \"Swift\"))\n\n",
+        "answer": "Hello Swift",
+        "choices": ["HelloSwift", "\"Hello Swift\"", "Hello Swift", "Error"],
+        "point": 4
+    },
+    {
+        "question": "What is the output of the following Swift code using a higher-order function and trailing closure?\n\nlet numbers = [1, 2, 3, 4, 5]\nlet filtered = numbers.filter { $0 % 2 == 0 }\nprint(filtered)\n\n",
+        "answer": "[2, 4]",
+        "choices": ["[1, 3, 5]", "[2, 4]", "[1, 2, 3, 4, 5]", "Error"],
+        "point": 5
+    },
+    {
+        "question": "What does the following Swift code print when using an initializer with default parameters?\n\nstruct Point {\n    var x: Int = 0\n    var y: Int = 0\n}\n\nlet p = Point(y: 5)\nprint(\"(\\(p.x), \\(p.y))\")\n\n",
+        "answer": "(0, 5)",
+        "choices": ["(0, 0)", "(5, 0)", "(0, 5)", "(5, 5)"],
+        "point": 5
+    },
+    {
+        "question": "What is the output of the following Swift code using a tuple returned from a function?\n\nfunc getCoordinates() -> (x: Int, y: Int) {\n    return (10, 20)\n}\n\nlet coords = getCoordinates()\nprint(\"x: \\(coords.x), y: \\(coords.y)\")\n\n",
+        "answer": "x: 10, y: 20",
+        "choices": [
+            "x: 10, y: 20",
+            "10, 20",
+            "(10, 20)",
+            "Error"
+        ],
+        "point": 6
+    },
+    {
+        "question": "What does the following Swift code print when using a lazy property?\n\nclass DataManager {\n    lazy var data: [Int] = {\n        print(\"Loading data\")\n        return [1, 2, 3]\n    }()\n}\n\nlet manager = DataManager()\nprint(\"Before accessing data\")\nprint(manager.data)\n\n",
+        "answer": "Before accessing data\nLoading data\n[1, 2, 3]",
+        "choices": [
+            "Loading data\nBefore accessing data\n[1, 2, 3]",
+            "Before accessing data\nLoading data\n[1, 2, 3]",
+            "Before accessing data\n[1, 2, 3]\nLoading data",
+            "Error"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What is the output of the following Swift code using type inference?\n\nlet message = \"Hello, Swift!\"\nprint(message)\n\n",
+        "answer": "Hello, Swift!",
+        "choices": ["message", "\"Hello, Swift!\"", "Hello, Swift!", "Error"],
+        "point": 2
+    },
+    {
+        "question": "What does the following Swift code print when using a nested optional?\n\nlet nestedOptional: Int?? = 5\nprint(nestedOptional ?? nil)\n\n",
+        "answer": "Optional(5)",
+        "choices": ["5", "Optional(5)", "nil", "Error"],
+        "point": 8
+    },
+    {
+        "question": "What is the output of the following Swift code using a protocol with a default implementation?\n\nprotocol Drawable {\n    func draw()\n}\n\nextension Drawable {\n    func draw() {\n        print(\"Default Draw\")\n    }\n}\n\nstruct Circle: Drawable {}\n\nlet circle = Circle()\ncircle.draw()\n\n",
+        "answer": "Default Draw",
+        "choices": [
+            "Circle Draw",
+            "Default Draw",
+            "Error",
+            "No output"
+        ],
+        "point": 7
+    },
+    {
+        "question": "What does the following Swift code print when using a shared DispatchQueue?\n\nlet queue = DispatchQueue(label: \"com.example.queue\", attributes: .concurrent)\nqueue.async {\n    print(\"Task 1\")\n}\nqueue.async(flags: .barrier) {\n    print(\"Barrier Task\")\n}\nqueue.async {\n    print(\"Task 2\")\n}\n\n\n",
+        "answer": "Task 1\nBarrier Task\nTask 2",
+        "choices": [
+            "Task 1\nTask 2\nBarrier Task",
+            "Task 1\nBarrier Task\nTask 2",
+            "Barrier Task\nTask 1\nTask 2",
+            "Task 2\nTask 1\nBarrier Task"
+        ],
+        "point": 9
+    }
+]
