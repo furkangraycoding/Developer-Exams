@@ -1,4 +1,3 @@
-//
 //  ScoreManager.swift
 //  FlashCard
 //
@@ -10,19 +9,27 @@ import Foundation
 class ScoreManager {
     static let shared = ScoreManager()
     
-    private let highScoresKey = "highScores"
+    // Menüye özgü skorları saklamak için anahtarları dinamik olarak oluşturacağız
+    func getHighScoresKey(for menu: String) -> String {
+        return "\(menu)_highScores"
+    }
     
-    // Yüksek skorları UserDefaults'tan yükler
-    func loadScores() -> [UserScore] {
+    // Yüksek skorları UserDefaults'tan yükler ve menu bazında filtreler
+    func loadScores(for menu: String) -> [UserScore] {
+        let highScoresKey = getHighScoresKey(for: menu)
+        
         guard let data = UserDefaults.standard.data(forKey: highScoresKey),
-              let scores = try? JSONDecoder().decode([UserScore].self, from: data) else {
+              let allScores = try? JSONDecoder().decode([UserScore].self, from: data) else {
             return [] // Eğer skorlar yüklenemezse boş liste döner
         }
-        return scores
+        
+        return allScores
     }
     
     // Yüksek skorları UserDefaults'a kaydeder
-    func saveScores(_ scores: [UserScore]) {
+    func saveScores(_ scores: [UserScore], for menu: String) {
+        let highScoresKey = getHighScoresKey(for: menu)
+        
         if let data = try? JSONEncoder().encode(scores) {
             UserDefaults.standard.set(data, forKey: highScoresKey)
         }
@@ -30,7 +37,7 @@ class ScoreManager {
     
     // Yeni bir skoru ekleyip yüksek skorları günceller
     func addNewScore(_ score: UserScore) {
-        var currentScores = loadScores()
+        var currentScores = loadScores(for: score.scoreMenu)
         currentScores.append(score)
         
         // Skorları azalan sırayla sıralıyoruz
@@ -41,6 +48,7 @@ class ScoreManager {
             currentScores = Array(currentScores.prefix(3))
         }
         
-        saveScores(currentScores)
+        // Skorları menüye göre kaydediyoruz
+        saveScores(currentScores, for: score.scoreMenu)
     }
 }

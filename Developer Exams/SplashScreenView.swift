@@ -32,13 +32,13 @@ struct SplashScreenView: View {
                 // Logo/Icon Animation
                 Image(.developer) // Replace with your own logo
                     .resizable()
-                    .frame(width: 270, height: 270)
+                    .frame(width: 300, height: 300)
                     .foregroundColor(.green) // Set the logo color to green
                     .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition (on navigation)
                     .scaleEffect(isAppearing ? 0.5 : 1) // Scale up from 0.5 when appearing
                     .rotationEffect(.degrees(navigateToMainScreen ? 360 : 0)) // Rotate 360 degrees when disappearing
-                    .offset(y: navigateToMainScreen ? -50 : 0) // Move up when disappearing (out of view)
-                    .animation(.easeInOut(duration: 0.5), value: navigateToMainScreen) // Animation for out transition
+                    .offset(y: navigateToMainScreen ? -150 : 0) // Move up when disappearing (out of view)
+                    .animation(.easeInOut(duration: 0.8), value: navigateToMainScreen) // Animation for out transition
                     .onAppear {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             isAppearing = false // Animate in (grow, fade in)

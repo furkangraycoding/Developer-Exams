@@ -11,6 +11,7 @@ import SwiftUICore
 
 class GlobalViewModel: ObservableObject {
     @Published var chosenMenu: String = ""
+    @Published var chosenMenuColor: Color = Color.black
     @Published var isActive: String = "SplashEkranı"
     @Published var username: String = ""
     @Published var isMenuVisible: Bool = true

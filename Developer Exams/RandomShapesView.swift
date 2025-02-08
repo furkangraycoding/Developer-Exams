@@ -21,7 +21,7 @@ struct RandomShapesView: View {
                     .opacity(0.8)
                     .overlay(
                         Text("?")
-                            .font(.system(size: 30))
+                            .font(.system(size: 45))
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                             .rotationEffect(Angle.degrees(questionRotation)) // Opposite rotation for "?"
@@ -43,7 +43,7 @@ struct RandomShapesView: View {
         }
         
         // Rotate "?" counter-clockwise (opposite direction, slower)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 9) {
             withAnimation(.linear(duration: 12).repeatForever(autoreverses: true)) {
                 self.questionRotation -= 360
             }

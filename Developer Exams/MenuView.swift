@@ -6,15 +6,16 @@ struct MenuView: View {
     
     // New color palette using built-in SwiftUI colors
     let menuItems = [
-        ("Swift", Color.purple),
-        ("Java", Color.purple),
-        ("Javascript", Color.purple),
-        ("Ruby", Color.purple),
-        ("Python", Color.purple),
-        ("C#", Color.purple),
-        ("Go", Color.purple),
-        ("Solidty", Color.purple)
+        ("Swift", Color.red),       // Pastel kırmızı
+        ("Java", Color.orange),     // Pastel turuncu
+        ("Javascript", Color.yellow),// Pastel sarı
+        ("Ruby", Color.purple),     // Pastel mor
+        ("Python", Color.blue),     // Pastel mavi
+        ("C#", Color.green),         // Pastel yeşil
+        ("Go", Color.cyan),         // Pastel mavi-yeşil
+        ("Solidity", Color.pink)    // Pastel pembe
     ]
+
     
     private let columns = [
         GridItem(.flexible(), spacing: 20),
@@ -24,7 +25,7 @@ struct MenuView: View {
     var body: some View {
         ZStack {
             // Soft gradient background with built-in colors
-            LinearGradient(gradient: Gradient(colors: [Color.black, Color.gray]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color.black, Color.green.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             
             GeometryReader { geometry in
@@ -35,16 +36,17 @@ struct MenuView: View {
                                 Button(action: {
                                     withAnimation {
                                         GlobalViewModel.shared.chosenMenu = menuItems[index].0
+                                        GlobalViewModel.shared.chosenMenuColor = menuItems[index].1
                                         isMenuVisible = false // Hide the menu when a choice is made
                                     }
                                 }) {
                                     Text(menuItems[index].0)
-                                        .font(.headline)
+                                        .font(.title3)
                                         .fontWeight(.bold)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.black.opacity(0.6))
                                         .frame(width: (geometry.size.width - 60) / 2, height: (geometry.size.width - 60) / 2) // Making each button square
                                         .background(
-                                            LinearGradient(gradient: Gradient(colors: [menuItems[index].1.opacity(0.6), menuItems[index].1]),
+                                            LinearGradient(gradient: Gradient(colors: [menuItems[index].1.opacity(0.6), menuItems[index].1.opacity(0.8)]),
                                                            startPoint: .top, endPoint: .bottom)
                                         )
                                         .cornerRadius(20) // Apply corner radius to the background

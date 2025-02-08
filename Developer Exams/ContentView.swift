@@ -7,7 +7,8 @@ struct ContentView: View {
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @State private var isLoadedAds: Bool = false
     @State private var backgroundColor: Color = .black
-    @State private var gameOverBackgroundColor: Color = .green
+    @EnvironmentObject var globalViewModel: GlobalViewModel
+    @State private var gameOverBackgroundColor: Color = GlobalViewModel.shared.chosenMenuColor.opacity(0.8)
     @State private var showMessage = false
     @State private var messagePosition: [CGPoint] = [
         CGPoint(x: 0.5, y: 0.5)
@@ -18,7 +19,7 @@ struct ContentView: View {
     @State private var highScores: [UserScore] = []
     @State private var highestUserScore: Int = 0
     @State private var chosenMenu: String = ""
-    @EnvironmentObject var globalViewModel: GlobalViewModel
+    
     
     let originalBackgroundColor: Color = .black
     
@@ -26,8 +27,8 @@ struct ContentView: View {
         self.chosenMenu = GlobalViewModel.shared.chosenMenu
         self.username = username
         self.isLoadedAds = false
-        _highScores = State(initialValue: ScoreManager.shared.loadScores())
-        _highestUserScore = State(initialValue: ScoreManager.shared.loadScores().max(by: { $0.score < $1.score })?.score ?? 0)
+        _highScores = State(initialValue: ScoreManager.shared.loadScores(for: GlobalViewModel.shared.chosenMenu))
+        _highestUserScore = State(initialValue: ScoreManager.shared.loadScores(for: GlobalViewModel.shared.chosenMenu).max(by: { $0.score < $1.score })?.score ?? 0)
     }
     
     func showAd() { interstitialAdsManager.displayInterstitialAd() }
@@ -44,28 +45,23 @@ struct ContentView: View {
                         Button(action: {
                             globalViewModel.isMenuVisible = true
                         }) {
-                            Text("<")
-                                .background(.white)
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
-                                .padding(5)
-                                .cornerRadius(10)
+                            HStack {
+                                Image(systemName: "chevron.left") // Sol ok ikonu
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                            }
+                            .padding(10)
+                            .background(gameOverBackgroundColor)
+                            .cornerRadius(15) // Daha yuvarlak köşeler
+                            .shadow(radius: 5) // Hafif gölge ekleyerek butonun daha belirgin olmasını sağlıyoruz
                         }
-                        .cornerRadius(5)
-                        .background(.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(.white, lineWidth: 12)
-                        )
-                        .background(.white)
-                        .padding(.trailing, 5)
-                        
+                        .padding(.leading, 5) // Kenara biraz daha yakın
+
                         Text("\(username)")
                             .font(.headline)
                             .padding()
                             .background(gameOverBackgroundColor)
-                            .foregroundColor(backgroundColor)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         
@@ -75,7 +71,7 @@ struct ContentView: View {
                             .font(.headline)
                             .padding()
                             .background(gameOverBackgroundColor)
-                            .foregroundColor(backgroundColor)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .shadow(radius: 5)
                         
@@ -85,7 +81,7 @@ struct ContentView: View {
                             .font(.headline)
                             .padding()
                             .background(gameOverBackgroundColor)
-                            .foregroundColor(backgroundColor)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .shadow(radius: 5)
                     }
@@ -186,56 +182,66 @@ struct ContentView: View {
                             let flashcard = flashcardViewModel.currentQuestions[flashcardViewModel.currentIndex]
                             
                             VStack {
-                                if flashcardViewModel.showingAnswer {
+                                if flashcardViewModel.showingAnswer  {
                                     GeometryReader { geometry in
                                         ForEach(0..<messagePosition.count, id: \.self) { index in
                                             Text(currentMessage)
                                                 .font(.title)
                                                 .fontWeight(.bold)
                                                 .foregroundColor(
-                                                    showCorrectMessage ? .green : (showWrongMessage ? .red : .clear)
+                                                    showCorrectMessage ? gameOverBackgroundColor.opacity(1.2) : (showWrongMessage ? .red.opacity(0.8) : .clear)
                                                 )
                                                 .position(
                                                     x: geometry.size.width * messagePosition[index].x,
                                                     y: geometry.size.height * messagePosition[index].y
                                                 )
-                                                .scaleEffect(showMessage ? 3 : 0.7)
-                                                .opacity(showMessage ? 1 : 0)
+                                                .scaleEffect(showMessage ? (showCorrectMessage ? 2.7 :2.7) : 2.7) // Correct mesajı büyük olur
+                                                .opacity(showMessage ? 1 : 0) // Mesaj görünür
+                                                // Correct durumda: önce dönüp sonra büyüme animasyonu
+                                                .rotationEffect(showCorrectMessage && showMessage ? .degrees(360) : .degrees(0)) // Dönme animasyonu
                                                 .animation(
-                                                    .easeInOut(duration: 0.3)
-                                                        .repeatCount(2, autoreverses: true),
+                                                    showCorrectMessage
+                                                    ? .easeInOut(duration: 0.9).repeatCount(1, autoreverses: true)
+                                                    : .easeInOut(duration: 0.6).repeatCount(1, autoreverses: true),
                                                     value: showMessage
                                                 )
+                                                // Try Again durumu: sadece büyüme ve kaybolma animasyonu
+                                                .scaleEffect(showWrongMessage && showMessage ? 1 : 1)
+                                                .rotationEffect(.degrees(0)) // Try again durumunda dönme yok
                                         }
                                     }
                                     .onAppear {
                                         if flashcardViewModel.resultMessage == "Correct!" {
                                             showCorrectMessage = true
                                             currentMessage = "Correct!"
-                                            backgroundColor = .green.opacity(0.3)
+                                            backgroundColor = gameOverBackgroundColor.opacity(0.6)
+                                            showWrongMessage = false // Try Again durumunu sıfırlıyoruz
                                         } else {
                                             showWrongMessage = true
                                             currentMessage = "Try again"
-                                            backgroundColor = .pink.opacity(0.3)
+                                            backgroundColor = .black
+                                            showCorrectMessage = false // Correct durumunu sıfırlıyoruz
                                         }
                                         
                                         showMessage = true
                                         
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                                             showMessage = false
                                             showCorrectMessage = false
                                             showWrongMessage = false
                                             backgroundColor = originalBackgroundColor
                                         }
                                     }
-                                } else {
+
+                                    
+                                }else {
                                         ScrollView{
                                             VStack(spacing: 10) {
                                                 Text("(\(flashcard.point) points) \n \n\(flashcard.question)")
                                                     .foregroundStyle(Color.white)
                                                     .font(.headline)
                                                     .fontWeight(.semibold)
-                                                    .multilineTextAlignment(.center)
+                                                    .multilineTextAlignment(.leading)
                                                     .frame(maxWidth: .infinity)
                                                     .minimumScaleFactor(0.5)
                                                     .padding(.top, 20)
@@ -250,7 +256,8 @@ struct ContentView: View {
                                                                 .padding()
                                                                 .frame(maxWidth: .infinity)
                                                                 .minimumScaleFactor(0.5)
-                                                                .background(Color.blue)
+                                                                .multilineTextAlignment(.center)
+                                                                .background(gameOverBackgroundColor)
                                                                 .foregroundColor(.white)
                                                                 .cornerRadius(10)
                                                         }
@@ -274,7 +281,7 @@ struct ContentView: View {
                             ForEach(0..<flashcardViewModel.heartsRemaining, id: \.self) { _ in
                                 Image(systemName: "heart.fill")
                                     .font(.system(size: 42))
-                                    .foregroundColor(.red)
+                                    .foregroundColor(gameOverBackgroundColor)
                                     .offset(y: -10)
                             }
                         }
@@ -287,9 +294,9 @@ struct ContentView: View {
         }
         .onChange(of: flashcardViewModel.gameOver) { newValue in
             if newValue {
-                let newScore = UserScore(username: username, score: flashcardViewModel.correctAnswersCount)
+                let newScore = UserScore(username: username, score: flashcardViewModel.correctAnswersCount, scoreMenu: GlobalViewModel.shared.chosenMenu)
                 ScoreManager.shared.addNewScore(newScore)
-                highScores = ScoreManager.shared.loadScores()
+                highScores = ScoreManager.shared.loadScores(for: GlobalViewModel.shared.chosenMenu)
             }
             updateHighestUserScore()
         }
