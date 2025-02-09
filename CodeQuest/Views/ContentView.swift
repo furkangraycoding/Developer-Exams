@@ -8,7 +8,7 @@ struct ContentView: View {
     @State private var isLoadedAds: Bool = false
     @State private var backgroundColor: Color = .black
     @EnvironmentObject var globalViewModel: GlobalViewModel
-    @State private var gameOverBackgroundColor: Color = GlobalViewModel.shared.chosenMenuColor.opacity(0.8)
+    @State private var gameOverBackgroundColor: Color = GlobalViewModel.shared.chosenMenuColor.opacity(0.7)
     @State private var showMessage = false
     @State private var messagePosition: [CGPoint] = [
         CGPoint(x: 0.5, y: 0.5)
@@ -187,9 +187,9 @@ struct ContentView: View {
                                         ForEach(0..<messagePosition.count, id: \.self) { index in
                                             Text(currentMessage)
                                                 .font(.title)
-                                                .fontWeight(.semibold)
+                                                .fontWeight(.bold)
                                                 .foregroundColor(
-                                                    showCorrectMessage ? gameOverBackgroundColor.opacity(1) : (showWrongMessage ? .red.opacity(0.9) : .clear)
+                                                    showCorrectMessage ? gameOverBackgroundColor.opacity(1) : (showWrongMessage ? gameOverBackgroundColor.opacity(1) : .clear)
                                                 )
                                                 .italic(showWrongMessage)
                                                 .position(
@@ -215,12 +215,11 @@ struct ContentView: View {
                                         if flashcardViewModel.resultMessage == "Correct!" {
                                             showCorrectMessage = true
                                             currentMessage = "Correct!"
-                                            backgroundColor = gameOverBackgroundColor.opacity(0.4)
+                                            backgroundColor = gameOverBackgroundColor.opacity(0.2)
                                             showWrongMessage = false // Try Again durumunu sıfırlıyoruz
                                         } else {
                                             showWrongMessage = true
                                             currentMessage = "Try again"
-                                            backgroundColor = .black
                                             showCorrectMessage = false // Correct durumunu sıfırlıyoruz
                                         }
                                         

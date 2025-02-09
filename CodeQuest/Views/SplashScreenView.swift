@@ -32,7 +32,7 @@ struct SplashScreenView: View {
                 // Logo/Icon Animation
                 Image(.developer) // Replace with your own logo
                     .resizable()
-                    .frame(width: 280, height: 280)
+                    .frame(width: 300, height: 300)
                     .foregroundColor(.green) // Set the logo color to green
                     .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition (on navigation)
                     .scaleEffect(isAppearing ? 0.5 : 1) // Scale up from 0.5 when appearing

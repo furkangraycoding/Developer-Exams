@@ -50,8 +50,11 @@ struct UsernameInputView: View {
                         
                         // Button Area
                         Button(action: {
-                            withAnimation(.easeInOut(duration: 0.3)) {
+                            withAnimation(.easeInOut(duration: 0.1)) {
                                 globalViewModel.isActive = "AnaEkran"
+                                if username.isEmpty {
+                                    username = "NewUser" + String(Int.random(in: 100..<1000))
+                                }
                                 globalViewModel.username = username
                             }
                         }) {
@@ -93,7 +96,7 @@ struct UsernameInputView: View {
                 }
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: isActive)
+        .animation(.easeInOut(duration: 0.1), value: isActive)
         .navigationBarHidden(true) // Hide navigation bar
     }
 }

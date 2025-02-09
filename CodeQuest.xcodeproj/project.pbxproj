@@ -12,13 +12,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A07114042D3432EB004087DC /* Developer Exams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Developer Exams.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07114042D3432EB004087DC /* CodeQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A07114062D3432EB004087DC /* Developer Exams */ = {
+		A07114062D3432EB004087DC /* CodeQuest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Developer Exams";
+			path = CodeQuest;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -39,7 +39,7 @@
 		A07113FB2D3432EB004087DC = {
 			isa = PBXGroup;
 			children = (
-				A07114062D3432EB004087DC /* Developer Exams */,
+				A07114062D3432EB004087DC /* CodeQuest */,
 				A07114052D3432EB004087DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,7 +47,7 @@
 		A07114052D3432EB004087DC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A07114042D3432EB004087DC /* Developer Exams.app */,
+				A07114042D3432EB004087DC /* CodeQuest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,9 +55,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A07114032D3432EB004087DC /* Developer Exams */ = {
+		A07114032D3432EB004087DC /* CodeQuest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A07114142D3432EE004087DC /* Build configuration list for PBXNativeTarget "Developer Exams" */;
+			buildConfigurationList = A07114142D3432EE004087DC /* Build configuration list for PBXNativeTarget "CodeQuest" */;
 			buildPhases = (
 				A07114002D3432EB004087DC /* Sources */,
 				A07114012D3432EB004087DC /* Frameworks */,
@@ -68,15 +68,15 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A07114062D3432EB004087DC /* Developer Exams */,
+				A07114062D3432EB004087DC /* CodeQuest */,
 			);
-			name = "Developer Exams";
+			name = CodeQuest;
 			packageProductDependencies = (
 				A07114302D3433B9004087DC /* GoogleMobileAds */,
 				A07114932D343558004087DC /* GoogleMobileAds */,
 			);
 			productName = "Developer Exams";
-			productReference = A07114042D3432EB004087DC /* Developer Exams.app */;
+			productReference = A07114042D3432EB004087DC /* CodeQuest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,7 +94,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A07113FF2D3432EB004087DC /* Build configuration list for PBXProject "Developer Exams" */;
+			buildConfigurationList = A07113FF2D3432EB004087DC /* Build configuration list for PBXProject "CodeQuest" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -111,7 +111,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A07114032D3432EB004087DC /* Developer Exams */,
+				A07114032D3432EB004087DC /* CodeQuest */,
 			);
 		};
 /* End PBXProject section */
@@ -190,7 +190,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Developer Exams/InfoAd.plist";
+				INFOPLIST_FILE = CodeQuest/InfoAd.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -248,7 +248,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "Developer Exams/InfoAd.plist";
+				INFOPLIST_FILE = CodeQuest/InfoAd.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -264,13 +264,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Developer Exams/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CodeQuest/Preview Content\"";
 				DEVELOPMENT_TEAM = 9L4W8ND457;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Developer Exams/InfoAd.plist";
+				INFOPLIST_FILE = CodeQuest/InfoAd.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CodeQuest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,7 +285,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.magneticminds.Developer-Exams";
+				PRODUCT_BUNDLE_IDENTIFIER = com.magneticminds.CodeQuest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -295,13 +298,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Developer Exams/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"CodeQuest/Preview Content\"";
 				DEVELOPMENT_TEAM = 9L4W8ND457;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Developer Exams/InfoAd.plist";
+				INFOPLIST_FILE = CodeQuest/InfoAd.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CodeQuest;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -313,7 +319,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.magneticminds.Developer-Exams";
+				PRODUCT_BUNDLE_IDENTIFIER = com.magneticminds.CodeQuest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -324,7 +330,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A07113FF2D3432EB004087DC /* Build configuration list for PBXProject "Developer Exams" */ = {
+		A07113FF2D3432EB004087DC /* Build configuration list for PBXProject "CodeQuest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07114122D3432EE004087DC /* Debug */,
@@ -333,7 +339,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A07114142D3432EE004087DC /* Build configuration list for PBXNativeTarget "Developer Exams" */ = {
+		A07114142D3432EE004087DC /* Build configuration list for PBXNativeTarget "CodeQuest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A07114152D3432EE004087DC /* Debug */,
