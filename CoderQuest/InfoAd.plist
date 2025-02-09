@@ -180,6 +180,6 @@
       </dict>
     </array>
 	<key>com.apple.application-identifier</key>
-	<string>com.magneticmindsapp.CodeQuest</string>
+	<string>com.magneticmindsapp.CoderQuest</string>
 </dict>
 </plist>
