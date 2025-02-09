@@ -187,10 +187,11 @@ struct ContentView: View {
                                         ForEach(0..<messagePosition.count, id: \.self) { index in
                                             Text(currentMessage)
                                                 .font(.title)
-                                                .fontWeight(.bold)
+                                                .fontWeight(.semibold)
                                                 .foregroundColor(
-                                                    showCorrectMessage ? gameOverBackgroundColor.opacity(1.2) : (showWrongMessage ? .red.opacity(0.8) : .clear)
+                                                    showCorrectMessage ? gameOverBackgroundColor.opacity(1) : (showWrongMessage ? .red.opacity(0.9) : .clear)
                                                 )
+                                                .italic(showWrongMessage)
                                                 .position(
                                                     x: geometry.size.width * messagePosition[index].x,
                                                     y: geometry.size.height * messagePosition[index].y
@@ -214,7 +215,7 @@ struct ContentView: View {
                                         if flashcardViewModel.resultMessage == "Correct!" {
                                             showCorrectMessage = true
                                             currentMessage = "Correct!"
-                                            backgroundColor = gameOverBackgroundColor.opacity(0.6)
+                                            backgroundColor = gameOverBackgroundColor.opacity(0.4)
                                             showWrongMessage = false // Try Again durumunu sıfırlıyoruz
                                         } else {
                                             showWrongMessage = true

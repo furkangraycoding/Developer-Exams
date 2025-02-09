@@ -32,15 +32,15 @@ struct SplashScreenView: View {
                 // Logo/Icon Animation
                 Image(.developer) // Replace with your own logo
                     .resizable()
-                    .frame(width: 300, height: 300)
+                    .frame(width: 280, height: 280)
                     .foregroundColor(.green) // Set the logo color to green
                     .opacity(navigateToMainScreen ? 0 : 1) // Fade out during transition (on navigation)
                     .scaleEffect(isAppearing ? 0.5 : 1) // Scale up from 0.5 when appearing
                     .rotationEffect(.degrees(navigateToMainScreen ? 360 : 0)) // Rotate 360 degrees when disappearing
-                    .offset(y: navigateToMainScreen ? -150 : 0) // Move up when disappearing (out of view)
-                    .animation(.easeInOut(duration: 0.8), value: navigateToMainScreen) // Animation for out transition
+                    .offset(y: navigateToMainScreen ? -250 : 0) // Move up when disappearing (out of view)
+                    .animation(.easeInOut(duration: 0.9), value: navigateToMainScreen) // Animation for out transition
                     .onAppear {
-                        withAnimation(.easeInOut(duration: 0.5)) {
+                        withAnimation(.easeInOut(duration: 0.6)) {
                             isAppearing = false // Animate in (grow, fade in)
                         }
                     }
@@ -55,7 +55,7 @@ struct SplashScreenView: View {
         }
         .onChange(of: navigateToMainScreen) { _ in
             if navigateToMainScreen {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     transitionToMainApp()
                 }
             }

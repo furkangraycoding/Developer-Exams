@@ -19,13 +19,6 @@ struct RandomShapesView: View {
                     .position(self.shapesWithPositions[index].position)
                     .rotationEffect(Angle.degrees(rotation)) // Rotation for shapes
                     .opacity(0.8)
-                    .overlay(
-                        Text("?")
-                            .font(.system(size: 45))
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
-                            .rotationEffect(Angle.degrees(questionRotation)) // Opposite rotation for "?"
-                    )
             }
         }
         .onAppear {
@@ -38,13 +31,13 @@ struct RandomShapesView: View {
     // Start rotating the shapes and "?" text in opposite directions
     private func startRotationCycle() {
         // Rotate shapes clockwise (slower)
-        withAnimation(.linear(duration: 12).repeatForever(autoreverses: true)) {
+        withAnimation(.linear(duration: 16).repeatForever(autoreverses: true)) {
             self.rotation += 360
         }
         
         // Rotate "?" counter-clockwise (opposite direction, slower)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 9) {
-            withAnimation(.linear(duration: 12).repeatForever(autoreverses: true)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+            withAnimation(.linear(duration: 8).repeatForever(autoreverses: true)) {
                 self.questionRotation -= 360
             }
         }

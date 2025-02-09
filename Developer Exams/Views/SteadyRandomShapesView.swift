@@ -38,9 +38,9 @@ struct SteadyRandomShapesView: View {
     
     // Constants for the pattern
     let baseNumShapes: Int = 7 // Number of shapes in the inner circle layer
-    let maxLayers: Int = 3 // Number of circular layers (Increased to 9 layers)
+    let maxLayers: Int = 4 // Number of circular layers (Increased to 9 layers)
     let paddingBetweenCircles: CGFloat = 30  // Space between the layers of circles
-    let shapeSize: CGFloat = 75  // Fixed size of each shape
+    let shapeSize: CGFloat = 90  // Fixed size of each shape
 
     var body: some View {
         GeometryReader { geometry in
