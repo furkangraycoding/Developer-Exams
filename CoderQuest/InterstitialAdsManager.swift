@@ -23,7 +23,7 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
     
     // Load InterstitialAd
     func loadInterstitialAd() {
-        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-1995431888796304/8073267451", request: GADRequest()) { [weak self] add, error in
+        GADInterstitialAd.load(withAdUnitID: "ca-app-pub-8707747310682332/9743427999", request: GADRequest()) { [weak self] add, error in
             guard let self = self else {return}
             if let error = error{
                 print("🔴: \(error.localizedDescription)")
@@ -45,7 +45,7 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
             return
         }
         InterstitialAdsManager.withoutAdCounter += 1
-        if InterstitialAdsManager.withoutAdCounter == 3 {
+        if InterstitialAdsManager.withoutAdCounter >= 3 {
             if let add = interstitialAd {
             print("🔵: interstitialAd withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
             

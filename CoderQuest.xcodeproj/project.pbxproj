@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A07114312D3433B9004087DC /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114302D3433B9004087DC /* GoogleMobileAds */; };
-		A07114942D343558004087DC /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114932D343558004087DC /* GoogleMobileAds */; };
+		A0079A4D2D5A5AB900E3AE7B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A0079A4C2D5A5AB900E3AE7B /* GoogleMobileAds */; };
+		A08CD63F2D5C0DD90016BD00 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114302D3433B9004087DC /* GoogleMobileAds */; };
+		A08CD6402D5C0DD90016BD00 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A07114932D343558004087DC /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A07114942D343558004087DC /* GoogleMobileAds in Frameworks */,
-				A07114312D3433B9004087DC /* GoogleMobileAds in Frameworks */,
+				A08CD6402D5C0DD90016BD00 /* GoogleMobileAds in Frameworks */,
+				A08CD63F2D5C0DD90016BD00 /* GoogleMobileAds in Frameworks */,
+				A0079A4D2D5A5AB900E3AE7B /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +76,7 @@
 			packageProductDependencies = (
 				A07114302D3433B9004087DC /* GoogleMobileAds */,
 				A07114932D343558004087DC /* GoogleMobileAds */,
+				A0079A4C2D5A5AB900E3AE7B /* GoogleMobileAds */,
 			);
 			productName = "Developer Exams";
 			productReference = A07114042D3432EB004087DC /* CoderQuest.app */;
@@ -104,7 +107,7 @@
 			mainGroup = A07113FB2D3432EB004087DC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				A07114922D343558004087DC /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */,
+				A0079A4B2D5A5AB900E3AE7B /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A07114052D3432EB004087DC /* Products */;
@@ -284,7 +287,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.magneticminds.CoderQuest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -318,7 +321,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.magneticminds.CoderQuest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -351,13 +354,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		A07114922D343558004087DC /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */ = {
+		A0079A4B2D5A5AB900E3AE7B /* XCLocalSwiftPackageReference "../../Downloads/swift-package-manager-google-mobile-ads-main" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../Downloads/swift-package-manager-google-mobile-ads-main";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A0079A4C2D5A5AB900E3AE7B /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GoogleMobileAds;
+		};
 		A07114302D3433B9004087DC /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GoogleMobileAds;

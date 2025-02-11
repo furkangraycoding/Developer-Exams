@@ -32,7 +32,6 @@ struct ContentView: View {
     }
     
     func showAd() { interstitialAdsManager.displayInterstitialAd() }
-    func loadAd() { interstitialAdsManager.loadInterstitialAd() }
     
     var body: some View {
         ZStack {
@@ -141,7 +140,6 @@ struct ContentView: View {
                                 .accessibilityLabel("Restart Game")
                                 
                                 Button(action: {
-                                    loadAd()
                                     flashcardViewModel.restoreHearts()
                                     showAd()
                                 }) {
@@ -291,6 +289,7 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(backgroundColor)
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
         .onChange(of: flashcardViewModel.gameOver) { newValue in
             if newValue {
