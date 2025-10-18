@@ -36,7 +36,6 @@ enum AchievementType: String, Codable {
     case dedicated = "dedicated"
     case veteran = "veteran"
     case legend = "legend"
-    case unstoppable = "unstoppable"
 }
 
 struct Achievement: Identifiable, Codable {
@@ -54,6 +53,45 @@ struct Achievement: Identifiable, Codable {
     
     var progress: Double {
         return min(Double(currentCount) / Double(requiredCount), 1.0)
+    }
+    
+    // Custom coding keys for backward compatibility
+    enum CodingKeys: String, CodingKey {
+        case id, title, description, icon, requiredCount, currentCount
+        case isUnlocked, isClaimed, type, xpReward, coinReward
+    }
+    
+    // Custom decoder to handle missing isClaimed and coinReward fields
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        title = try container.decode(String.self, forKey: .title)
+        description = try container.decode(String.self, forKey: .description)
+        icon = try container.decode(String.self, forKey: .icon)
+        requiredCount = try container.decode(Int.self, forKey: .requiredCount)
+        currentCount = try container.decode(Int.self, forKey: .currentCount)
+        isUnlocked = try container.decode(Bool.self, forKey: .isUnlocked)
+        isClaimed = try container.decodeIfPresent(Bool.self, forKey: .isClaimed) ?? false
+        type = try container.decode(AchievementType.self, forKey: .type)
+        xpReward = try container.decode(Int.self, forKey: .xpReward)
+        coinReward = try container.decodeIfPresent(Int.self, forKey: .coinReward) ?? 0
+    }
+    
+    // Regular init for creating new achievements
+    init(id: String, title: String, description: String, icon: String, 
+         requiredCount: Int, currentCount: Int, isUnlocked: Bool, isClaimed: Bool,
+         type: AchievementType, xpReward: Int, coinReward: Int) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.requiredCount = requiredCount
+        self.currentCount = currentCount
+        self.isUnlocked = isUnlocked
+        self.isClaimed = isClaimed
+        self.type = type
+        self.xpReward = xpReward
+        self.coinReward = coinReward
     }
     
     static let allAchievements: [Achievement] = [

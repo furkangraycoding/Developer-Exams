@@ -81,6 +81,32 @@ struct UserStatistics: Codable {
     var dailyGoalStreak: Int
     var lastPlayedDate: Date?
     
+    // Custom coding keys for backward compatibility
+    enum CodingKeys: String, CodingKey {
+        case totalXP, totalCoins, level, currentStreak, longestStreak
+        case totalGamesPlayed, totalQuestionsAnswered, totalCorrectAnswers
+        case totalWrongAnswers, perfectGames, languageStats, dailyGoalStreak
+        case lastPlayedDate
+    }
+    
+    // Custom decoder to handle missing totalCoins field
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        totalXP = try container.decode(Int.self, forKey: .totalXP)
+        totalCoins = try container.decodeIfPresent(Int.self, forKey: .totalCoins) ?? 0
+        level = try container.decode(Int.self, forKey: .level)
+        currentStreak = try container.decode(Int.self, forKey: .currentStreak)
+        longestStreak = try container.decode(Int.self, forKey: .longestStreak)
+        totalGamesPlayed = try container.decode(Int.self, forKey: .totalGamesPlayed)
+        totalQuestionsAnswered = try container.decode(Int.self, forKey: .totalQuestionsAnswered)
+        totalCorrectAnswers = try container.decode(Int.self, forKey: .totalCorrectAnswers)
+        totalWrongAnswers = try container.decode(Int.self, forKey: .totalWrongAnswers)
+        perfectGames = try container.decode(Int.self, forKey: .perfectGames)
+        languageStats = try container.decode([String: LanguageStatistics].self, forKey: .languageStats)
+        dailyGoalStreak = try container.decode(Int.self, forKey: .dailyGoalStreak)
+        lastPlayedDate = try container.decodeIfPresent(Date.self, forKey: .lastPlayedDate)
+    }
+    
     var overallAccuracy: Double {
         guard totalQuestionsAnswered > 0 else { return 0 }
         return Double(totalCorrectAnswers) / Double(totalQuestionsAnswered) * 100
