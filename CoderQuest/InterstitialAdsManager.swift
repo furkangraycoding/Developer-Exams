@@ -45,7 +45,7 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
             return
         }
         InterstitialAdsManager.withoutAdCounter += 1
-        if InterstitialAdsManager.withoutAdCounter >= 3 {
+        if InterstitialAdsManager.withoutAdCounter >= 2 {
             if let add = interstitialAd {
             print("🔵: interstitialAd withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
             

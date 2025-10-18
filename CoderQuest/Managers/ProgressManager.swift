@@ -132,93 +132,165 @@ class ProgressManager: ObservableObject {
                 continue
             }
             
+            var shouldUnlock = false
+            
             switch achievement.type {
             case .firstWin:
                 if statistics.totalGamesPlayed >= 1 {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .streak5:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 5 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .streak10:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 10 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .streak20:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 20 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
+                }
+                
+            case .streak50:
+                achievement.currentCount = statistics.longestStreak
+                if statistics.longestStreak >= 50 {
+                    shouldUnlock = true
                 }
                 
             case .perfectScore:
                 if isPerfect {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .speed50:
                 achievement.currentCount = statistics.totalCorrectAnswers
                 if statistics.totalCorrectAnswers >= 50 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .speed100:
                 achievement.currentCount = statistics.totalCorrectAnswers
                 if statistics.totalCorrectAnswers >= 100 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
+                }
+                
+            case .speed250:
+                achievement.currentCount = statistics.totalCorrectAnswers
+                if statistics.totalCorrectAnswers >= 250 {
+                    shouldUnlock = true
+                }
+                
+            case .speed500:
+                achievement.currentCount = statistics.totalCorrectAnswers
+                if statistics.totalCorrectAnswers >= 500 {
+                    shouldUnlock = true
                 }
                 
             case .allLanguages:
                 achievement.currentCount = statistics.languageStats.count
                 if statistics.languageStats.count >= 8 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .hardMode:
                 if difficulty == .hard {
                     achievement.currentCount += 1
                     if achievement.currentCount >= 10 {
-                        unlockAchievement(at: index)
+                        shouldUnlock = true
                     }
                 }
                 
             case .master100:
                 achievement.currentCount = statistics.totalXP
                 if statistics.totalXP >= 100 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .master500:
                 achievement.currentCount = statistics.totalXP
                 if statistics.totalXP >= 500 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .master1000:
                 achievement.currentCount = statistics.totalXP
                 if statistics.totalXP >= 1000 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
+                }
+                
+            case .master2500:
+                achievement.currentCount = statistics.totalXP
+                if statistics.totalXP >= 2500 {
+                    shouldUnlock = true
+                }
+                
+            case .master5000:
+                achievement.currentCount = statistics.totalXP
+                if statistics.totalXP >= 5000 {
+                    shouldUnlock = true
+                }
+                
+            case .marathonRunner:
+                achievement.currentCount = statistics.totalGamesPlayed
+                if statistics.totalGamesPlayed >= 25 {
+                    shouldUnlock = true
+                }
+                
+            case .centuryClub:
+                achievement.currentCount = statistics.totalGamesPlayed
+                if statistics.totalGamesPlayed >= 100 {
+                    shouldUnlock = true
+                }
+                
+            case .perfectStreak:
+                achievement.currentCount = statistics.perfectGames
+                if statistics.perfectGames >= 3 {
+                    shouldUnlock = true
+                }
+                
+            case .speedDemon:
+                // This would require time tracking per question - placeholder for now
+                achievement.currentCount = 0
+                
+            case .dedicated:
+                achievement.currentCount = statistics.dailyGoalStreak
+                if statistics.dailyGoalStreak >= 7 {
+                    shouldUnlock = true
+                }
+                
+            case .veteran:
+                achievement.currentCount = statistics.dailyGoalStreak
+                if statistics.dailyGoalStreak >= 30 {
+                    shouldUnlock = true
+                }
+                
+            case .legend:
+                achievement.currentCount = statistics.level
+                if statistics.level >= 50 {
+                    shouldUnlock = true
                 }
                 
             case .nightOwl:
                 let hour = Calendar.current.component(.hour, from: Date())
                 if hour >= 0 && hour < 6 {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .earlyBird:
                 let hour = Calendar.current.component(.hour, from: Date())
                 if hour >= 4 && hour < 6 {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .weekendWarrior:
@@ -226,12 +298,18 @@ class ProgressManager: ObservableObject {
                 if weekday == 1 || weekday == 7 {
                     achievement.currentCount += 1
                     if achievement.currentCount >= 5 {
-                        unlockAchievement(at: index)
+                        shouldUnlock = true
                     }
                 }
             }
             
+            // Update the achievement first with current count
             achievements[index] = achievement
+            
+            // Then unlock if needed (this will update isUnlocked flag)
+            if shouldUnlock {
+                unlockAchievement(at: index)
+            }
         }
         
         saveAchievements()
@@ -247,8 +325,28 @@ class ProgressManager: ObservableObject {
         print("🎉 Unlocking achievement: \(achievements[index].title)")
         achievements[index].isUnlocked = true
         recentlyUnlockedAchievements.append(achievements[index])
-        statistics.addXP(achievements[index].xpReward)
+        // Don't auto-add rewards, user must claim them
         print("✅ Achievement unlocked, total recent: \(recentlyUnlockedAchievements.count)")
+    }
+    
+    func claimAchievementReward(achievementId: String) -> Bool {
+        guard let index = achievements.firstIndex(where: { $0.id == achievementId }) else {
+            return false
+        }
+        
+        guard achievements[index].isUnlocked && !achievements[index].isClaimed else {
+            return false
+        }
+        
+        let achievement = achievements[index]
+        statistics.addXP(achievement.xpReward)
+        achievements[index].isClaimed = true
+        
+        saveStatistics()
+        saveAchievements()
+        
+        print("🎁 Claimed reward for '\(achievement.title)': +\(achievement.xpReward) XP")
+        return true
     }
     
     func clearRecentAchievements() {
