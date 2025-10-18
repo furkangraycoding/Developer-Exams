@@ -258,6 +258,7 @@ struct AchievementCard: View {
             // Status section with fixed height
             VStack(spacing: 4) {
                 if !achievement.isUnlocked {
+                    // Progress bar - 6px height
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 4)
@@ -277,15 +278,21 @@ struct AchievementCard: View {
                     }
                     .frame(height: 6)
                     
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    // Counter text - 22px height
                     Text("\(achievement.currentCount)/\(achievement.requiredCount)")
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.gray.opacity(0.6))
-                        .frame(height: 18)
+                        .frame(height: 22)
                 } else if achievement.isClaimed {
+                    // Top spacer to match progress bar height
                     Spacer()
-                        .frame(height: 6)
+                        .frame(height: 8)
                     
+                    // Badge - 22px height to match
                     HStack(spacing: 3) {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.caption)
@@ -295,18 +302,19 @@ struct AchievementCard: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.green)
                     }
-                    .frame(minWidth: 80)
+                    .frame(minWidth: 80, minHeight: 22)
                     .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 3)
                     .background(
                         Capsule()
                             .fill(Color.green.opacity(0.2))
                     )
-                    .frame(height: 18)
                 } else {
+                    // Top spacer to match progress bar height
                     Spacer()
-                        .frame(height: 6)
+                        .frame(height: 8)
                     
+                    // Badge - 22px height to match
                     HStack(spacing: 3) {
                         Image(systemName: "gift.fill")
                             .font(.caption)
@@ -316,14 +324,13 @@ struct AchievementCard: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.yellow)
                     }
-                    .frame(minWidth: 80)
+                    .frame(minWidth: 80, minHeight: 22)
                     .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.vertical, 3)
                     .background(
                         Capsule()
                             .fill(Color.yellow.opacity(0.2))
                     )
-                    .frame(height: 18)
                 }
             }
             .frame(height: 40)
