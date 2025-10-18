@@ -91,46 +91,6 @@ struct EnhancedQuizView: View {
                 }
                 .padding()
                 
-                // Progress Bar
-                GeometryReader { geometry in
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.2))
-                            .frame(height: 8)
-                        
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                LinearGradient(
-                                    colors: [globalViewModel.chosenMenuColor, globalViewModel.chosenMenuColor.opacity(0.6)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .frame(width: geometry.size.width * progress, height: 8)
-                            .animation(.spring(), value: progress)
-                    }
-                }
-                .frame(height: 8)
-                .padding(.horizontal)
-                
-                // Hearts
-                if !flashcardViewModel.gameOver {
-                    HStack(spacing: 8) {
-                        ForEach(0..<flashcardViewModel.heartsRemaining, id: \.self) { _ in
-                            Image(systemName: "heart.fill")
-                                .font(.title2)
-                                .foregroundColor(.red)
-                        }
-                        
-                        ForEach(0..<(5 - flashcardViewModel.heartsRemaining), id: \.self) { _ in
-                            Image(systemName: "heart")
-                                .font(.title2)
-                                .foregroundColor(.white.opacity(0.3))
-                        }
-                    }
-                    .padding(.vertical, 10)
-                }
-                
                 Spacer()
                 
                 // Main Content
@@ -167,17 +127,42 @@ struct EnhancedQuizView: View {
                 }
                 
                 Spacer()
+                
+                // Hearts at Bottom
+                if !flashcardViewModel.gameOver {
+                    HStack(spacing: 12) {
+                        ForEach(0..<flashcardViewModel.heartsRemaining, id: \.self) { _ in
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 48))
+                                .foregroundColor(.red)
+                                .shadow(color: .red.opacity(0.5), radius: 8)
+                        }
+                        
+                        ForEach(0..<(5 - flashcardViewModel.heartsRemaining), id: \.self) { _ in
+                            Image(systemName: "heart")
+                                .font(.system(size: 48))
+                                .foregroundColor(.white.opacity(0.3))
+                        }
+                    }
+                    .padding(.bottom, 30)
+                }
             }
             
-            // Achievement Popup - Only show if we have NEW achievements
+            // Achievement Popup - Top of view when game is over
             if showAchievementPopup && !progressManager.recentlyUnlockedAchievements.isEmpty {
-                VStack(spacing: 12) {
-                    ForEach(progressManager.recentlyUnlockedAchievements) { achievement in
-                        ModernAchievementPopup(achievement: achievement)
+                VStack {
+                    VStack(spacing: 12) {
+                        ForEach(progressManager.recentlyUnlockedAchievements) { achievement in
+                            ModernAchievementPopup(achievement: achievement)
+                        }
                     }
+                    .padding(.top, 60)
+                    
+                    Spacer()
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .transition(.move(edge: .top).combined(with: .opacity))
-                .zIndex(1000) // Ensure it's on top
+                .zIndex(1000)
                 .onAppear {
                     let count = progressManager.recentlyUnlockedAchievements.count
                     print("🎯 Displaying \(count) achievement popup(s)")
@@ -337,90 +322,25 @@ struct QuestionView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 25) {
-                // Points Badge
-                HStack {
-                    Spacer()
-                    
-                    HStack(spacing: 12) {
+                // Question Card with Points Inside
+                VStack(spacing: 25) {
+                    // Points at Top of Card
+                    HStack(spacing: 8) {
                         Image(systemName: "star.fill")
-                            .font(.system(size: 24, weight: .bold))
+                            .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.yellow)
-                            .shadow(color: .yellow.opacity(0.5), radius: 8)
+                            .shadow(color: .yellow.opacity(0.5), radius: 6)
                         
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("\(flashcard.point)")
-                                .font(.system(size: 32, weight: .black, design: .rounded))
-                                .foregroundColor(.white)
-                            Text("POINTS")
-                                .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(color)
-                                .tracking(1.5)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 12)
-                    .background(
-                        Capsule()
-                            .fill(
-                                LinearGradient(
-                                    colors: [color.opacity(0.3), color.opacity(0.2)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .overlay(
-                                Capsule()
-                                    .strokeBorder(color.opacity(0.6), lineWidth: 2)
-                            )
-                    )
-                    .shadow(color: color.opacity(0.4), radius: 12, x: 0, y: 4)
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 10)
-                
-                // Question Card
-                VStack(spacing: 30) {
-                    // Icon
-                    ZStack {
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [color.opacity(0.3), color.opacity(0.1), .clear],
-                                    center: .center,
-                                    startRadius: 30,
-                                    endRadius: 80
-                                )
-                            )
-                            .frame(width: 140, height: 140)
-                            .blur(radius: 10)
-                        
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [color.opacity(0.4), color.opacity(0.2)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 80, height: 80)
-                            .overlay(
-                                Circle()
-                                    .strokeBorder(
-                                        LinearGradient(
-                                            colors: [color.opacity(0.8), color.opacity(0.4)],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        ),
-                                        lineWidth: 3
-                                    )
-                            )
-                            .shadow(color: color.opacity(0.5), radius: 15, x: 0, y: 5)
-                        
-                        Image(systemName: "questionmark.circle.fill")
-                            .font(.system(size: 36, weight: .bold))
+                        Text("\(flashcard.point)")
+                            .font(.system(size: 28, weight: .black, design: .rounded))
                             .foregroundColor(.white)
-                            .shadow(color: .black.opacity(0.3), radius: 2)
+                        
+                        Text("POINTS")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(color)
+                            .tracking(1.5)
                     }
+                    .padding(.top, 10)
                     
                     // Question Text
                     Text(flashcard.question)
@@ -451,6 +371,7 @@ struct QuestionView: View {
                         .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
                 )
                 .padding(.horizontal, 20)
+                .padding(.top, 10)
                 
                 // Answer Choices
                 VStack(spacing: 15) {
