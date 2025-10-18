@@ -338,175 +338,181 @@ struct QuestionView: View {
     @State private var glowIntensity: Double = 0.3
     @State private var shimmerPhase: CGFloat = 0
     
+    private var pointsBadge: some View {
+        HStack {
+            Spacer()
+            
+            ZStack {
+                // Dynamic pulsing glow layers
+                ForEach(0..<4) { i in
+                    Capsule()
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    color.opacity(glowIntensity * (1.0 - Double(i) * 0.15)),
+                                    color.opacity(glowIntensity * 0.3),
+                                    .clear
+                                ],
+                                center: .center,
+                                startRadius: CGFloat(10 + i * 8),
+                                endRadius: CGFloat(35 + i * 12)
+                            )
+                        )
+                        .frame(height: CGFloat(60 + i * 6))
+                        .blur(radius: CGFloat(10 + i * 3))
+                        .scaleEffect(pulseAnimation ? 1.05 : 1.0)
+                        .animation(
+                            Animation.easeInOut(duration: 1.8 + Double(i) * 0.3)
+                                .repeatForever(autoreverses: true)
+                                .delay(Double(i) * 0.15),
+                            value: pulseAnimation
+                        )
+                }
+                
+                pointsBadgeContent
+            }
+            .offset(y: floatAnimation ? -6 : 0)
+            .scaleEffect(floatAnimation ? 1.02 : 1.0)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 15)
+        .padding(.bottom, 38)
+    }
+    
+    private var pointsBadgeContent: some View {
+        HStack(spacing: 14) {
+            starIcon
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("\(flashcard.point)")
+                    .font(.system(size: 28, weight: .black, design: .rounded))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.white, .white.opacity(0.9)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .shadow(color: color.opacity(0.5), radius: 4, x: 0, y: 2)
+                Text("POINTS")
+                    .font(.system(size: 11, weight: .black))
+                    .foregroundColor(color.opacity(0.9))
+                    .tracking(2)
+                    .shadow(color: .black.opacity(0.3), radius: 1)
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 14)
+        .background(pointsBadgeBackground)
+    }
+    
+    private var starIcon: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [.yellow.opacity(0.7), .orange.opacity(0.4), .clear],
+                        center: .center,
+                        startRadius: 8,
+                        endRadius: 32
+                    )
+                )
+                .frame(width: 56, height: 56)
+                .blur(radius: 10)
+            
+            Circle()
+                .fill(
+                    AngularGradient(
+                        colors: [
+                            .yellow,
+                            .orange,
+                            .red.opacity(0.8),
+                            .orange,
+                            .yellow
+                        ],
+                        center: .center,
+                        startAngle: .degrees(shimmerPhase),
+                        endAngle: .degrees(shimmerPhase + 360)
+                    )
+                )
+                .frame(width: 44, height: 44)
+                .shadow(color: .yellow.opacity(0.9), radius: 12)
+            
+            Circle()
+                .strokeBorder(
+                    LinearGradient(
+                        colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 2
+                )
+                .frame(width: 44, height: 44)
+            
+            Image(systemName: "star.fill")
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.4), radius: 2)
+                .scaleEffect(pulseAnimation ? 1.1 : 1.0)
+        }
+    }
+    
+    private var pointsBadgeBackground: some View {
+        ZStack {
+            Capsule()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.25),
+                            color.opacity(0.45),
+                            color.opacity(0.35),
+                            color.opacity(0.5)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+            
+            Capsule()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            .white.opacity(0.4),
+                            .clear,
+                            .clear
+                        ],
+                        startPoint: .top,
+                        endPoint: .center
+                    )
+                )
+                .frame(height: 28)
+                .offset(y: -7)
+            
+            Capsule()
+                .strokeBorder(
+                    LinearGradient(
+                        colors: [
+                            .white.opacity(0.8),
+                            color.opacity(0.9),
+                            color,
+                            color.opacity(0.7),
+                            .white.opacity(0.6)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 3.5
+                )
+        }
+        .shadow(color: color.opacity(0.7), radius: 18, x: 0, y: 8)
+        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Premium Points Badge with Particle Effects
-                    HStack {
-                        Spacer()
-                        
-                        ZStack {
-                            // Dynamic pulsing glow layers
-                            ForEach(0..<4) { i in
-                                Capsule()
-                                    .fill(
-                                        RadialGradient(
-                                            colors: [
-                                                color.opacity(glowIntensity * (1.0 - Double(i) * 0.15)),
-                                                color.opacity(glowIntensity * 0.3),
-                                                .clear
-                                            ],
-                                            center: .center,
-                                            startRadius: CGFloat(10 + i * 8),
-                                            endRadius: CGFloat(35 + i * 12)
-                                        )
-                                    )
-                                    .frame(height: CGFloat(60 + i * 6))
-                                    .blur(radius: CGFloat(10 + i * 3))
-                                    .scaleEffect(pulseAnimation ? 1.05 : 1.0)
-                                    .animation(
-                                        Animation.easeInOut(duration: 1.8 + Double(i) * 0.3)
-                                            .repeatForever(autoreverses: true)
-                                            .delay(Double(i) * 0.15),
-                                        value: pulseAnimation
-                                    )
-                            }
-                            
-                            HStack(spacing: 14) {
-                                // Animated star with shimmer
-                                ZStack {
-                                    // Outer glow ring
-                                    Circle()
-                                        .fill(
-                                            RadialGradient(
-                                                colors: [.yellow.opacity(0.7), .orange.opacity(0.4), .clear],
-                                                center: .center,
-                                                startRadius: 8,
-                                                endRadius: 32
-                                            )
-                                        )
-                                        .frame(width: 56, height: 56)
-                                        .blur(radius: 10)
-                                    
-                                    // Rotating gradient circle
-                                    Circle()
-                                        .fill(
-                                            AngularGradient(
-                                                colors: [
-                                                    .yellow,
-                                                    .orange,
-                                                    .red.opacity(0.8),
-                                                    .orange,
-                                                    .yellow
-                                                ],
-                                                center: .center,
-                                                startAngle: .degrees(shimmerPhase),
-                                                endAngle: .degrees(shimmerPhase + 360)
-                                            )
-                                        )
-                                        .frame(width: 44, height: 44)
-                                        .shadow(color: .yellow.opacity(0.9), radius: 12)
-                                    
-                                    // Inner white circle for contrast
-                                    Circle()
-                                        .strokeBorder(
-                                            LinearGradient(
-                                                colors: [.white.opacity(0.6), .white.opacity(0.2)],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            ),
-                                            lineWidth: 2
-                                        )
-                                        .frame(width: 44, height: 44)
-                                    
-                                    Image(systemName: "star.fill")
-                                        .font(.system(size: 20, weight: .bold))
-                                        .foregroundColor(.white)
-                                        .shadow(color: .black.opacity(0.4), radius: 2)
-                                        .scaleEffect(pulseAnimation ? 1.1 : 1.0)
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(flashcard.point)")
-                                        .font(.system(size: 28, weight: .black, design: .rounded))
-                                        .foregroundStyle(
-                                            LinearGradient(
-                                                colors: [.white, .white.opacity(0.9)],
-                                                startPoint: .top,
-                                                endPoint: .bottom
-                                            )
-                                        )
-                                        .shadow(color: color.opacity(0.5), radius: 4, x: 0, y: 2)
-                                    Text("POINTS")
-                                        .font(.system(size: 11, weight: .black))
-                                        .foregroundColor(color.opacity(0.9))
-                                        .tracking(2)
-                                        .shadow(color: .black.opacity(0.3), radius: 1)
-                                }
-                            }
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 14)
-                            .background(
-                                ZStack {
-                                    // Glossy base
-                                    Capsule()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [
-                                                    Color.white.opacity(0.25),
-                                                    color.opacity(0.45),
-                                                    color.opacity(0.35),
-                                                    color.opacity(0.5)
-                                                ],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                    
-                                    // Glass reflection effect
-                                    Capsule()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [
-                                                    .white.opacity(0.4),
-                                                    .clear,
-                                                    .clear
-                                                ],
-                                                startPoint: .top,
-                                                endPoint: .center
-                                            )
-                                        )
-                                        .frame(height: 28)
-                                        .offset(y: -7)
-                                    
-                                    // Premium border
-                                    Capsule()
-                                        .strokeBorder(
-                                            LinearGradient(
-                                                colors: [
-                                                    .white.opacity(0.8),
-                                                    color.opacity(0.9),
-                                                    color,
-                                                    color.opacity(0.7),
-                                                    .white.opacity(0.6)
-                                                ],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            ),
-                                            lineWidth: 3.5
-                                        )
-                                }
-                                .shadow(color: color.opacity(0.7), radius: 18, x: 0, y: 8)
-                                .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
-                            )
-                        }
-                        .offset(y: floatAnimation ? -6 : 0)
-                        .scaleEffect(floatAnimation ? 1.02 : 1.0)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 15)
-                    .padding(.bottom, 38)
+                    pointsBadge
                     
                     // Enhanced Question Card
                     VStack(spacing: 0) {
@@ -630,8 +636,14 @@ struct QuestionView: View {
                                             )
                                         )
                                         .frame(width: CGFloat(140 + i * 10), height: CGFloat(140 + i * 10))
-                                        .blur(radius: CGFloat(15 + i * 3))\n                                        .scaleEffect(pulseAnimation ? 1.03 : 1.0)
-                                        .animation(\n                                            Animation.easeInOut(duration: 2.0 + Double(i) * 0.3)\n                                                .repeatForever(autoreverses: true)\n                                                .delay(Double(i) * 0.15),\n                                            value: pulseAnimation\n                                        )
+                                        .blur(radius: CGFloat(15 + i * 3))
+                                        .scaleEffect(pulseAnimation ? 1.03 : 1.0)
+                                        .animation(
+                                            Animation.easeInOut(duration: 2.0 + Double(i) * 0.3)
+                                                .repeatForever(autoreverses: true)
+                                                .delay(Double(i) * 0.15),
+                                            value: pulseAnimation
+                                        )
                                 }
                                 
                                 // Main icon circle with glass effect
