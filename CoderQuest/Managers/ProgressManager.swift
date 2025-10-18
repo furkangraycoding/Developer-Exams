@@ -238,9 +238,23 @@ class ProgressManager: ObservableObject {
     }
     
     private func unlockAchievement(at index: Int) {
+        // Only unlock if not already unlocked
+        guard !achievements[index].isUnlocked else {
+            print("⚠️ Achievement '\(achievements[index].title)' already unlocked, skipping")
+            return
+        }
+        
+        print("🎉 Unlocking achievement: \(achievements[index].title)")
         achievements[index].isUnlocked = true
         recentlyUnlockedAchievements.append(achievements[index])
         statistics.addXP(achievements[index].xpReward)
+        print("✅ Achievement unlocked, total recent: \(recentlyUnlockedAchievements.count)")
+    }
+    
+    func clearRecentAchievements() {
+        print("🗑️ Clearing \(recentlyUnlockedAchievements.count) recent achievements")
+        recentlyUnlockedAchievements.removeAll()
+        print("✅ Recent achievements cleared, count: \(recentlyUnlockedAchievements.count)")
     }
     
     func resetProgress() {
