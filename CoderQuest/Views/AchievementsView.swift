@@ -100,7 +100,7 @@ struct AchievementsView: View {
                 .padding(.bottom, 10)
                 
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                    LazyVGrid(columns: [GridItem(.fixed(200)), GridItem(.fixed(200))], spacing: 15) {
                         ForEach(progressManager.achievements) { achievement in
                             AchievementCard(achievement: achievement)
                                 .onTapGesture {
@@ -189,7 +189,10 @@ struct AchievementCard: View {
     }
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
+            Spacer()
+                .frame(height: 5)
+            
             // Icon section with FIXED height
             ZStack {
                 // Outer glow for unlocked achievements
@@ -216,7 +219,7 @@ struct AchievementCard: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .frame(width: 80, height: 80)
+                    .frame(width: 70, height: 70)
                     .shadow(
                         color: achievement.isUnlocked ? cardColor.primary.opacity(0.6) : .clear,
                         radius: achievement.isUnlocked ? 15 : 0
@@ -233,29 +236,29 @@ struct AchievementCard: View {
                 
                 // Icon
                 Image(systemName: achievement.icon)
-                    .font(.system(size: 35, weight: .semibold))
+                    .font(.system(size: 30, weight: .semibold))
                     .foregroundColor(achievement.isUnlocked ? .white : .gray.opacity(0.4))
                 
                 // Locked overlay
                 if !achievement.isUnlocked {
                     Circle()
                         .fill(Color.black.opacity(0.6))
-                        .frame(width: 80, height: 80)
+                        .frame(width: 70, height: 70)
                     
                     Image(systemName: "lock.fill")
-                        .font(.system(size: 25))
+                        .font(.system(size: 22))
                         .foregroundColor(.gray.opacity(0.6))
                 }
             }
-            .frame(width: 80, height: 80)
+            .frame(width: 70, height: 70)
             
             Text(achievement.title)
-                .font(.subheadline)
+                .font(.caption)
                 .fontWeight(achievement.isUnlocked ? .bold : .regular)
                 .foregroundColor(achievement.isUnlocked ? .white : .gray.opacity(0.5))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .frame(height: 35)
+                .frame(height: 32)
             
             // Status section with FIXED height
             ZStack {
@@ -280,6 +283,7 @@ struct AchievementCard: View {
                             }
                         }
                         .frame(height: 6)
+                        .padding(.horizontal, 15)
                         
                         Spacer()
                             .frame(height: 2)
@@ -341,11 +345,12 @@ struct AchievementCard: View {
                     }
                 }
             }
-            .frame(height: 40)
+            .frame(height: 35)
+            
+            Spacer()
+                .frame(height: 5)
         }
-        .frame(height: 200)
-        .padding(.vertical, 15)
-        .padding(.horizontal, 10)
+        .frame(width: 200, height: 200)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(
