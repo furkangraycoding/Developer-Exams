@@ -85,10 +85,10 @@ struct UserStatistics: Codable {
         return Double(totalCorrectAnswers) / Double(totalQuestionsAnswered) * 100
     }
     
-    // Exponential leveling - much harder to level up
+    // Exponential leveling - VERY hard to level up (2x harder)
     var xpForNextLevel: Int {
         // Formula: base * (1.5 ^ (level - 1))
-        let base = 100
+        let base = 200  // Changed from 100 to 200 (2x harder)
         let exponent = pow(1.5, Double(level - 1))
         return Int(Double(base) * exponent)
     }
@@ -96,7 +96,7 @@ struct UserStatistics: Codable {
     var currentLevelXP: Int {
         var xpCounted = 0
         for lvl in 1..<level {
-            let base = 100
+            let base = 200  // Changed from 100 to 200 (2x harder)
             let exponent = pow(1.5, Double(lvl - 1))
             xpCounted += Int(Double(base) * exponent)
         }
@@ -127,12 +127,12 @@ struct UserStatistics: Codable {
     
     mutating func addXP(_ amount: Int) {
         totalXP += amount
-        // Calculate new level based on exponential formula
+        // Calculate new level based on exponential formula (2x harder)
         var calculatedLevel = 1
         var xpThreshold = 0
         
         while true {
-            let base = 100
+            let base = 200  // Changed from 100 to 200 (2x harder)
             let exponent = pow(1.5, Double(calculatedLevel - 1))
             let xpNeeded = Int(Double(base) * exponent)
             xpThreshold += xpNeeded

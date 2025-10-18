@@ -153,16 +153,16 @@ struct MenuView: View {
                         QuickActionButton(
                             icon: "trophy.fill",
                             title: "Achievements",
-                            color: .yellow,
-                            badge: progressManager.achievements.filter { $0.isUnlocked }.count
+                            color: .yellow
                         ) {
                             showAchievements = true
                         }
                         
                         QuickActionButton(
                             icon: "flame.fill",
-                            title: "Streak \(progressManager.statistics.currentStreak)",
-                            color: .orange
+                            title: "\(progressManager.statistics.currentStreak) Streak",
+                            color: .orange,
+                            badge: progressManager.statistics.longestStreak
                         ) {}
                     }
                     .padding(.horizontal)
