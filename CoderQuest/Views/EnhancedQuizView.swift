@@ -122,7 +122,7 @@ struct EnhancedQuizView: View {
                                 .foregroundColor(.red)
                         }
                         
-                        ForEach(0..<(difficulty.heartCount - flashcardViewModel.heartsRemaining), id: \.self) { _ in
+                        ForEach(0..<(5 - flashcardViewModel.heartsRemaining), id: \.self) { _ in
                             Image(systemName: "heart")
                                 .font(.title2)
                                 .foregroundColor(.white.opacity(0.3))
