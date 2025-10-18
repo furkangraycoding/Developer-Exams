@@ -336,152 +336,238 @@ struct QuestionView: View {
     @State private var pulseAnimation = false
     @State private var floatAnimation = false
     @State private var glowIntensity: Double = 0.3
+    @State private var shimmerPhase: CGFloat = 0
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Ultra Premium Points Badge with Floating Effect
+                    // Premium Points Badge with Particle Effects
                     HStack {
                         Spacer()
                         
                         ZStack {
-                            // Multi-layer animated glow
-                            ForEach(0..<3) { i in
+                            // Dynamic pulsing glow layers
+                            ForEach(0..<4) { i in
                                 Capsule()
                                     .fill(
                                         RadialGradient(
-                                            colors: [color.opacity(glowIntensity), .clear],
+                                            colors: [
+                                                color.opacity(glowIntensity * (1.0 - Double(i) * 0.15)),
+                                                color.opacity(glowIntensity * 0.3),
+                                                .clear
+                                            ],
                                             center: .center,
-                                            startRadius: CGFloat(15 + i * 10),
-                                            endRadius: CGFloat(40 + i * 15)
+                                            startRadius: CGFloat(10 + i * 8),
+                                            endRadius: CGFloat(35 + i * 12)
                                         )
                                     )
-                                    .frame(height: 56)
-                                    .blur(radius: CGFloat(12 + i * 4))
-                                    .opacity(1.0 - Double(i) * 0.2)
+                                    .frame(height: CGFloat(60 + i * 6))
+                                    .blur(radius: CGFloat(10 + i * 3))
+                                    .scaleEffect(pulseAnimation ? 1.05 : 1.0)
+                                    .animation(
+                                        Animation.easeInOut(duration: 1.8 + Double(i) * 0.3)
+                                            .repeatForever(autoreverses: true)
+                                            .delay(Double(i) * 0.15),
+                                        value: pulseAnimation
+                                    )
                             }
                             
-                            HStack(spacing: 12) {
-                                // Premium animated star
+                            HStack(spacing: 14) {
+                                // Animated star with shimmer
                                 ZStack {
-                                    // Star glow
+                                    // Outer glow ring
                                     Circle()
                                         .fill(
                                             RadialGradient(
-                                                colors: [.yellow.opacity(0.6), .orange.opacity(0.3), .clear],
+                                                colors: [.yellow.opacity(0.7), .orange.opacity(0.4), .clear],
                                                 center: .center,
-                                                startRadius: 10,
-                                                endRadius: 30
+                                                startRadius: 8,
+                                                endRadius: 32
                                             )
                                         )
-                                        .frame(width: 50, height: 50)
-                                        .blur(radius: 8)
+                                        .frame(width: 56, height: 56)
+                                        .blur(radius: 10)
                                     
+                                    // Rotating gradient circle
                                     Circle()
                                         .fill(
                                             AngularGradient(
-                                                colors: [.yellow, .orange, .yellow, .orange, .yellow],
-                                                center: .center
+                                                colors: [
+                                                    .yellow,
+                                                    .orange,
+                                                    .red.opacity(0.8),
+                                                    .orange,
+                                                    .yellow
+                                                ],
+                                                center: .center,
+                                                startAngle: .degrees(shimmerPhase),
+                                                endAngle: .degrees(shimmerPhase + 360)
                                             )
                                         )
-                                        .frame(width: 40, height: 40)
-                                        .shadow(color: .yellow.opacity(0.8), radius: 10)
+                                        .frame(width: 44, height: 44)
+                                        .shadow(color: .yellow.opacity(0.9), radius: 12)
+                                    
+                                    // Inner white circle for contrast
+                                    Circle()
+                                        .strokeBorder(
+                                            LinearGradient(
+                                                colors: [.white.opacity(0.6), .white.opacity(0.2)],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            ),
+                                            lineWidth: 2
+                                        )
+                                        .frame(width: 44, height: 44)
                                     
                                     Image(systemName: "star.fill")
-                                        .font(.system(size: 18, weight: .bold))
+                                        .font(.system(size: 20, weight: .bold))
                                         .foregroundColor(.white)
-                                        .rotationEffect(.degrees(pulseAnimation ? 360 : 0))
-                                        .shadow(color: .black.opacity(0.3), radius: 2)
+                                        .shadow(color: .black.opacity(0.4), radius: 2)
+                                        .scaleEffect(pulseAnimation ? 1.1 : 1.0)
                                 }
                                 
-                                VStack(alignment: .leading, spacing: 3) {
+                                VStack(alignment: .leading, spacing: 4) {
                                     Text("\(flashcard.point)")
-                                        .font(.system(size: 24, weight: .black, design: .rounded))
-                                        .foregroundColor(.white)
+                                        .font(.system(size: 28, weight: .black, design: .rounded))
+                                        .foregroundStyle(
+                                            LinearGradient(
+                                                colors: [.white, .white.opacity(0.9)],
+                                                startPoint: .top,
+                                                endPoint: .bottom
+                                            )
+                                        )
+                                        .shadow(color: color.opacity(0.5), radius: 4, x: 0, y: 2)
                                     Text("POINTS")
-                                        .font(.system(size: 10, weight: .heavy))
-                                        .foregroundColor(.white.opacity(0.8))
-                                        .tracking(1.5)
+                                        .font(.system(size: 11, weight: .black))
+                                        .foregroundColor(color.opacity(0.9))
+                                        .tracking(2)
+                                        .shadow(color: .black.opacity(0.3), radius: 1)
                                 }
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 12)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 14)
                             .background(
                                 ZStack {
+                                    // Glossy base
                                     Capsule()
                                         .fill(
                                             LinearGradient(
                                                 colors: [
-                                                    color.opacity(0.4),
-                                                    color.opacity(0.25),
-                                                    color.opacity(0.35)
+                                                    Color.white.opacity(0.25),
+                                                    color.opacity(0.45),
+                                                    color.opacity(0.35),
+                                                    color.opacity(0.5)
                                                 ],
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
                                             )
                                         )
                                     
+                                    // Glass reflection effect
+                                    Capsule()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [
+                                                    .white.opacity(0.4),
+                                                    .clear,
+                                                    .clear
+                                                ],
+                                                startPoint: .top,
+                                                endPoint: .center
+                                            )
+                                        )
+                                        .frame(height: 28)
+                                        .offset(y: -7)
+                                    
+                                    // Premium border
                                     Capsule()
                                         .strokeBorder(
                                             LinearGradient(
-                                                colors: [color, color.opacity(0.6), color, color.opacity(0.6)],
+                                                colors: [
+                                                    .white.opacity(0.8),
+                                                    color.opacity(0.9),
+                                                    color,
+                                                    color.opacity(0.7),
+                                                    .white.opacity(0.6)
+                                                ],
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
                                             ),
-                                            lineWidth: 3
+                                            lineWidth: 3.5
                                         )
                                 }
-                                .shadow(color: color.opacity(0.6), radius: 15, x: 0, y: 6)
+                                .shadow(color: color.opacity(0.7), radius: 18, x: 0, y: 8)
+                                .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                             )
                         }
-                        .offset(y: floatAnimation ? -5 : 0)
+                        .offset(y: floatAnimation ? -6 : 0)
+                        .scaleEffect(floatAnimation ? 1.02 : 1.0)
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 15)
-                    .padding(.bottom, 35)
+                    .padding(.bottom, 38)
                     
-                    // Revolutionary Question Card with Particle Effects
+                    // Enhanced Question Card
                     VStack(spacing: 0) {
-                        // Futuristic header with animated elements
+                        // Premium header
                         VStack(spacing: 0) {
-                            HStack(spacing: 12) {
-                                // Animated status dots
-                                ForEach(0..<3) { i in
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [color, color.opacity(0.6)],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
+                            HStack(spacing: 14) {
+                                // Animated status indicator
+                                HStack(spacing: 8) {
+                                    ForEach(0..<3) { i in
+                                        Circle()
+                                            .fill(
+                                                LinearGradient(
+                                                    colors: [color, color.opacity(0.7)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                )
                                             )
-                                        )
-                                        .frame(width: 11, height: 11)
-                                        .shadow(color: color.opacity(0.8), radius: 4)
-                                        .scaleEffect(pulseAnimation ? 1.1 : 1.0)
-                                        .animation(
-                                            Animation.easeInOut(duration: 1.2)
-                                                .repeatForever(autoreverses: true)
-                                                .delay(Double(i) * 0.2),
-                                            value: pulseAnimation
-                                        )
+                                            .frame(width: 10, height: 10)
+                                            .shadow(color: color.opacity(0.9), radius: 5)
+                                            .scaleEffect(pulseAnimation ? 1.15 : 1.0)
+                                            .opacity(pulseAnimation ? 1.0 : 0.7)
+                                            .animation(
+                                                Animation.easeInOut(duration: 1.0)
+                                                    .repeatForever(autoreverses: true)
+                                                    .delay(Double(i) * 0.25),
+                                                value: pulseAnimation
+                                            )
+                                    }
                                 }
                                 
                                 Spacer()
                                 
-                                HStack(spacing: 4) {
-                                    Image(systemName: "bolt.fill")
-                                        .font(.system(size: 10))
+                                HStack(spacing: 6) {
+                                    Image(systemName: "brain.head.profile")
+                                        .font(.system(size: 12, weight: .bold))
                                         .foregroundColor(color)
                                     Text("QUESTION")
-                                        .font(.system(size: 11, weight: .black))
-                                        .foregroundColor(color.opacity(0.8))
-                                        .tracking(2)
+                                        .font(.system(size: 12, weight: .black))
+                                        .foregroundColor(color)
+                                        .tracking(2.5)
                                 }
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 6)
+                                .background(
+                                    Capsule()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [color.opacity(0.25), color.opacity(0.15)],
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .overlay(
+                                            Capsule()
+                                                .strokeBorder(color.opacity(0.5), lineWidth: 1.5)
+                                        )
+                                )
                             }
-                            .padding(.horizontal, 26)
-                            .padding(.top, 22)
-                            .padding(.bottom, 14)
+                            .padding(.horizontal, 28)
+                            .padding(.top, 24)
+                            .padding(.bottom, 16)
                             
                             // Animated divider
                             GeometryReader { geo in
@@ -502,125 +588,212 @@ struct QuestionView: View {
                         }
                         
                         // Premium content
-                        VStack(spacing: 32) {
-                            // Ultra premium animated icon
+                        VStack(spacing: 36) {
+                            // Enhanced animated icon with depth
                             ZStack {
-                                // Rotating outer ring
-                                Circle()
-                                    .strokeBorder(
-                                        AngularGradient(
-                                            colors: [color, .clear, color.opacity(0.3), .clear],
-                                            center: .center
-                                        ),
-                                        lineWidth: 3
-                                    )
-                                    .frame(width: 110, height: 110)
-                                    .rotationEffect(.degrees(pulseAnimation ? 360 : 0))
-                                    .blur(radius: 2)
+                                // Outer rotating rings
+                                ForEach(0..<2) { ringIndex in
+                                    Circle()
+                                        .strokeBorder(
+                                            AngularGradient(
+                                                colors: [
+                                                    color.opacity(0.8),
+                                                    .clear,
+                                                    color.opacity(0.4),
+                                                    .clear,
+                                                    color.opacity(0.6),
+                                                    .clear
+                                                ],
+                                                center: .center
+                                            ),
+                                            lineWidth: 2.5
+                                        )
+                                        .frame(width: CGFloat(118 + ringIndex * 12), height: CGFloat(118 + ringIndex * 12))
+                                        .rotationEffect(.degrees(pulseAnimation ? (ringIndex % 2 == 0 ? 360 : -360) : 0))
+                                        .blur(radius: 1.5)
+                                        .opacity(0.7)
+                                }
                                 
-                                // Multiple glow layers with pulse
-                                ForEach(0..<3) { i in
+                                // Multi-layer glows with breathing effect
+                                ForEach(0..<4) { i in
                                     Circle()
                                         .fill(
                                             RadialGradient(
                                                 colors: [
-                                                    color.opacity(glowIntensity * (1 - Double(i) * 0.3)),
+                                                    color.opacity(glowIntensity * (0.9 - Double(i) * 0.2)),
+                                                    color.opacity(glowIntensity * 0.3),
                                                     .clear
                                                 ],
                                                 center: .center,
-                                                startRadius: CGFloat(30 + i * 20),
-                                                endRadius: CGFloat(70 + i * 25)
+                                                startRadius: CGFloat(25 + i * 15),
+                                                endRadius: CGFloat(60 + i * 20)
                                             )
                                         )
-                                        .frame(width: 140, height: 140)
-                                        .blur(radius: 18)
+                                        .frame(width: CGFloat(140 + i * 10), height: CGFloat(140 + i * 10))
+                                        .blur(radius: CGFloat(15 + i * 3))\n                                        .scaleEffect(pulseAnimation ? 1.03 : 1.0)
+                                        .animation(\n                                            Animation.easeInOut(duration: 2.0 + Double(i) * 0.3)\n                                                .repeatForever(autoreverses: true)\n                                                .delay(Double(i) * 0.15),\n                                            value: pulseAnimation\n                                        )
                                 }
                                 
-                                // Main icon circle with shimmer
+                                // Main icon circle with glass effect
                                 ZStack {
+                                    // Base gradient circle
                                     Circle()
                                         .fill(
                                             LinearGradient(
                                                 colors: [
-                                                    color.opacity(0.35),
-                                                    color.opacity(0.2),
-                                                    color.opacity(0.3)
+                                                    color.opacity(0.5),
+                                                    color.opacity(0.3),
+                                                    color.opacity(0.4)
                                                 ],
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
                                             )
                                         )
-                                        .frame(width: 90, height: 90)
+                                        .frame(width: 100, height: 100)
                                     
+                                    // Glass reflection
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [
+                                                    .white.opacity(0.3),
+                                                    .clear
+                                                ],
+                                                startPoint: .top,
+                                                endPoint: .center
+                                            )
+                                        )
+                                        .frame(width: 100, height: 100)
+                                    
+                                    // Border with gradient
                                     Circle()
                                         .strokeBorder(
                                             LinearGradient(
-                                                colors: [color.opacity(0.8), color.opacity(0.4)],
+                                                colors: [
+                                                    .white.opacity(0.6),
+                                                    color.opacity(0.9),
+                                                    color.opacity(0.6),
+                                                    .white.opacity(0.4)
+                                                ],
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
                                             ),
-                                            lineWidth: 4
+                                            lineWidth: 4.5
                                         )
-                                        .frame(width: 90, height: 90)
-                                        .shadow(color: color.opacity(0.6), radius: 18, x: 0, y: 6)
+                                        .frame(width: 100, height: 100)
+                                        .shadow(color: color.opacity(0.7), radius: 20, x: 0, y: 8)
                                     
+                                    // Icon with enhanced styling
                                     Image(systemName: "brain.head.profile")
-                                        .font(.system(size: 40, weight: .bold))
-                                        .foregroundColor(color)
-                                        .shadow(color: .black.opacity(0.4), radius: 4)
+                                        .font(.system(size: 46, weight: .bold))
+                                        .foregroundStyle(
+                                            LinearGradient(
+                                                colors: [.white, color.opacity(0.9)],
+                                                startPoint: .top,
+                                                endPoint: .bottom
+                                            )
+                                        )
+                                        .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 2)
+                                        .shadow(color: color.opacity(0.8), radius: 8)
                                 }
-                                .scaleEffect(pulseAnimation ? 1.05 : 1.0)
+                                .scaleEffect(pulseAnimation ? 1.06 : 1.0)
                             }
-                            .padding(.top, 15)
+                            .padding(.top, 18)
                             
-                            // Enhanced question text
-                            Text(flashcard.question)
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)
-                                .lineSpacing(10)
-                                .padding(.horizontal, 30)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .shadow(color: .black.opacity(0.3), radius: 2)
+                            // Premium question text with background
+                            VStack(spacing: 16) {
+                                Text(flashcard.question)
+                                    .font(.system(size: 21, weight: .semibold, design: .rounded))
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [.white, .white.opacity(0.95)],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                    )
+                                    .multilineTextAlignment(.center)
+                                    .lineSpacing(11)
+                                    .padding(.horizontal, 32)
+                                    .padding(.vertical, 20)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 18)
+                                            .fill(
+                                                LinearGradient(
+                                                    colors: [
+                                                        Color.white.opacity(0.08),
+                                                        Color.white.opacity(0.04)
+                                                    ],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                )
+                                            )
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 18)
+                                                    .strokeBorder(
+                                                        Color.white.opacity(0.15),
+                                                        lineWidth: 1.5
+                                                    )
+                                            )
+                                    )
+                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+                            }
+                            .padding(.horizontal, 4)
                         }
-                        .padding(.vertical, 36)
+                        .padding(.vertical, 40)
                     }
                     .frame(maxWidth: .infinity)
                     .background(
                         ZStack {
-                            // Premium glass card
-                            RoundedRectangle(cornerRadius: 34)
+                            // Premium glass card with depth
+                            RoundedRectangle(cornerRadius: 36)
                                 .fill(
                                     LinearGradient(
                                         colors: [
-                                            Color(white: 0.16, opacity: 0.96),
-                                            Color(white: 0.13, opacity: 0.92),
-                                            Color(white: 0.14, opacity: 0.94)
+                                            Color(white: 0.18, opacity: 0.97),
+                                            Color(white: 0.14, opacity: 0.94),
+                                            Color(white: 0.15, opacity: 0.96),
+                                            Color(white: 0.13, opacity: 0.93)
                                         ],
                                         startPoint: .topLeading,
                                         endPoint: .bottomTrailing
                                     )
                                 )
                             
-                            // Animated border glow
-                            RoundedRectangle(cornerRadius: 34)
+                            // Top glass reflection
+                            RoundedRectangle(cornerRadius: 36)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            .white.opacity(0.12),
+                                            .clear
+                                        ],
+                                        startPoint: .top,
+                                        endPoint: .center
+                                    )
+                                )
+                            
+                            // Enhanced animated border
+                            RoundedRectangle(cornerRadius: 36)
                                 .strokeBorder(
                                     LinearGradient(
                                         colors: [
-                                            color.opacity(0.8),
+                                            .white.opacity(0.4),
+                                            color.opacity(0.85),
+                                            color.opacity(0.5),
+                                            color.opacity(0.7),
                                             color.opacity(0.4),
-                                            color.opacity(0.6),
-                                            color.opacity(0.3),
-                                            color.opacity(0.7)
+                                            .white.opacity(0.3)
                                         ],
                                         startPoint: .topLeading,
                                         endPoint: .bottomTrailing
                                     ),
-                                    lineWidth: 3.5
+                                    lineWidth: 4
                                 )
                         }
-                        .shadow(color: color.opacity(0.5), radius: 28, x: 0, y: 14)
-                        .shadow(color: .black.opacity(0.4), radius: 18, x: 0, y: 10)
+                        .shadow(color: color.opacity(0.6), radius: 32, x: 0, y: 16)
+                        .shadow(color: .black.opacity(0.5), radius: 20, x: 0, y: 12)
+                        .shadow(color: color.opacity(0.3), radius: 15, x: 0, y: 8)
                     )
                     .padding(.horizontal, 20)
                     .padding(.bottom, 40)
@@ -674,6 +847,11 @@ struct QuestionView: View {
             // Glow intensity animation
             withAnimation(Animation.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
                 glowIntensity = 0.5
+            }
+            
+            // Shimmer rotation animation
+            withAnimation(Animation.linear(duration: 3.0).repeatForever(autoreverses: false)) {
+                shimmerPhase = 360
             }
         }
     }

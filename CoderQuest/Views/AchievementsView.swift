@@ -238,8 +238,9 @@ struct AchievementCard: View {
                 .lineLimit(2)
                 .frame(height: 35)
             
-            if !achievement.isUnlocked {
-                VStack(spacing: 4) {
+            // Status section with fixed height
+            VStack(spacing: 4) {
+                if !achievement.isUnlocked {
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 4)
@@ -263,24 +264,28 @@ struct AchievementCard: View {
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.gray.opacity(0.6))
+                } else {
+                    Spacer()
+                        .frame(height: 6)
+                    
+                    HStack(spacing: 3) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.caption)
+                            .foregroundColor(.green)
+                        Text("Unlocked!")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.green)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(Color.green.opacity(0.2))
+                    )
                 }
-            } else {
-                HStack(spacing: 3) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                    Text("Unlocked!")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(
-                    Capsule()
-                        .fill(Color.green.opacity(0.2))
-                )
             }
+            .frame(height: 34)
         }
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
