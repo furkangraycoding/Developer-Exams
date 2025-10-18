@@ -13,9 +13,14 @@ struct SplashScreenView: View {
 
     var body: some View {
         ZStack {
-            // Modern gradient background
+            // Enhanced gradient background
             LinearGradient(
-                gradient: Gradient(colors: [Color.black, Color.purple.opacity(0.6), Color.cyan.opacity(0.4)]),
+                gradient: Gradient(colors: [
+                    Color.black,
+                    Color(red: 0.1, green: 0.05, blue: 0.2),
+                    Color.purple.opacity(0.4),
+                    Color.cyan.opacity(0.3)
+                ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

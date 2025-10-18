@@ -27,9 +27,14 @@ struct MenuView: View {
     
     var body: some View {
         ZStack {
-            // Modern gradient background
+            // Enhanced gradient background
             LinearGradient(
-                gradient: Gradient(colors: [Color.black, Color.cyan.opacity(0.4), Color.purple.opacity(0.3)]),
+                gradient: Gradient(colors: [
+                    Color.black,
+                    Color(red: 0.05, green: 0.1, blue: 0.2),
+                    Color.cyan.opacity(0.3),
+                    Color.purple.opacity(0.2)
+                ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -39,29 +44,76 @@ struct MenuView: View {
                 // Top Header with Stats
                 VStack(spacing: 15) {
                     HStack {
-                        // Profile Section
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text("Welcome back,")
-                                .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.8))
-                            Text(globalViewModel.username)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
+                        // Enhanced Profile Section
+                        HStack(spacing: 12) {
+                            // Avatar
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.cyan, .purple],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 50, height: 50)
+                                
+                                Text(String(globalViewModel.username.prefix(1)).uppercased())
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
+                            .shadow(color: .cyan.opacity(0.5), radius: 8)
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Welcome back,")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.7))
+                                Text(globalViewModel.username)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                            }
                         }
                         
                         Spacer()
                         
-                        // Level Badge
-                        HStack(spacing: 8) {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
+                        // Enhanced Level Badge
+                        HStack(spacing: 10) {
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        RadialGradient(
+                                            colors: [.yellow.opacity(0.4), .orange.opacity(0.2)],
+                                            center: .center,
+                                            startRadius: 10,
+                                            endRadius: 25
+                                        )
+                                    )
+                                    .frame(width: 44, height: 44)
+                                    .blur(radius: 5)
+                                
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.yellow, .orange],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 38, height: 38)
+                                
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(.white)
+                            }
+                            
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Level")
                                     .font(.caption2)
                                     .foregroundColor(.white.opacity(0.7))
                                 Text("\(progressManager.statistics.level)")
-                                    .font(.headline)
+                                    .font(.title3)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
                             }
@@ -69,9 +121,21 @@ struct MenuView: View {
                         .padding(.horizontal, 12)
                         .padding(.vertical, 8)
                         .background(
-                            Capsule()
-                                .fill(Color.white.opacity(0.15))
-                                .shadow(color: .yellow.opacity(0.3), radius: 5)
+                            ZStack {
+                                Capsule()
+                                    .fill(Color.white.opacity(0.12))
+                                
+                                Capsule()
+                                    .stroke(
+                                        LinearGradient(
+                                            colors: [.yellow.opacity(0.5), .orange.opacity(0.3)],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            }
+                            .shadow(color: .yellow.opacity(0.3), radius: 8)
                         )
                     }
                     .padding(.horizontal)
@@ -178,20 +242,48 @@ struct QuickActionButton: View {
     
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 ZStack(alignment: .topTrailing) {
-                    Image(systemName: icon)
-                        .font(.title2)
-                        .foregroundColor(color)
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [color.opacity(0.3), .clear],
+                                    center: .center,
+                                    startRadius: 10,
+                                    endRadius: 30
+                                )
+                            )
+                            .frame(width: 50, height: 50)
+                            .blur(radius: 5)
+                        
+                        Circle()
+                            .fill(color.opacity(0.2))
+                            .frame(width: 40, height: 40)
+                        
+                        Image(systemName: icon)
+                            .font(.title3)
+                            .foregroundColor(color)
+                    }
                     
                     if let badge = badge, badge > 0 {
                         Text("\(badge)")
                             .font(.caption2)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
-                            .padding(4)
-                            .background(Circle().fill(Color.red))
-                            .offset(x: 8, y: -8)
+                            .frame(width: 20, height: 20)
+                            .background(
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.red, .orange],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .shadow(color: .red.opacity(0.5), radius: 4)
+                            )
+                            .offset(x: 5, y: -5)
                     }
                 }
                 
@@ -203,11 +295,24 @@ struct QuickActionButton: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
             .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.white.opacity(0.15))
-                    .shadow(color: color.opacity(0.3), radius: 5)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.white.opacity(0.08))
+                    
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            LinearGradient(
+                                colors: [color.opacity(0.4), color.opacity(0.1)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
+                }
+                .shadow(color: color.opacity(0.2), radius: 6)
             )
         }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
@@ -224,31 +329,67 @@ struct DifficultyButton: View {
         }
     }
     
+    var emoji: String {
+        switch difficulty {
+        case .easy: return "😊"
+        case .medium: return "🤔"
+        case .hard: return "💪"
+        }
+    }
+    
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 5) {
-                Image(systemName: difficulty == .easy ? "🟢" : difficulty == .medium ? "🟡" : "🔴")
-                    .font(.title3)
+            VStack(spacing: 8) {
+                // Emoji icon
+                Text(emoji)
+                    .font(.title)
                 
                 Text(difficulty.rawValue)
                     .font(.subheadline)
-                    .fontWeight(isSelected ? .bold : .regular)
+                    .fontWeight(isSelected ? .bold : .medium)
                 
-                Text("\(difficulty.heartCount) ❤️")
-                    .font(.caption2)
-                    .opacity(0.8)
+                HStack(spacing: 2) {
+                    ForEach(0..<difficulty.heartCount, id: \.self) { _ in
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 8))
+                            .foregroundColor(.red)
+                    }
+                }
+                
+                if let timeLimit = difficulty.timeLimit {
+                    Text("\(timeLimit)s")
+                        .font(.caption2)
+                        .foregroundColor(.white.opacity(0.6))
+                }
             }
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
             .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? color.opacity(0.4) : Color.white.opacity(0.1))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isSelected ? color : Color.clear, lineWidth: 2)
-                    )
+                ZStack {
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(isSelected ? color.opacity(0.25) : Color.white.opacity(0.08))
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(
+                            isSelected ?
+                                LinearGradient(
+                                    colors: [color, color.opacity(0.6)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) :
+                                LinearGradient(
+                                    colors: [.clear, .clear],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                            lineWidth: isSelected ? 2 : 1
+                        )
+                }
+                .shadow(color: isSelected ? color.opacity(0.4) : .clear, radius: isSelected ? 8 : 0)
             )
+            .scaleEffect(isSelected ? 1.05 : 1.0)
+            .animation(.spring(response: 0.3), value: isSelected)
         }
     }
 }
@@ -262,26 +403,42 @@ struct LanguageCard: View {
     
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 12) {
-                // Icon
+            VStack(spacing: 15) {
+                // Enhanced Icon with glow
                 ZStack {
                     Circle()
                         .fill(
+                            RadialGradient(
+                                colors: [color.opacity(0.4), .clear],
+                                center: .center,
+                                startRadius: 20,
+                                endRadius: 50
+                            )
+                        )
+                        .frame(width: 90, height: 90)
+                        .blur(radius: 10)
+                    
+                    Circle()
+                        .fill(
                             LinearGradient(
-                                colors: [color.opacity(0.6), color.opacity(0.8)],
+                                colors: [color.opacity(0.8), color],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
                         )
                         .frame(width: 70, height: 70)
-                        .shadow(color: color.opacity(0.4), radius: 10)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.white.opacity(0.3), lineWidth: 2)
+                        )
+                        .shadow(color: color.opacity(0.5), radius: 12)
                     
                     if icon.count == 1 {
                         Text(icon)
                             .font(.system(size: 35))
                     } else {
                         Image(systemName: icon)
-                            .font(.system(size: 30))
+                            .font(.system(size: 30, weight: .semibold))
                             .foregroundColor(.white)
                     }
                 }
@@ -292,50 +449,69 @@ struct LanguageCard: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                 
-                // Stats or Play indicator
+                // Enhanced Stats
                 if let stats = stats {
-                    VStack(spacing: 4) {
-                        HStack {
+                    VStack(spacing: 6) {
+                        HStack(spacing: 5) {
                             Image(systemName: "star.fill")
-                                .font(.caption2)
+                                .font(.caption)
                                 .foregroundColor(.yellow)
                             Text("\(stats.totalPoints)")
-                                .font(.caption)
-                                .foregroundColor(.white.opacity(0.8))
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.yellow)
                         }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(
+                            Capsule()
+                                .fill(Color.yellow.opacity(0.2))
+                        )
                         
                         Text(String(format: "%.0f%% Accuracy", stats.accuracy))
-                            .font(.caption2)
-                            .foregroundColor(.white.opacity(0.6))
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.7))
                     }
                 } else {
-                    HStack(spacing: 4) {
-                        Image(systemName: "play.fill")
-                            .font(.caption2)
+                    HStack(spacing: 6) {
+                        Image(systemName: "play.circle.fill")
+                            .font(.subheadline)
                             .foregroundColor(color)
-                        Text("Start")
+                        Text("Start Learning")
                             .font(.caption)
-                            .foregroundColor(.white.opacity(0.8))
+                            .fontWeight(.medium)
+                            .foregroundColor(.white.opacity(0.9))
                     }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(color.opacity(0.2))
+                            .overlay(
+                                Capsule()
+                                    .stroke(color.opacity(0.4), lineWidth: 1)
+                            )
+                    )
                 }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 20)
             .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white.opacity(0.1))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(
-                                LinearGradient(
-                                    colors: [color.opacity(0.6), color.opacity(0.3)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 2
-                            )
-                    )
-                    .shadow(color: color.opacity(0.2), radius: 8)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 22)
+                        .fill(Color.white.opacity(0.08))
+                    
+                    RoundedRectangle(cornerRadius: 22)
+                        .stroke(
+                            LinearGradient(
+                                colors: [color.opacity(0.6), color.opacity(0.3)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 2
+                        )
+                }
+                .shadow(color: color.opacity(0.3), radius: 10)
             )
         }
         .buttonStyle(ScaleButtonStyle())

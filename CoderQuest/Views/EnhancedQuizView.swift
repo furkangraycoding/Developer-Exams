@@ -36,9 +36,14 @@ struct EnhancedQuizView: View {
     
     var body: some View {
         ZStack {
-            // Background
+            // Enhanced Background
             LinearGradient(
-                gradient: Gradient(colors: [Color.black, globalViewModel.chosenMenuColor.opacity(0.3)]),
+                gradient: Gradient(colors: [
+                    Color.black,
+                    Color.black.opacity(0.9),
+                    globalViewModel.chosenMenuColor.opacity(0.25),
+                    globalViewModel.chosenMenuColor.opacity(0.15)
+                ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
