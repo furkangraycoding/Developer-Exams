@@ -77,127 +77,65 @@ struct MenuView: View {
                         
                         Spacer()
                         
-                        VStack(spacing: 8) {
-                            // Enhanced Level Badge
-                            HStack(spacing: 10) {
-                                ZStack {
-                                    Circle()
-                                        .fill(
-                                            RadialGradient(
-                                                colors: [.yellow.opacity(0.4), .orange.opacity(0.2)],
-                                                center: .center,
-                                                startRadius: 10,
-                                                endRadius: 25
-                                            )
+                        // Enhanced Level Badge
+                        HStack(spacing: 10) {
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        RadialGradient(
+                                            colors: [.yellow.opacity(0.4), .orange.opacity(0.2)],
+                                            center: .center,
+                                            startRadius: 10,
+                                            endRadius: 25
                                         )
-                                        .frame(width: 44, height: 44)
-                                        .blur(radius: 5)
-                                    
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [.yellow, .orange],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                        .frame(width: 38, height: 38)
-                                    
-                                    Image(systemName: "star.fill")
-                                        .font(.system(size: 18))
-                                        .foregroundColor(.white)
-                                }
+                                    )
+                                    .frame(width: 44, height: 44)
+                                    .blur(radius: 5)
                                 
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("Level")
-                                        .font(.caption2)
-                                        .foregroundColor(.white.opacity(0.7))
-                                    Text("\(progressManager.statistics.level)")
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color.white.opacity(0.12))
-                                    
-                                    Capsule()
-                                        .stroke(
-                                            LinearGradient(
-                                                colors: [.yellow.opacity(0.5), .orange.opacity(0.3)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            ),
-                                            lineWidth: 1
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.yellow, .orange],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
                                         )
-                                }
-                                .shadow(color: .yellow.opacity(0.3), radius: 8)
-                            )
+                                    )
+                                    .frame(width: 38, height: 38)
+                                
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(.white)
+                            }
                             
-                            // Coins Badge
-                            HStack(spacing: 10) {
-                                ZStack {
-                                    Circle()
-                                        .fill(
-                                            RadialGradient(
-                                                colors: [.cyan.opacity(0.4), .blue.opacity(0.2)],
-                                                center: .center,
-                                                startRadius: 10,
-                                                endRadius: 25
-                                            )
-                                        )
-                                        .frame(width: 44, height: 44)
-                                        .blur(radius: 5)
-                                    
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [.cyan, .blue],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                        .frame(width: 38, height: 38)
-                                    
-                                    Image(systemName: "dollarsign.circle.fill")
-                                        .font(.system(size: 18))
-                                        .foregroundColor(.white)
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("Coins")
-                                        .font(.caption2)
-                                        .foregroundColor(.white.opacity(0.7))
-                                    Text("\(progressManager.statistics.totalCoins)")
-                                        .font(.title3)
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.white)
-                                }
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Level")
+                                    .font(.caption2)
+                                    .foregroundColor(.white.opacity(0.7))
+                                Text("\(progressManager.statistics.level)")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
                             }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(
-                                ZStack {
-                                    Capsule()
-                                        .fill(Color.white.opacity(0.12))
-                                    
-                                    Capsule()
-                                        .stroke(
-                                            LinearGradient(
-                                                colors: [.cyan.opacity(0.5), .blue.opacity(0.3)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            ),
-                                            lineWidth: 1
-                                        )
-                                }
-                                .shadow(color: .cyan.opacity(0.3), radius: 8)
-                            )
                         }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            ZStack {
+                                Capsule()
+                                    .fill(Color.white.opacity(0.12))
+                                
+                                Capsule()
+                                    .stroke(
+                                        LinearGradient(
+                                            colors: [.yellow.opacity(0.5), .orange.opacity(0.3)],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        ),
+                                        lineWidth: 1
+                                    )
+                            }
+                            .shadow(color: .yellow.opacity(0.3), radius: 8)
+                        )
                     }
                     .padding(.horizontal)
                     .padding(.top, 10)

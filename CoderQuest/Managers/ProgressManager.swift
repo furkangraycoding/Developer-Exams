@@ -340,13 +340,12 @@ class ProgressManager: ObservableObject {
         
         let achievement = achievements[index]
         statistics.addXP(achievement.xpReward)
-        statistics.addCoins(achievement.coinReward)
         achievements[index].isClaimed = true
         
         saveStatistics()
         saveAchievements()
         
-        print("🎁 Claimed reward for '\(achievement.title)': +\(achievement.xpReward) XP, +\(achievement.coinReward) Coins")
+        print("🎁 Claimed reward for '\(achievement.title)': +\(achievement.xpReward) XP")
         return true
     }
     

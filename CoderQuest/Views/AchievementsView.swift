@@ -568,74 +568,33 @@ struct AchievementDetailView: View {
                 )
             }
             
-            // Rewards Display
-            HStack(spacing: 15) {
-                // XP Reward
-                HStack(spacing: 6) {
-                    Image(systemName: "star.fill")
-                        .font(.title3)
-                        .foregroundColor(.yellow)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("+\(achievement.xpReward)")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("XP")
-                            .font(.caption2)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-                .background(
-                    Capsule()
-                        .fill(
-                            LinearGradient(
-                                colors: [.yellow.opacity(0.3), .orange.opacity(0.2)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color.yellow.opacity(0.6), lineWidth: 2)
-                        )
-                )
-                .shadow(color: .yellow.opacity(0.4), radius: 10)
-                
-                // Coin Reward
-                HStack(spacing: 6) {
-                    Image(systemName: "dollarsign.circle.fill")
-                        .font(.title3)
-                        .foregroundColor(.cyan)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("+\(achievement.coinReward)")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("Coins")
-                            .font(.caption2)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-                .background(
-                    Capsule()
-                        .fill(
-                            LinearGradient(
-                                colors: [.cyan.opacity(0.3), .blue.opacity(0.2)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color.cyan.opacity(0.6), lineWidth: 2)
-                        )
-                )
-                .shadow(color: .cyan.opacity(0.4), radius: 10)
+            // XP Reward
+            HStack(spacing: 8) {
+                Image(systemName: "star.fill")
+                    .font(.title3)
+                    .foregroundColor(.yellow)
+                Text("+\(achievement.xpReward) XP")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
             }
+            .padding(.horizontal, 25)
+            .padding(.vertical, 12)
+            .background(
+                Capsule()
+                    .fill(
+                        LinearGradient(
+                            colors: [.yellow.opacity(0.3), .orange.opacity(0.2)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color.yellow.opacity(0.6), lineWidth: 2)
+                    )
+            )
+            .shadow(color: .yellow.opacity(0.4), radius: 10)
         }
         .padding(35)
         .background(
