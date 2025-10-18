@@ -169,29 +169,6 @@ struct MenuView: View {
                 }
                 .padding(.bottom, 20)
                 
-                // Difficulty Selector
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Select Difficulty")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.horizontal)
-                    
-                    HStack(spacing: 12) {
-                        ForEach(DifficultyLevel.allCases, id: \.self) { difficulty in
-                            DifficultyButton(
-                                difficulty: difficulty,
-                                isSelected: selectedDifficulty == difficulty
-                            ) {
-                                withAnimation(.spring()) {
-                                    selectedDifficulty = difficulty
-                                }
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                .padding(.bottom, 20)
-                
                 // Language Selection Title
                 Text("Choose Your Language")
                     .font(.title2)
