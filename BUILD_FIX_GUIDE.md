@@ -7,13 +7,26 @@
 **Issues Found:**
 - Missing backward compatibility for new fields (`totalCoins`, `isClaimed`, `coinReward`)
 - Duplicate achievement type enum case (`unstoppable`)
+- Non-exhaustive switch statements in AchievementsView.swift and EnhancedQuizView.swift
 
 **Fixes Applied:**
 1. **UserStatistics** - Added custom `init(from decoder:)` to handle missing `totalCoins` field
 2. **Achievement** - Added custom `init(from decoder:)` to handle missing `isClaimed` and `coinReward` fields
 3. **AchievementType** - Removed duplicate `unstoppable` enum case (using `streak50` instead)
+4. **AchievementsView.swift** - Updated both switch statements to handle all 27 achievement types with color assignments
+5. **EnhancedQuizView.swift** - Updated ModernAchievementPopup switch statement to handle all 27 achievement types
 
-These fixes ensure backward compatibility with existing saved data.
+**Color Assignments for New Achievements:**
+- Streak50: Orange/Yellow (flame theme)
+- Speed250, Speed500: Blue/Cyan (speed theme)
+- Master2500, Master5000: Yellow/Orange (prestige theme)
+- MarathonRunner, CenturyClub: Green/Teal (endurance theme)
+- PerfectStreak: Pink/Purple (perfection theme)
+- SpeedDemon: Cyan/Blue (speed theme)
+- Dedicated, Veteran: Orange/Red (dedication theme)
+- Legend: Yellow/Pink (legendary theme)
+
+These fixes ensure backward compatibility with existing saved data and complete switch coverage.
 
 ---
 

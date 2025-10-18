@@ -1298,18 +1298,28 @@ struct ModernAchievementPopup: View {
         switch achievement.type {
         case .firstWin, .perfectScore:
             return (.green, .mint)
-        case .streak5, .streak10, .streak20:
+        case .streak5, .streak10, .streak20, .streak50:
             return (.orange, .yellow)
-        case .speed50, .speed100:
+        case .speed50, .speed100, .speed250, .speed500:
             return (.blue, .cyan)
         case .allLanguages:
             return (.purple, .pink)
         case .hardMode:
             return (.red, .orange)
-        case .master100, .master500, .master1000:
+        case .master100, .master500, .master1000, .master2500, .master5000:
             return (.yellow, .orange)
         case .nightOwl, .earlyBird, .weekendWarrior:
             return (.indigo, .purple)
+        case .marathonRunner, .centuryClub:
+            return (.green, .teal)
+        case .perfectStreak:
+            return (.pink, .purple)
+        case .speedDemon:
+            return (.cyan, .blue)
+        case .dedicated, .veteran:
+            return (.orange, .red)
+        case .legend:
+            return (.yellow, .pink)
         }
     }
     
