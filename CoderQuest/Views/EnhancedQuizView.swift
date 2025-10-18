@@ -188,12 +188,17 @@ struct EnhancedQuizView: View {
         }
         .onChange(of: flashcardViewModel.gameOver) { isGameOver in
             if isGameOver {
+                // First clear old achievements
+                showAchievementPopup = false
+                progressManager.recentlyUnlockedAchievements.removeAll()
+                
+                // Then record session (which will add new achievements)
                 recordGameSession()
                 
-                // Reset and show new achievements
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                // Show only new achievements after a delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     if !progressManager.recentlyUnlockedAchievements.isEmpty {
-                        withAnimation {
+                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                             showAchievementPopup = true
                         }
                     }
@@ -208,6 +213,10 @@ struct EnhancedQuizView: View {
     }
     
     func setupGame() {
+        // Clear any old achievements first
+        showAchievementPopup = false
+        progressManager.recentlyUnlockedAchievements.removeAll()
+        
         flashcardViewModel.chosenMenu = chosenMenu
         flashcardViewModel.heartsRemaining = 5
         flashcardViewModel.loadFlashcards(chosenMenu: chosenMenu)
@@ -258,9 +267,7 @@ struct EnhancedQuizView: View {
         let timePlayed = Date().timeIntervalSince(sessionStartTime)
         let isPerfect = correctInSession == questionsInSession && questionsInSession > 0
         
-        // Reset recently unlocked achievements before recording new session
-        progressManager.recentlyUnlockedAchievements.removeAll()
-        
+        // Record session - this will populate recentlyUnlockedAchievements
         progressManager.recordGameSession(
             language: chosenMenu,
             score: flashcardViewModel.correctAnswersCount,
@@ -273,11 +280,14 @@ struct EnhancedQuizView: View {
     }
     
     func restartGame() {
+        // Clear achievements and reset
+        showAchievementPopup = false
+        progressManager.recentlyUnlockedAchievements.removeAll()
+        
         flashcardViewModel.restartGame()
         questionsInSession = 0
         correctInSession = 0
         sessionStartTime = Date()
-        progressManager.recentlyUnlockedAchievements.removeAll()
     }
     
     func showAd() {
@@ -292,116 +302,208 @@ struct QuestionView: View {
     @Binding var selectedAnswer: String?
     let color: Color
     let onAnswer: (String) -> Void
+    @State private var showQuestion = false
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 30) {
-                // Enhanced Points Badge
-                HStack {
-                    Spacer()
-                    HStack(spacing: 6) {
-                        Image(systemName: "star.fill")
-                            .font(.caption)
-                            .foregroundColor(.yellow)
-                        Text("+\(flashcard.point)")
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("pts")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.8))
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(
-                        Capsule()
-                            .fill(
-                                LinearGradient(
-                                    colors: [color.opacity(0.6), color.opacity(0.4)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    // Top Section - Points Badge
+                    HStack {
+                        Spacer()
+                        
+                        ZStack {
+                            // Glow effect
+                            Capsule()
+                                .fill(
+                                    RadialGradient(
+                                        colors: [color.opacity(0.4), .clear],
+                                        center: .center,
+                                        startRadius: 10,
+                                        endRadius: 40
+                                    )
                                 )
-                            )
-                            .overlay(
+                                .frame(height: 44)
+                                .blur(radius: 8)
+                            
+                            HStack(spacing: 8) {
+                                ZStack {
+                                    Circle()
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [.yellow, .orange],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .frame(width: 32, height: 32)
+                                    
+                                    Image(systemName: "star.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.white)
+                                }
+                                
+                                Text("\(flashcard.point)")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                
+                                Text("points")
+                                    .font(.caption)
+                                    .foregroundColor(.white.opacity(0.8))
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
                                 Capsule()
-                                    .stroke(color.opacity(0.6), lineWidth: 1.5)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [color.opacity(0.3), color.opacity(0.15)],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
+                                    )
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(
+                                                LinearGradient(
+                                                    colors: [color, color.opacity(0.5)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                ),
+                                                lineWidth: 2
+                                            )
+                                    )
                             )
-                            .shadow(color: color.opacity(0.5), radius: 8)
-                    )
-                }
-                .padding(.horizontal)
-                
-                // Enhanced Question Card
-                VStack(spacing: 20) {
-                    // Question icon
-                    ZStack {
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [color.opacity(0.3), .clear],
-                                    center: .center,
-                                    startRadius: 20,
-                                    endRadius: 50
-                                )
-                            )
-                            .frame(width: 80, height: 80)
-                            .blur(radius: 10)
-                        
-                        Circle()
-                            .fill(color.opacity(0.2))
-                            .frame(width: 60, height: 60)
-                        
-                        Image(systemName: "questionmark")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(color)
-                    }
-                    
-                    // Question text
-                    Text(flashcard.question)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4)
-                        .padding(.horizontal, 20)
-                }
-                .padding(.vertical, 30)
-                .frame(maxWidth: .infinity)
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.white.opacity(0.08))
-                        
-                        RoundedRectangle(cornerRadius: 25)
-                            .stroke(
-                                LinearGradient(
-                                    colors: [color.opacity(0.5), color.opacity(0.2)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 2
-                            )
-                    }
-                    .shadow(color: color.opacity(0.3), radius: 15)
-                )
-                .padding(.horizontal)
-                
-                // Enhanced Choices
-                VStack(spacing: 12) {
-                    ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
-                        ChoiceButton(
-                            text: choice,
-                            index: index,
-                            color: color,
-                            isSelected: selectedAnswer == choice
-                        ) {
-                            onAnswer(choice)
                         }
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 10)
+                    .padding(.bottom, 25)
+                    
+                    // Question Card with Modern Design
+                    VStack(spacing: 0) {
+                        // Decorative top bar
+                        HStack(spacing: 8) {
+                            Circle()
+                                .fill(color.opacity(0.8))
+                                .frame(width: 8, height: 8)
+                            Circle()
+                                .fill(color.opacity(0.6))
+                                .frame(width: 8, height: 8)
+                            Circle()
+                                .fill(color.opacity(0.4))
+                                .frame(width: 8, height: 8)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 15)
+                        .padding(.bottom, 20)
+                        
+                        // Question content
+                        VStack(spacing: 25) {
+                            // Icon
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        RadialGradient(
+                                            colors: [color.opacity(0.25), .clear],
+                                            center: .center,
+                                            startRadius: 30,
+                                            endRadius: 70
+                                        )
+                                    )
+                                    .frame(width: 100, height: 100)
+                                    .blur(radius: 12)
+                                
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [color.opacity(0.3), color.opacity(0.15)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 70, height: 70)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(color.opacity(0.5), lineWidth: 2)
+                                    )
+                                
+                                Image(systemName: "lightbulb.fill")
+                                    .font(.system(size: 30, weight: .medium))
+                                    .foregroundColor(color)
+                            }
+                            
+                            // Question text
+                            Text(flashcard.question)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .lineSpacing(6)
+                                .padding(.horizontal, 25)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(.bottom, 30)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 28)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            Color.white.opacity(0.12),
+                                            Color.white.opacity(0.08)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                            
+                            RoundedRectangle(cornerRadius: 28)
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [color.opacity(0.6), color.opacity(0.2), color.opacity(0.4)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2
+                                )
+                        }
+                        .shadow(color: color.opacity(0.35), radius: 20, x: 0, y: 10)
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 30)
+                    .opacity(showQuestion ? 1 : 0)
+                    .offset(y: showQuestion ? 0 : -20)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: showQuestion)
+                    
+                    // Answer Choices
+                    VStack(spacing: 14) {
+                        ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
+                            ChoiceButton(
+                                text: choice,
+                                index: index,
+                                color: color,
+                                isSelected: selectedAnswer == choice
+                            ) {
+                                onAnswer(choice)
+                            }
+                            .opacity(showQuestion ? 1 : 0)
+                            .offset(x: showQuestion ? 0 : -30)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2 + Double(index) * 0.1), value: showQuestion)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 30)
                 }
-                .padding(.horizontal)
+                .frame(minHeight: geometry.size.height)
             }
-            .padding(.vertical, 20)
+        }
+        .onAppear {
+            showQuestion = true
         }
     }
 }
@@ -419,77 +521,128 @@ struct ChoiceButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 15) {
-                // Option letter badge
+            HStack(spacing: 16) {
+                // Enhanced Option letter badge
                 ZStack {
+                    // Outer glow for selected
+                    if isSelected {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [color.opacity(0.4), .clear],
+                                    center: .center,
+                                    startRadius: 15,
+                                    endRadius: 30
+                                )
+                            )
+                            .frame(width: 50, height: 50)
+                            .blur(radius: 8)
+                    }
+                    
                     Circle()
                         .fill(
                             isSelected ?
                                 LinearGradient(
-                                    colors: [color, color.opacity(0.7)],
+                                    colors: [color, color.opacity(0.8)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ) :
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.1)],
+                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.08)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
                         )
-                        .frame(width: 40, height: 40)
+                        .frame(width: 44, height: 44)
+                        .overlay(
+                            Circle()
+                                .stroke(
+                                    isSelected ? Color.white.opacity(0.3) : Color.white.opacity(0.1),
+                                    lineWidth: 2
+                                )
+                        )
                     
                     Text(optionLetter)
-                        .font(.headline)
-                        .fontWeight(.bold)
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                 }
                 
-                // Answer text
+                // Enhanced Answer text
                 Text(text)
                     .font(.body)
                     .fontWeight(isSelected ? .semibold : .regular)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
+                    .lineSpacing(2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                // Checkmark for selected
+                // Enhanced Checkmark for selected
                 if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.title3)
-                        .foregroundColor(color)
+                    ZStack {
+                        Circle()
+                            .fill(color.opacity(0.2))
+                            .frame(width: 32, height: 32)
+                        
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(color)
+                    }
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 18)
             .background(
                 ZStack {
-                    RoundedRectangle(cornerRadius: 18)
+                    // Base background
+                    RoundedRectangle(cornerRadius: 20)
                         .fill(
                             isSelected ?
-                                color.opacity(0.15) :
-                                Color.white.opacity(0.06)
-                        )
-                    
-                    RoundedRectangle(cornerRadius: 18)
-                        .stroke(
-                            isSelected ?
                                 LinearGradient(
-                                    colors: [color, color.opacity(0.6)],
+                                    colors: [
+                                        color.opacity(0.2),
+                                        color.opacity(0.12)
+                                    ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ) :
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.1), Color.clear],
+                                    colors: [
+                                        Color.white.opacity(0.08),
+                                        Color.white.opacity(0.04)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                        )
+                    
+                    // Border
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(
+                            isSelected ?
+                                LinearGradient(
+                                    colors: [color, color.opacity(0.5)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) :
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
-                            lineWidth: isSelected ? 2 : 1
+                            lineWidth: isSelected ? 2.5 : 1
                         )
                 }
-                .shadow(color: isSelected ? color.opacity(0.4) : .clear, radius: isSelected ? 12 : 0)
+                .shadow(
+                    color: isSelected ? color.opacity(0.5) : Color.black.opacity(0.1),
+                    radius: isSelected ? 15 : 5,
+                    x: 0,
+                    y: isSelected ? 8 : 2
+                )
             )
         }
         .buttonStyle(ScaleButtonStyle())
+        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
     }
 }
 
