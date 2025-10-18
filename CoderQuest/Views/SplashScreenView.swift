@@ -2,17 +2,12 @@ import SwiftUI
 import Combine
 
 struct SplashScreenView: View {
-    @State private var displayedText: String = ""
     private let fullText = "CoderQuest"
     private let subtitle = "Master Programming, One Question at a Time"
-    private let typingSpeed: TimeInterval = 0.085
-    @State private var timer: Timer.TimerPublisher?
-    @State private var index = 0
     
     @State private var navigateToMainScreen = false
     @State private var isAppearing = true
     @State private var showSubtitle = false
-    @State private var cancellables: Set<AnyCancellable> = []
     @Binding var isActive : String
     @EnvironmentObject var globalViewModel: GlobalViewModel
 
@@ -25,12 +20,6 @@ struct SplashScreenView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-            .animation(.linear(duration: 3).repeatForever(autoreverses: true), value: displayedText)
-            
-            // Animated particles
-            SteadyRandomShapesView()
-                .opacity(0.4)
-                .ignoresSafeArea()
 
             VStack(spacing: 30) {
                 Spacer()
@@ -72,7 +61,7 @@ struct SplashScreenView: View {
                 
                 // Title
                 VStack(spacing: 10) {
-                    Text(displayedText)
+                    Text(fullText)
                         .font(.system(size: 48, weight: .bold, design: .rounded))
                         .foregroundStyle(
                             LinearGradient(
@@ -112,47 +101,23 @@ struct SplashScreenView: View {
             }
         }
         .onAppear {
-            startTypingAnimation()
+            // Show subtitle after a delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    showSubtitle = true
+                }
+            }
+            
+            // Navigate after delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                navigateToMainScreen = true
+            }
         }
         .onChange(of: navigateToMainScreen) { _ in
             if navigateToMainScreen {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     transitionToMainApp()
                 }
-            }
-        }
-    }
-    
-    // Start the typing animation
-    private func startTypingAnimation() {
-        // Create the timer manually and use onReceive to track its updates
-        timer = Timer.publish(every: typingSpeed, on: .main, in: .common)
-        
-        // Use onReceive to listen for timer updates and update the displayed text
-        timer?
-            .autoconnect()
-            .sink { _ in
-                typeText()
-            }
-            .store(in: &cancellables)
-    }
-    
-    // This will type out the text one character at a time
-    private func typeText() {
-        if index < fullText.count {
-            let character = fullText[fullText.index(fullText.startIndex, offsetBy: index)]
-            displayedText.append(character)
-            index += 1
-        } else {
-            // Once all the text is typed, stop the timer
-            timer?.connect().cancel()
-            // Show subtitle
-            withAnimation(.easeIn(duration: 0.5)) {
-                showSubtitle = true
-            }
-            // Trigger the navigation to the next screen after delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                navigateToMainScreen = true
             }
         }
     }

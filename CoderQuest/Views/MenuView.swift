@@ -35,12 +35,6 @@ struct MenuView: View {
             )
             .ignoresSafeArea()
             
-            // Animated background particles
-            RandomShapesView(shapesWithPositions: $globalViewModel.shapesWithPositions)
-                .environmentObject(globalViewModel)
-                .opacity(0.3)
-                .ignoresSafeArea()
-            
             VStack(spacing: 0) {
                 // Top Header with Stats
                 VStack(spacing: 15) {

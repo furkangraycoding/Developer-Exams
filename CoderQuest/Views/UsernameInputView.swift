@@ -20,12 +20,6 @@ struct UsernameInputView: View {
             )
             .ignoresSafeArea()
             
-            // Animated particles
-            RandomShapesView(shapesWithPositions: $globalViewModel.shapesWithPositions)
-                .environmentObject(globalViewModel)
-                .opacity(0.3)
-                .ignoresSafeArea()
-            
             VStack(spacing: 0) {
                 Spacer()
                 
