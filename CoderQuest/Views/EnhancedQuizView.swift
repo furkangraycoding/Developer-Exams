@@ -322,36 +322,45 @@ struct QuestionView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 25) {
-                // Question Card with Points Inside
-                VStack(spacing: 25) {
-                    // Points at Top of Card
-                    HStack(spacing: 8) {
-                        Image(systemName: "star.fill")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.yellow)
-                            .shadow(color: .yellow.opacity(0.5), radius: 6)
-                        
-                        Text("\(flashcard.point)")
-                            .font(.system(size: 28, weight: .black, design: .rounded))
-                            .foregroundColor(.white)
-                        
-                        Text("POINTS")
-                            .font(.system(size: 11, weight: .bold))
-                            .foregroundColor(color)
-                            .tracking(1.5)
-                    }
-                    .padding(.top, 10)
-                    
+                // Question Card
+                VStack(spacing: 20) {
                     // Question Text
                     Text(flashcard.question)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.system(size: 16, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(8)
+                        .lineSpacing(6)
                         .padding(.horizontal, 25)
+                        .padding(.top, 25)
                         .fixedSize(horizontal: false, vertical: true)
+                    
+                    // Points Badge at Bottom Right of Card
+                    HStack {
+                        Spacer()
+                        
+                        HStack(spacing: 6) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.yellow)
+                            
+                            Text("\(flashcard.point)")
+                                .font(.system(size: 20, weight: .black, design: .rounded))
+                                .foregroundColor(.white)
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(color.opacity(0.25))
+                                .overlay(
+                                    Capsule()
+                                        .strokeBorder(color.opacity(0.5), lineWidth: 1.5)
+                                )
+                        )
+                    }
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 15)
                 }
-                .padding(.vertical, 35)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 28)
@@ -413,12 +422,23 @@ struct ChoiceButton: View {
     let isSelected: Bool
     let action: () -> Void
     
+    @State private var pulseEffect = false
+    
     var optionLetter: String {
         String(UnicodeScalar(65 + index)!)
     }
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
+                pulseEffect = true
+            }
+            action()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                pulseEffect = false
+            }
+        }) {
             HStack(spacing: 16) {
                 // Letter Badge
                 ZStack {
@@ -496,10 +516,18 @@ struct ChoiceButton: View {
                         y: isSelected ? 8 : 4
                     )
             )
+            .overlay(
+                // Pulse ring animation on selection
+                RoundedRectangle(cornerRadius: 20)
+                    .strokeBorder(color, lineWidth: 3)
+                    .scaleEffect(pulseEffect ? 1.1 : 1.0)
+                    .opacity(pulseEffect ? 0 : (isSelected ? 0.6 : 0))
+                    .animation(.easeOut(duration: 0.6), value: pulseEffect)
+            )
         }
         .buttonStyle(ScaleButtonStyle())
-        .scaleEffect(isSelected ? 1.02 : 1.0)
-        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isSelected)
+        .scaleEffect(isSelected ? 1.03 : 1.0)
+        .animation(.spring(response: 0.35, dampingFraction: 0.65), value: isSelected)
     }
 }
 
@@ -514,18 +542,111 @@ struct AnswerFeedbackView: View {
     let isCorrect: Bool
     let color: Color
     
+    @State private var scaleEffect: CGFloat = 0.5
+    @State private var rotationEffect: Double = -180
+    @State private var showParticles = false
+    @State private var glowIntensity: Double = 0
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .font(.system(size: 100))
-                .foregroundColor(isCorrect ? .green : .red)
-                .scaleEffect(1.0)
-                .animation(.spring(response: 0.5, dampingFraction: 0.6), value: isCorrect)
+        ZStack {
+            // Particle effects for correct answer
+            if isCorrect && showParticles {
+                ForEach(0..<20) { i in
+                    Circle()
+                        .fill(
+                            [Color.green, Color.yellow, Color.cyan, Color.mint].randomElement() ?? .green
+                        )
+                        .frame(width: CGFloat.random(in: 8...16), height: CGFloat.random(in: 8...16))
+                        .offset(
+                            x: CGFloat.random(in: -200...200),
+                            y: CGFloat.random(in: -200...200)
+                        )
+                        .opacity(showParticles ? 0 : 1)
+                        .animation(
+                            .easeOut(duration: Double.random(in: 0.8...1.2))
+                                .delay(Double(i) * 0.02),
+                            value: showParticles
+                        )
+                }
+            }
             
-            Text(isCorrect ? "Correct!" : "Try Again!")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
+            VStack(spacing: 30) {
+                // Animated Icon with Glow
+                ZStack {
+                    // Glow effect
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    (isCorrect ? Color.green : Color.red).opacity(glowIntensity),
+                                    .clear
+                                ],
+                                center: .center,
+                                startRadius: 40,
+                                endRadius: 100
+                            )
+                        )
+                        .frame(width: 200, height: 200)
+                        .blur(radius: 20)
+                    
+                    // Icon
+                    Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .font(.system(size: 120))
+                        .foregroundColor(isCorrect ? .green : .red)
+                        .shadow(color: (isCorrect ? .green : .red).opacity(0.6), radius: 20)
+                        .scaleEffect(scaleEffect)
+                        .rotationEffect(.degrees(isCorrect ? rotationEffect : 0))
+                }
+                
+                // Text with background
+                Text(isCorrect ? "Correct!" : "Try Again!")
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 18)
+                    .background(
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: isCorrect ? 
+                                        [Color.green.opacity(0.3), Color.mint.opacity(0.2)] :
+                                        [Color.red.opacity(0.3), Color.orange.opacity(0.2)],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(
+                                        isCorrect ? Color.green.opacity(0.6) : Color.red.opacity(0.6),
+                                        lineWidth: 3
+                                    )
+                            )
+                    )
+                    .shadow(color: (isCorrect ? .green : .red).opacity(0.4), radius: 15)
+                    .scaleEffect(scaleEffect)
+            }
+        }
+        .onAppear {
+            // Entrance animation
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                scaleEffect = 1.0
+                if isCorrect {
+                    rotationEffect = 0
+                }
+            }
+            
+            // Glow pulse
+            withAnimation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true)) {
+                glowIntensity = 0.6
+            }
+            
+            // Show particles for correct answer
+            if isCorrect {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    showParticles = true
+                }
+            }
         }
     }
 }

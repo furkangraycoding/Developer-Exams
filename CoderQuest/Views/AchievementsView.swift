@@ -281,6 +281,7 @@ struct AchievementCard: View {
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.gray.opacity(0.6))
+                        .frame(height: 18)
                 } else if achievement.isClaimed {
                     Spacer()
                         .frame(height: 6)
@@ -294,12 +295,14 @@ struct AchievementCard: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.green)
                     }
+                    .frame(minWidth: 80)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(
                         Capsule()
                             .fill(Color.green.opacity(0.2))
                     )
+                    .frame(height: 18)
                 } else {
                     Spacer()
                         .frame(height: 6)
@@ -313,15 +316,17 @@ struct AchievementCard: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.yellow)
                     }
+                    .frame(minWidth: 80)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
                     .background(
                         Capsule()
                             .fill(Color.yellow.opacity(0.2))
                     )
+                    .frame(height: 18)
                 }
             }
-            .frame(height: 34)
+            .frame(height: 40)
         }
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
