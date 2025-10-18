@@ -333,821 +333,262 @@ struct QuestionView: View {
     let color: Color
     let onAnswer: (String) -> Void
     @State private var showQuestion = false
-    @State private var pulseAnimation = false
-    @State private var floatAnimation = false
-    @State private var glowIntensity: Double = 0.3
-    @State private var shimmerPhase: CGFloat = 0
-    
-    private var pointsBadge: some View {
-        HStack {
-            Spacer()
-            
-            ZStack {
-                // Dynamic pulsing glow layers
-                ForEach(0..<4) { i in
-                    Capsule()
-                        .fill(
-                            RadialGradient(
-                                colors: [
-                                    color.opacity(glowIntensity * (1.0 - Double(i) * 0.15)),
-                                    color.opacity(glowIntensity * 0.3),
-                                    .clear
-                                ],
-                                center: .center,
-                                startRadius: CGFloat(10 + i * 8),
-                                endRadius: CGFloat(35 + i * 12)
-                            )
-                        )
-                        .frame(height: CGFloat(60 + i * 6))
-                        .blur(radius: CGFloat(10 + i * 3))
-                        .scaleEffect(pulseAnimation ? 1.05 : 1.0)
-                        .animation(
-                            Animation.easeInOut(duration: 1.8 + Double(i) * 0.3)
-                                .repeatForever(autoreverses: true)
-                                .delay(Double(i) * 0.15),
-                            value: pulseAnimation
-                        )
-                }
-                
-                pointsBadgeContent
-            }
-            .offset(y: floatAnimation ? -6 : 0)
-            .scaleEffect(floatAnimation ? 1.02 : 1.0)
-        }
-        .padding(.horizontal, 20)
-        .padding(.top, 15)
-        .padding(.bottom, 38)
-    }
-    
-    private var pointsBadgeContent: some View {
-        HStack(spacing: 14) {
-            starIcon
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("\(flashcard.point)")
-                    .font(.system(size: 28, weight: .black, design: .rounded))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.white, .white.opacity(0.9)],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .shadow(color: color.opacity(0.5), radius: 4, x: 0, y: 2)
-                Text("POINTS")
-                    .font(.system(size: 11, weight: .black))
-                    .foregroundColor(color.opacity(0.9))
-                    .tracking(2)
-                    .shadow(color: .black.opacity(0.3), radius: 1)
-            }
-        }
-        .padding(.horizontal, 24)
-        .padding(.vertical, 14)
-        .background(pointsBadgeBackground)
-    }
-    
-    private var starIcon: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [.yellow.opacity(0.7), .orange.opacity(0.4), .clear],
-                        center: .center,
-                        startRadius: 8,
-                        endRadius: 32
-                    )
-                )
-                .frame(width: 56, height: 56)
-                .blur(radius: 10)
-            
-            Circle()
-                .fill(
-                    AngularGradient(
-                        colors: [
-                            .yellow,
-                            .orange,
-                            .red.opacity(0.8),
-                            .orange,
-                            .yellow
-                        ],
-                        center: .center,
-                        startAngle: .degrees(shimmerPhase),
-                        endAngle: .degrees(shimmerPhase + 360)
-                    )
-                )
-                .frame(width: 44, height: 44)
-                .shadow(color: .yellow.opacity(0.9), radius: 12)
-            
-            Circle()
-                .strokeBorder(
-                    LinearGradient(
-                        colors: [.white.opacity(0.6), .white.opacity(0.2)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 2
-                )
-                .frame(width: 44, height: 44)
-            
-            Image(systemName: "star.fill")
-                .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.4), radius: 2)
-                .scaleEffect(pulseAnimation ? 1.1 : 1.0)
-        }
-    }
-    
-    private var pointsBadgeBackground: some View {
-        ZStack {
-            Capsule()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.white.opacity(0.25),
-                            color.opacity(0.45),
-                            color.opacity(0.35),
-                            color.opacity(0.5)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-            
-            Capsule()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            .white.opacity(0.4),
-                            .clear,
-                            .clear
-                        ],
-                        startPoint: .top,
-                        endPoint: .center
-                    )
-                )
-                .frame(height: 28)
-                .offset(y: -7)
-            
-            Capsule()
-                .strokeBorder(
-                    LinearGradient(
-                        colors: [
-                            .white.opacity(0.8),
-                            color.opacity(0.9),
-                            color,
-                            color.opacity(0.7),
-                            .white.opacity(0.6)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 3.5
-                )
-        }
-        .shadow(color: color.opacity(0.7), radius: 18, x: 0, y: 8)
-        .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
-    }
     
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    pointsBadge
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 25) {
+                // Points Badge
+                HStack {
+                    Spacer()
                     
-                    // Enhanced Question Card
-                    VStack(spacing: 0) {
-                        // Premium header
-                        VStack(spacing: 0) {
-                            HStack(spacing: 14) {
-                                // Animated status indicator
-                                HStack(spacing: 8) {
-                                    ForEach(0..<3) { i in
-                                        Circle()
-                                            .fill(
-                                                LinearGradient(
-                                                    colors: [color, color.opacity(0.7)],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing
-                                                )
-                                            )
-                                            .frame(width: 10, height: 10)
-                                            .shadow(color: color.opacity(0.9), radius: 5)
-                                            .scaleEffect(pulseAnimation ? 1.15 : 1.0)
-                                            .opacity(pulseAnimation ? 1.0 : 0.7)
-                                            .animation(
-                                                Animation.easeInOut(duration: 1.0)
-                                                    .repeatForever(autoreverses: true)
-                                                    .delay(Double(i) * 0.25),
-                                                value: pulseAnimation
-                                            )
-                                    }
-                                }
-                                
-                                Spacer()
-                                
-                                HStack(spacing: 6) {
-                                    Image(systemName: "brain.head.profile")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(color)
-                                    Text("QUESTION")
-                                        .font(.system(size: 12, weight: .black))
-                                        .foregroundColor(color)
-                                        .tracking(2.5)
-                                }
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 6)
-                                .background(
-                                    Capsule()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [color.opacity(0.25), color.opacity(0.15)],
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        )
-                                        .overlay(
-                                            Capsule()
-                                                .strokeBorder(color.opacity(0.5), lineWidth: 1.5)
-                                        )
-                                )
-                            }
-                            .padding(.horizontal, 28)
-                            .padding(.top, 24)
-                            .padding(.bottom, 16)
-                            
-                            // Animated divider
-                            GeometryReader { geo in
+                    HStack(spacing: 12) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.yellow)
+                            .shadow(color: .yellow.opacity(0.5), radius: 8)
+                        
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("\(flashcard.point)")
+                                .font(.system(size: 32, weight: .black, design: .rounded))
+                                .foregroundColor(.white)
+                            Text("POINTS")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(color)
+                                .tracking(1.5)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(
+                        Capsule()
+                            .fill(
                                 LinearGradient(
-                                    colors: [.clear, color.opacity(0.5), color, color.opacity(0.5), .clear],
+                                    colors: [color.opacity(0.3), color.opacity(0.2)],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
-                                .frame(height: 2)
-                                .mask(
-                                    Rectangle()
-                                        .frame(width: geo.size.width * (showQuestion ? 1.0 : 0.0))
-                                        .animation(.easeOut(duration: 0.8).delay(0.3), value: showQuestion)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .strokeBorder(color.opacity(0.6), lineWidth: 2)
+                            )
+                    )
+                    .shadow(color: color.opacity(0.4), radius: 12, x: 0, y: 4)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 10)
+                
+                // Question Card
+                VStack(spacing: 30) {
+                    // Icon
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [color.opacity(0.3), color.opacity(0.1), .clear],
+                                    center: .center,
+                                    startRadius: 30,
+                                    endRadius: 80
                                 )
-                            }
-                            .frame(height: 2)
-                            .padding(.horizontal, 26)
-                        }
+                            )
+                            .frame(width: 140, height: 140)
+                            .blur(radius: 10)
                         
-                        // Premium content
-                        VStack(spacing: 36) {
-                            // Enhanced animated icon with depth
-                            ZStack {
-                                // Outer rotating rings
-                                ForEach(0..<2) { ringIndex in
-                                    Circle()
-                                        .strokeBorder(
-                                            AngularGradient(
-                                                colors: [
-                                                    color.opacity(0.8),
-                                                    .clear,
-                                                    color.opacity(0.4),
-                                                    .clear,
-                                                    color.opacity(0.6),
-                                                    .clear
-                                                ],
-                                                center: .center
-                                            ),
-                                            lineWidth: 2.5
-                                        )
-                                        .frame(width: CGFloat(118 + ringIndex * 12), height: CGFloat(118 + ringIndex * 12))
-                                        .rotationEffect(.degrees(pulseAnimation ? (ringIndex % 2 == 0 ? 360 : -360) : 0))
-                                        .blur(radius: 1.5)
-                                        .opacity(0.7)
-                                }
-                                
-                                // Multi-layer glows with breathing effect
-                                ForEach(0..<4) { i in
-                                    Circle()
-                                        .fill(
-                                            RadialGradient(
-                                                colors: [
-                                                    color.opacity(glowIntensity * (0.9 - Double(i) * 0.2)),
-                                                    color.opacity(glowIntensity * 0.3),
-                                                    .clear
-                                                ],
-                                                center: .center,
-                                                startRadius: CGFloat(25 + i * 15),
-                                                endRadius: CGFloat(60 + i * 20)
-                                            )
-                                        )
-                                        .frame(width: CGFloat(140 + i * 10), height: CGFloat(140 + i * 10))
-                                        .blur(radius: CGFloat(15 + i * 3))
-                                        .scaleEffect(pulseAnimation ? 1.03 : 1.0)
-                                        .animation(
-                                            Animation.easeInOut(duration: 2.0 + Double(i) * 0.3)
-                                                .repeatForever(autoreverses: true)
-                                                .delay(Double(i) * 0.15),
-                                            value: pulseAnimation
-                                        )
-                                }
-                                
-                                // Main icon circle with glass effect
-                                ZStack {
-                                    // Base gradient circle
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [
-                                                    color.opacity(0.5),
-                                                    color.opacity(0.3),
-                                                    color.opacity(0.4)
-                                                ],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                        .frame(width: 100, height: 100)
-                                    
-                                    // Glass reflection
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [
-                                                    .white.opacity(0.3),
-                                                    .clear
-                                                ],
-                                                startPoint: .top,
-                                                endPoint: .center
-                                            )
-                                        )
-                                        .frame(width: 100, height: 100)
-                                    
-                                    // Border with gradient
-                                    Circle()
-                                        .strokeBorder(
-                                            LinearGradient(
-                                                colors: [
-                                                    .white.opacity(0.6),
-                                                    color.opacity(0.9),
-                                                    color.opacity(0.6),
-                                                    .white.opacity(0.4)
-                                                ],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            ),
-                                            lineWidth: 4.5
-                                        )
-                                        .frame(width: 100, height: 100)
-                                        .shadow(color: color.opacity(0.7), radius: 20, x: 0, y: 8)
-                                    
-                                    // Icon with enhanced styling
-                                    Image(systemName: "brain.head.profile")
-                                        .font(.system(size: 46, weight: .bold))
-                                        .foregroundStyle(
-                                            LinearGradient(
-                                                colors: [.white, color.opacity(0.9)],
-                                                startPoint: .top,
-                                                endPoint: .bottom
-                                            )
-                                        )
-                                        .shadow(color: .black.opacity(0.5), radius: 3, x: 0, y: 2)
-                                        .shadow(color: color.opacity(0.8), radius: 8)
-                                }
-                                .scaleEffect(pulseAnimation ? 1.06 : 1.0)
-                            }
-                            .padding(.top, 18)
-                            
-                            // Premium question text with background
-                            VStack(spacing: 16) {
-                                Text(flashcard.question)
-                                    .font(.system(size: 21, weight: .semibold, design: .rounded))
-                                    .foregroundStyle(
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [color.opacity(0.4), color.opacity(0.2)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .frame(width: 80, height: 80)
+                            .overlay(
+                                Circle()
+                                    .strokeBorder(
                                         LinearGradient(
-                                            colors: [.white, .white.opacity(0.95)],
-                                            startPoint: .top,
-                                            endPoint: .bottom
-                                        )
+                                            colors: [color.opacity(0.8), color.opacity(0.4)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        ),
+                                        lineWidth: 3
                                     )
-                                    .multilineTextAlignment(.center)
-                                    .lineSpacing(11)
-                                    .padding(.horizontal, 32)
-                                    .padding(.vertical, 20)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 18)
-                                            .fill(
-                                                LinearGradient(
-                                                    colors: [
-                                                        Color.white.opacity(0.08),
-                                                        Color.white.opacity(0.04)
-                                                    ],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing
-                                                )
-                                            )
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 18)
-                                                    .strokeBorder(
-                                                        Color.white.opacity(0.15),
-                                                        lineWidth: 1.5
-                                                    )
-                                            )
-                                    )
-                                    .shadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
-                            }
-                            .padding(.horizontal, 4)
-                        }
-                        .padding(.vertical, 40)
+                            )
+                            .shadow(color: color.opacity(0.5), radius: 15, x: 0, y: 5)
+                        
+                        Image(systemName: "questionmark.circle.fill")
+                            .font(.system(size: 36, weight: .bold))
+                            .foregroundColor(.white)
+                            .shadow(color: .black.opacity(0.3), radius: 2)
                     }
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        ZStack {
-                            // Premium glass card with depth
-                            RoundedRectangle(cornerRadius: 36)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [
-                                            Color(white: 0.18, opacity: 0.97),
-                                            Color(white: 0.14, opacity: 0.94),
-                                            Color(white: 0.15, opacity: 0.96),
-                                            Color(white: 0.13, opacity: 0.93)
-                                        ],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                            
-                            // Top glass reflection
-                            RoundedRectangle(cornerRadius: 36)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [
-                                            .white.opacity(0.12),
-                                            .clear
-                                        ],
-                                        startPoint: .top,
-                                        endPoint: .center
-                                    )
-                                )
-                            
-                            // Enhanced animated border
-                            RoundedRectangle(cornerRadius: 36)
+                    
+                    // Question Text
+                    Text(flashcard.question)
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(8)
+                        .padding(.horizontal, 25)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.vertical, 35)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 28)
+                        .fill(Color(white: 0.15, opacity: 0.95))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 28)
                                 .strokeBorder(
                                     LinearGradient(
-                                        colors: [
-                                            .white.opacity(0.4),
-                                            color.opacity(0.85),
-                                            color.opacity(0.5),
-                                            color.opacity(0.7),
-                                            color.opacity(0.4),
-                                            .white.opacity(0.3)
-                                        ],
+                                        colors: [color.opacity(0.6), color.opacity(0.3)],
                                         startPoint: .topLeading,
                                         endPoint: .bottomTrailing
                                     ),
-                                    lineWidth: 4
+                                    lineWidth: 2
                                 )
+                        )
+                        .shadow(color: color.opacity(0.3), radius: 20, x: 0, y: 10)
+                        .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
+                )
+                .padding(.horizontal, 20)
+                
+                // Answer Choices
+                VStack(spacing: 15) {
+                    ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
+                        ChoiceButton(
+                            text: choice,
+                            index: index,
+                            color: color,
+                            isSelected: selectedAnswer == choice
+                        ) {
+                            onAnswer(choice)
                         }
-                        .shadow(color: color.opacity(0.6), radius: 32, x: 0, y: 16)
-                        .shadow(color: .black.opacity(0.5), radius: 20, x: 0, y: 12)
-                        .shadow(color: color.opacity(0.3), radius: 15, x: 0, y: 8)
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
-                    .opacity(showQuestion ? 1 : 0)
-                    .offset(y: showQuestion ? 0 : -40)
-                    .scaleEffect(showQuestion ? 1 : 0.92)
-                    .rotationEffect(.degrees(showQuestion ? 0 : -3))
-                    .animation(.spring(response: 0.8, dampingFraction: 0.75).delay(0.2), value: showQuestion)
-                    
-                    // Revolutionary Answer Choices with Effects
-                    VStack(spacing: 18) {
-                        ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
-                            RevolutionaryChoiceButton(
-                                text: choice,
-                                index: index,
-                                color: color,
-                                isSelected: selectedAnswer == choice
-                            ) {
-                                onAnswer(choice)
-                            }
-                            .opacity(showQuestion ? 1 : 0)
-                            .offset(x: showQuestion ? 0 : -50)
-                            .scaleEffect(showQuestion ? 1 : 0.88)
-                            .rotationEffect(.degrees(showQuestion ? 0 : -5))
-                            .animation(
-                                .spring(response: 0.8, dampingFraction: 0.72)
-                                    .delay(0.35 + Double(index) * 0.1),
-                                value: showQuestion
-                            )
-                        }
+                        .opacity(showQuestion ? 1 : 0)
+                        .offset(x: showQuestion ? 0 : -30)
+                        .animation(
+                            .spring(response: 0.6, dampingFraction: 0.8)
+                                .delay(0.1 + Double(index) * 0.08),
+                            value: showQuestion
+                        )
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 40)
                 }
-                .frame(minHeight: geometry.size.height)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 30)
             }
+            .opacity(showQuestion ? 1 : 0)
+            .scaleEffect(showQuestion ? 1 : 0.95)
+            .animation(.spring(response: 0.6, dampingFraction: 0.8), value: showQuestion)
         }
         .onAppear {
             showQuestion = true
-            
-            // Star rotation animation
-            withAnimation(Animation.linear(duration: 8.0).repeatForever(autoreverses: false)) {
-                pulseAnimation = true
-            }
-            
-            // Floating animation
-            withAnimation(Animation.easeInOut(duration: 3.0).repeatForever(autoreverses: true)) {
-                floatAnimation = true
-            }
-            
-            // Glow intensity animation
-            withAnimation(Animation.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
-                glowIntensity = 0.5
-            }
-            
-            // Shimmer rotation animation
-            withAnimation(Animation.linear(duration: 3.0).repeatForever(autoreverses: false)) {
-                shimmerPhase = 360
-            }
         }
     }
 }
 
-struct RevolutionaryChoiceButton: View {
+struct ChoiceButton: View {
     let text: String
     let index: Int
     let color: Color
     let isSelected: Bool
     let action: () -> Void
     
-    @State private var shimmerOffset: CGFloat = -200
-    
     var optionLetter: String {
-        return String(UnicodeScalar(65 + index)!) // A, B, C, D
-    }
-    
-    // Break down complex gradients into separate properties
-    private var selectedBadgeFill: some ShapeStyle {
-        AngularGradient(
-            colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
-            center: .center
-        )
-    }
-    
-    private var unselectedBadgeFill: some ShapeStyle {
-        LinearGradient(
-            colors: [
-                Color.white.opacity(0.20),
-                Color.white.opacity(0.12)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var badgeFill: some ShapeStyle {
-        isSelected ? AnyShapeStyle(selectedBadgeFill) : AnyShapeStyle(unselectedBadgeFill)
-    }
-    
-    private var selectedBackgroundFill: some ShapeStyle {
-        LinearGradient(
-            colors: [
-                color.opacity(0.22),
-                color.opacity(0.14),
-                color.opacity(0.18)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var unselectedBackgroundFill: some ShapeStyle {
-        LinearGradient(
-            colors: [
-                Color(white: 0.16, opacity: 0.85),
-                Color(white: 0.13, opacity: 0.75)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var backgroundFill: some ShapeStyle {
-        isSelected ? AnyShapeStyle(selectedBackgroundFill) : AnyShapeStyle(unselectedBackgroundFill)
+        String(UnicodeScalar(65 + index)!)
     }
     
     var body: some View {
         Button(action: action) {
-            buttonContent
-        }
-        .buttonStyle(RevolutionaryButtonStyle())
-        .scaleEffect(isSelected ? 1.04 : 1.0)
-        .animation(.spring(response: 0.5, dampingFraction: 0.72), value: isSelected)
-    }
-    
-    private var buttonContent: some View {
-        HStack(spacing: 20) {
-            letterBadge
-            answerText
-            if isSelected {
-                checkmark
-            }
-        }
-        .padding(.horizontal, 22)
-        .padding(.vertical, 22)
-        .background(cardBackground)
-    }
-    
-    private var letterBadge: some View {
-        ZStack {
-            if isSelected {
-                outerRotatingRing
-                multiLayerGlow
-            }
-            mainBadge
-        }
-    }
-    
-    private var outerRotatingRing: some View {
-        Circle()
-            .strokeBorder(
-                AngularGradient(
-                    colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
-                    center: .center
-                ),
-                lineWidth: 2
-            )
-            .frame(width: 64, height: 64)
-            .rotationEffect(.degrees(isSelected ? 360 : 0))
-            .animation(
-                Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
-                value: isSelected
-            )
-            .blur(radius: 1)
-    }
-    
-    private var multiLayerGlow: some View {
-        ForEach(0..<3) { i in
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [
-                            color.opacity(0.4 - Double(i) * 0.15),
-                            .clear
-                        ],
-                        center: .center,
-                        startRadius: CGFloat(18 + i * 12),
-                        endRadius: CGFloat(35 + i * 15)
-                    )
-                )
-                .frame(width: 60, height: 60)
-                .blur(radius: 12)
-        }
-    }
-    
-    private var mainBadge: some View {
-        ZStack {
-            Circle()
-                .fill(badgeFill)
-                .frame(width: 52, height: 52)
-            
-            Circle()
-                .strokeBorder(badgeStroke, lineWidth: 3)
-                .frame(width: 52, height: 52)
-            
-            Text(optionLetter)
-                .font(.system(size: 22, weight: .black, design: .rounded))
-                .foregroundColor(.white)
-                .shadow(color: .black.opacity(0.3), radius: 2)
-        }
-        .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
-        .scaleEffect(isSelected ? 1.08 : 1.0)
-    }
-    
-    private var badgeStroke: some ShapeStyle {
-        let selectedColors = [Color.white.opacity(0.5), Color.white.opacity(0.2)]
-        let unselectedColors = [Color.white.opacity(0.2), Color.white.opacity(0.05)]
-        
-        return LinearGradient(
-            colors: isSelected ? selectedColors : unselectedColors,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-    }
-    
-    private var answerText: some View {
-        Text(text)
-            .font(.system(size: 17, weight: isSelected ? .semibold : .medium))
-            .foregroundColor(.white)
-            .multilineTextAlignment(.leading)
-            .lineSpacing(5)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .shadow(color: .black.opacity(0.2), radius: 1)
-    }
-    
-    private var checkmark: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    RadialGradient(
-                        colors: [color.opacity(0.4), .clear],
-                        center: .center,
-                        startRadius: 10,
-                        endRadius: 25
-                    )
-                )
-                .frame(width: 42, height: 42)
-                .blur(radius: 8)
-            
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [color.opacity(0.3), color.opacity(0.2)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .frame(width: 38, height: 38)
-            
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(color)
-                .shadow(color: color.opacity(0.6), radius: 6)
-        }
-        .transition(.scale.combined(with: .opacity))
-    }
-    
-    private var cardBackground: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 24)
-                .fill(backgroundFill)
-            
-            if isSelected {
-                shimmerEffect
-            }
-            
-            RoundedRectangle(cornerRadius: 24)
-                .strokeBorder(borderGradient, lineWidth: isSelected ? 3.5 : 2)
-        }
-        .shadow(
-            color: isSelected ? color.opacity(0.6) : Color.black.opacity(0.25),
-            radius: isSelected ? 22 : 10,
-            x: 0,
-            y: isSelected ? 12 : 5
-        )
-    }
-    
-    private var shimmerEffect: some View {
-        RoundedRectangle(cornerRadius: 24)
-            .fill(
-                LinearGradient(
-                    colors: [
-                        .clear,
-                        Color.white.opacity(0.15),
-                        .clear
-                    ],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .offset(x: shimmerOffset)
-            .mask(RoundedRectangle(cornerRadius: 24))
-            .onAppear {
-                withAnimation(
-                    Animation.linear(duration: 2.0)
-                        .repeatForever(autoreverses: false)
-                ) {
-                    shimmerOffset = 400
+            HStack(spacing: 16) {
+                // Letter Badge
+                ZStack {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: isSelected ? 
+                                    [color, color.opacity(0.7)] :
+                                    [Color.white.opacity(0.2), Color.white.opacity(0.1)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 44, height: 44)
+                    
+                    Circle()
+                        .strokeBorder(
+                            isSelected ? Color.white.opacity(0.4) : Color.white.opacity(0.15),
+                            lineWidth: 2
+                        )
+                        .frame(width: 44, height: 44)
+                    
+                    Text(optionLetter)
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                }
+                .shadow(color: isSelected ? color.opacity(0.5) : .clear, radius: 8)
+                
+                // Answer Text
+                Text(text)
+                    .font(.system(size: 17, weight: isSelected ? .semibold : .regular))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                // Check Icon
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundColor(color)
+                        .shadow(color: color.opacity(0.5), radius: 6)
+                        .transition(.scale.combined(with: .opacity))
                 }
             }
-    }
-    
-    private var borderGradient: some ShapeStyle {
-        let selectedColors = [
-            color.opacity(0.9),
-            color.opacity(0.5),
-            color.opacity(0.7),
-            color.opacity(0.4)
-        ]
-        let unselectedColors = [
-            Color.white.opacity(0.22),
-            Color.white.opacity(0.08),
-            Color.white.opacity(0.15)
-        ]
-        
-        return LinearGradient(
-            colors: isSelected ? selectedColors : unselectedColors,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+            .padding(.horizontal, 18)
+            .padding(.vertical, 18)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(
+                        isSelected ?
+                            LinearGradient(
+                                colors: [color.opacity(0.25), color.opacity(0.15)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ) :
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.12), Color.white.opacity(0.08)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .strokeBorder(
+                                isSelected ? 
+                                    color.opacity(0.6) :
+                                    Color.white.opacity(0.15),
+                                lineWidth: isSelected ? 2 : 1
+                            )
+                    )
+                    .shadow(
+                        color: isSelected ? color.opacity(0.4) : Color.black.opacity(0.2),
+                        radius: isSelected ? 15 : 8,
+                        x: 0,
+                        y: isSelected ? 8 : 4
+                    )
+            )
+        }
+        .buttonStyle(ScaleButtonStyle())
+        .scaleEffect(isSelected ? 1.02 : 1.0)
+        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: isSelected)
     }
 }
 
-struct RevolutionaryButtonStyle: ButtonStyle {
+struct ScaleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
-            .brightness(configuration.isPressed ? -0.05 : 0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.65), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
     }
 }
-
 struct AnswerFeedbackView: View {
     let isCorrect: Bool
     let color: Color
