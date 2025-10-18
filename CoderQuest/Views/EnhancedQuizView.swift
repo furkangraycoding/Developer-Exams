@@ -169,18 +169,27 @@ struct EnhancedQuizView: View {
                 Spacer()
             }
             
-            // Achievement Popup
+            // Achievement Popup - Only show if we have NEW achievements
             if showAchievementPopup && !progressManager.recentlyUnlockedAchievements.isEmpty {
-                AchievementPopupView(achievements: progressManager.recentlyUnlockedAchievements)
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            withAnimation {
-                                showAchievementPopup = false
-                                progressManager.recentlyUnlockedAchievements.removeAll()
-                            }
+                VStack {
+                    ForEach(progressManager.recentlyUnlockedAchievements) { achievement in
+                        ModernAchievementPopup(achievement: achievement)
+                    }
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .onAppear {
+                    print("🎯 Displaying achievements popup")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                        withAnimation(.easeOut(duration: 0.4)) {
+                            showAchievementPopup = false
+                        }
+                        // Clear after hiding
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            progressManager.recentlyUnlockedAchievements.removeAll()
+                            print("🗑️ Cleared achievements after display")
                         }
                     }
+                }
             }
         }
         .onAppear {
@@ -188,18 +197,26 @@ struct EnhancedQuizView: View {
         }
         .onChange(of: flashcardViewModel.gameOver) { isGameOver in
             if isGameOver {
-                // First clear old achievements
+                // CRITICAL: Hide and clear any existing popups immediately
                 showAchievementPopup = false
-                progressManager.recentlyUnlockedAchievements.removeAll()
                 
-                // Then record session (which will add new achievements)
-                recordGameSession()
-                
-                // Show only new achievements after a delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    if !progressManager.recentlyUnlockedAchievements.isEmpty {
-                        withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                            showAchievementPopup = true
+                // Wait a moment for UI to settle
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    // Force clear ALL old achievements
+                    self.progressManager.recentlyUnlockedAchievements.removeAll()
+                    
+                    // Now record the session (this will populate new achievements)
+                    self.recordGameSession()
+                    
+                    // Wait for achievements to be processed, then show ONLY new ones
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        if !self.progressManager.recentlyUnlockedAchievements.isEmpty {
+                            print("🎉 Showing \(self.progressManager.recentlyUnlockedAchievements.count) NEW achievements")
+                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                self.showAchievementPopup = true
+                            }
+                        } else {
+                            print("✅ No new achievements this session")
                         }
                     }
                 }
@@ -303,30 +320,32 @@ struct QuestionView: View {
     let color: Color
     let onAnswer: (String) -> Void
     @State private var showQuestion = false
+    @State private var pulseAnimation = false
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Top Section - Points Badge
+                    // Premium Points Badge
                     HStack {
                         Spacer()
                         
                         ZStack {
-                            // Glow effect
+                            // Pulsing glow
                             Capsule()
                                 .fill(
                                     RadialGradient(
-                                        colors: [color.opacity(0.4), .clear],
+                                        colors: [color.opacity(0.5), .clear],
                                         center: .center,
                                         startRadius: 10,
-                                        endRadius: 40
+                                        endRadius: pulseAnimation ? 50 : 40
                                     )
                                 )
-                                .frame(height: 44)
-                                .blur(radius: 8)
+                                .frame(height: 50)
+                                .blur(radius: 10)
                             
-                            HStack(spacing: 8) {
+                            HStack(spacing: 10) {
+                                // Animated star
                                 ZStack {
                                     Circle()
                                         .fill(
@@ -336,29 +355,33 @@ struct QuestionView: View {
                                                 endPoint: .bottomTrailing
                                             )
                                         )
-                                        .frame(width: 32, height: 32)
+                                        .frame(width: 36, height: 36)
+                                        .shadow(color: .yellow.opacity(0.6), radius: 8)
                                     
                                     Image(systemName: "star.fill")
-                                        .font(.system(size: 14))
+                                        .font(.system(size: 16, weight: .bold))
                                         .foregroundColor(.white)
+                                        .rotationEffect(.degrees(pulseAnimation ? 360 : 0))
                                 }
                                 
-                                Text("\(flashcard.point)")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                
-                                Text("points")
-                                    .font(.caption)
-                                    .foregroundColor(.white.opacity(0.8))
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("\(flashcard.point)")
+                                        .font(.title2)
+                                        .fontWeight(.heavy)
+                                        .foregroundColor(.white)
+                                    Text("POINTS")
+                                        .font(.caption2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white.opacity(0.7))
+                                }
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
+                            .padding(.horizontal, 18)
+                            .padding(.vertical, 10)
                             .background(
                                 Capsule()
                                     .fill(
                                         LinearGradient(
-                                            colors: [color.opacity(0.3), color.opacity(0.15)],
+                                            colors: [color.opacity(0.35), color.opacity(0.2)],
                                             startPoint: .leading,
                                             endPoint: .trailing
                                         )
@@ -367,55 +390,78 @@ struct QuestionView: View {
                                         Capsule()
                                             .stroke(
                                                 LinearGradient(
-                                                    colors: [color, color.opacity(0.5)],
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
+                                                    colors: [color.opacity(0.8), color.opacity(0.5)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
                                                 ),
-                                                lineWidth: 2
+                                                lineWidth: 2.5
                                             )
                                     )
                             )
                         }
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 10)
-                    .padding(.bottom, 25)
+                    .padding(.top, 15)
+                    .padding(.bottom, 30)
                     
-                    // Question Card with Modern Design
+                    // Ultra Modern Question Card
                     VStack(spacing: 0) {
-                        // Decorative top bar
-                        HStack(spacing: 8) {
-                            Circle()
-                                .fill(color.opacity(0.8))
-                                .frame(width: 8, height: 8)
-                            Circle()
-                                .fill(color.opacity(0.6))
-                                .frame(width: 8, height: 8)
-                            Circle()
-                                .fill(color.opacity(0.4))
-                                .frame(width: 8, height: 8)
-                            Spacer()
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 15)
-                        .padding(.bottom, 20)
-                        
-                        // Question content
-                        VStack(spacing: 25) {
-                            // Icon
-                            ZStack {
+                        // Premium header
+                        VStack(spacing: 0) {
+                            HStack(spacing: 10) {
                                 Circle()
-                                    .fill(
-                                        RadialGradient(
-                                            colors: [color.opacity(0.25), .clear],
-                                            center: .center,
-                                            startRadius: 30,
-                                            endRadius: 70
-                                        )
-                                    )
-                                    .frame(width: 100, height: 100)
-                                    .blur(radius: 12)
+                                    .fill(color)
+                                    .frame(width: 10, height: 10)
+                                Circle()
+                                    .fill(color.opacity(0.7))
+                                    .frame(width: 10, height: 10)
+                                Circle()
+                                    .fill(color.opacity(0.4))
+                                    .frame(width: 10, height: 10)
                                 
+                                Spacer()
+                                
+                                Text("QUESTION")
+                                    .font(.caption2)
+                                    .fontWeight(.black)
+                                    .foregroundColor(color.opacity(0.6))
+                                    .tracking(2)
+                            }
+                            .padding(.horizontal, 24)
+                            .padding(.top, 20)
+                            .padding(.bottom, 10)
+                            
+                            Divider()
+                                .background(
+                                    LinearGradient(
+                                        colors: [color.opacity(0.3), .clear, color.opacity(0.3)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .padding(.horizontal, 24)
+                        }
+                        
+                        // Content
+                        VStack(spacing: 28) {
+                            // Premium Icon
+                            ZStack {
+                                // Multiple glow layers
+                                ForEach(0..<3) { i in
+                                    Circle()
+                                        .fill(
+                                            RadialGradient(
+                                                colors: [color.opacity(0.15 - Double(i) * 0.05), .clear],
+                                                center: .center,
+                                                startRadius: CGFloat(40 + i * 15),
+                                                endRadius: CGFloat(80 + i * 20)
+                                            )
+                                        )
+                                        .frame(width: 120, height: 120)
+                                        .blur(radius: 15)
+                                }
+                                
+                                // Main circle
                                 Circle()
                                     .fill(
                                         LinearGradient(
@@ -424,66 +470,83 @@ struct QuestionView: View {
                                             endPoint: .bottomTrailing
                                         )
                                     )
-                                    .frame(width: 70, height: 70)
+                                    .frame(width: 80, height: 80)
                                     .overlay(
                                         Circle()
-                                            .stroke(color.opacity(0.5), lineWidth: 2)
+                                            .stroke(
+                                                LinearGradient(
+                                                    colors: [color.opacity(0.6), color.opacity(0.3)],
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                ),
+                                                lineWidth: 3
+                                            )
                                     )
+                                    .shadow(color: color.opacity(0.5), radius: 15, x: 0, y: 5)
                                 
-                                Image(systemName: "lightbulb.fill")
-                                    .font(.system(size: 30, weight: .medium))
+                                Image(systemName: "brain.head.profile")
+                                    .font(.system(size: 36, weight: .semibold))
                                     .foregroundColor(color)
                             }
+                            .padding(.top, 10)
                             
-                            // Question text
+                            // Question text with better typography
                             Text(flashcard.question)
-                                .font(.title3)
-                                .fontWeight(.semibold)
+                                .font(.system(size: 19, weight: .medium, design: .rounded))
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
-                                .lineSpacing(6)
-                                .padding(.horizontal, 25)
+                                .lineSpacing(8)
+                                .padding(.horizontal, 28)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
-                        .padding(.bottom, 30)
+                        .padding(.vertical, 32)
                     }
                     .frame(maxWidth: .infinity)
                     .background(
                         ZStack {
-                            RoundedRectangle(cornerRadius: 28)
+                            // Base card
+                            RoundedRectangle(cornerRadius: 32)
                                 .fill(
                                     LinearGradient(
                                         colors: [
-                                            Color.white.opacity(0.12),
-                                            Color.white.opacity(0.08)
+                                            Color(white: 0.15, opacity: 0.95),
+                                            Color(white: 0.12, opacity: 0.9)
                                         ],
                                         startPoint: .topLeading,
                                         endPoint: .bottomTrailing
                                     )
                                 )
                             
-                            RoundedRectangle(cornerRadius: 28)
-                                .stroke(
+                            // Premium border
+                            RoundedRectangle(cornerRadius: 32)
+                                .strokeBorder(
                                     LinearGradient(
-                                        colors: [color.opacity(0.6), color.opacity(0.2), color.opacity(0.4)],
+                                        colors: [
+                                            color.opacity(0.7),
+                                            color.opacity(0.3),
+                                            color.opacity(0.5),
+                                            color.opacity(0.2)
+                                        ],
                                         startPoint: .topLeading,
                                         endPoint: .bottomTrailing
                                     ),
-                                    lineWidth: 2
+                                    lineWidth: 3
                                 )
                         }
-                        .shadow(color: color.opacity(0.35), radius: 20, x: 0, y: 10)
+                        .shadow(color: color.opacity(0.4), radius: 25, x: 0, y: 12)
+                        .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
                     )
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 35)
                     .opacity(showQuestion ? 1 : 0)
-                    .offset(y: showQuestion ? 0 : -20)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: showQuestion)
+                    .offset(y: showQuestion ? 0 : -30)
+                    .scaleEffect(showQuestion ? 1 : 0.95)
+                    .animation(.spring(response: 0.7, dampingFraction: 0.75).delay(0.15), value: showQuestion)
                     
-                    // Answer Choices
-                    VStack(spacing: 14) {
+                    // Premium Answer Choices
+                    VStack(spacing: 16) {
                         ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
-                            ChoiceButton(
+                            PremiumChoiceButton(
                                 text: choice,
                                 index: index,
                                 color: color,
@@ -492,23 +555,27 @@ struct QuestionView: View {
                                 onAnswer(choice)
                             }
                             .opacity(showQuestion ? 1 : 0)
-                            .offset(x: showQuestion ? 0 : -30)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2 + Double(index) * 0.1), value: showQuestion)
+                            .offset(x: showQuestion ? 0 : -40)
+                            .scaleEffect(showQuestion ? 1 : 0.9)
+                            .animation(.spring(response: 0.7, dampingFraction: 0.75).delay(0.25 + Double(index) * 0.08), value: showQuestion)
                         }
                     }
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 30)
+                    .padding(.bottom, 35)
                 }
                 .frame(minHeight: geometry.size.height)
             }
         }
         .onAppear {
             showQuestion = true
+            withAnimation(Animation.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
+                pulseAnimation = true
+            }
         }
     }
 }
 
-struct ChoiceButton: View {
+struct PremiumChoiceButton: View {
     let text: String
     let index: Int
     let color: Color
@@ -521,128 +588,155 @@ struct ChoiceButton: View {
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 16) {
-                // Enhanced Option letter badge
+            HStack(spacing: 18) {
+                // Ultra Premium Letter Badge
                 ZStack {
-                    // Outer glow for selected
+                    // Multi-layer glow
                     if isSelected {
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [color.opacity(0.4), .clear],
-                                    center: .center,
-                                    startRadius: 15,
-                                    endRadius: 30
+                        ForEach(0..<2) { i in
+                            Circle()
+                                .fill(
+                                    RadialGradient(
+                                        colors: [color.opacity(0.3 - Double(i) * 0.15), .clear],
+                                        center: .center,
+                                        startRadius: CGFloat(20 + i * 10),
+                                        endRadius: CGFloat(35 + i * 15)
+                                    )
                                 )
-                            )
-                            .frame(width: 50, height: 50)
-                            .blur(radius: 8)
+                                .frame(width: 55, height: 55)
+                                .blur(radius: 10)
+                        }
                     }
                     
+                    // Main circle with premium styling
                     Circle()
                         .fill(
                             isSelected ?
                                 LinearGradient(
-                                    colors: [color, color.opacity(0.8)],
+                                    colors: [color.opacity(0.9), color.opacity(0.7)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ) :
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.08)],
+                                    colors: [Color.white.opacity(0.18), Color.white.opacity(0.10)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
                         )
-                        .frame(width: 44, height: 44)
+                        .frame(width: 48, height: 48)
                         .overlay(
                             Circle()
                                 .stroke(
-                                    isSelected ? Color.white.opacity(0.3) : Color.white.opacity(0.1),
-                                    lineWidth: 2
+                                    LinearGradient(
+                                        colors: isSelected ?
+                                            [Color.white.opacity(0.4), Color.white.opacity(0.2)] :
+                                            [Color.white.opacity(0.15), Color.white.opacity(0.05)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2.5
                                 )
                         )
+                        .shadow(color: isSelected ? color.opacity(0.6) : .clear, radius: 12, x: 0, y: 4)
                     
                     Text(optionLetter)
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .font(.system(size: 20, weight: .black, design: .rounded))
                         .foregroundColor(.white)
                 }
                 
-                // Enhanced Answer text
+                // Premium Answer Text
                 Text(text)
-                    .font(.body)
-                    .fontWeight(isSelected ? .semibold : .regular)
+                    .font(.system(size: 16, weight: isSelected ? .semibold : .medium, design: .default))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
-                    .lineSpacing(2)
+                    .lineSpacing(4)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                // Enhanced Checkmark for selected
+                // Premium Checkmark
                 if isSelected {
                     ZStack {
                         Circle()
-                            .fill(color.opacity(0.2))
-                            .frame(width: 32, height: 32)
+                            .fill(
+                                RadialGradient(
+                                    colors: [color.opacity(0.3), color.opacity(0.15)],
+                                    center: .center,
+                                    startRadius: 5,
+                                    endRadius: 20
+                                )
+                            )
+                            .frame(width: 36, height: 36)
                         
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 14, weight: .bold))
+                        Circle()
+                            .fill(color.opacity(0.25))
+                            .frame(width: 36, height: 36)
+                        
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 24, weight: .bold))
                             .foregroundColor(color)
+                            .shadow(color: color.opacity(0.5), radius: 4)
                     }
                 }
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 18)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
             .background(
                 ZStack {
-                    // Base background
-                    RoundedRectangle(cornerRadius: 20)
+                    // Premium card background
+                    RoundedRectangle(cornerRadius: 22)
                         .fill(
                             isSelected ?
                                 LinearGradient(
                                     colors: [
-                                        color.opacity(0.2),
-                                        color.opacity(0.12)
+                                        color.opacity(0.20),
+                                        color.opacity(0.12),
+                                        color.opacity(0.15)
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ) :
                                 LinearGradient(
                                     colors: [
-                                        Color.white.opacity(0.08),
-                                        Color.white.opacity(0.04)
+                                        Color(white: 0.15, opacity: 0.8),
+                                        Color(white: 0.12, opacity: 0.7)
                                     ],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
                         )
                     
-                    // Border
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(
-                            isSelected ?
-                                LinearGradient(
-                                    colors: [color, color.opacity(0.5)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ) :
-                                LinearGradient(
-                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                            lineWidth: isSelected ? 2.5 : 1
+                    // Premium border
+                    RoundedRectangle(cornerRadius: 22)
+                        .strokeBorder(
+                            LinearGradient(
+                                colors: isSelected ?
+                                    [color.opacity(0.8), color.opacity(0.4), color.opacity(0.6)] :
+                                    [Color.white.opacity(0.2), Color.white.opacity(0.05), Color.white.opacity(0.1)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: isSelected ? 3 : 1.5
                         )
                 }
                 .shadow(
-                    color: isSelected ? color.opacity(0.5) : Color.black.opacity(0.1),
-                    radius: isSelected ? 15 : 5,
+                    color: isSelected ? color.opacity(0.5) : Color.black.opacity(0.2),
+                    radius: isSelected ? 18 : 8,
                     x: 0,
-                    y: isSelected ? 8 : 2
+                    y: isSelected ? 10 : 4
                 )
             )
         }
-        .buttonStyle(ScaleButtonStyle())
-        .scaleEffect(isSelected ? 1.02 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSelected)
+        .buttonStyle(PremiumButtonStyle())
+        .scaleEffect(isSelected ? 1.03 : 1.0)
+        .animation(.spring(response: 0.4, dampingFraction: 0.75), value: isSelected)
+    }
+}
+
+struct PremiumButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
     }
 }
 
@@ -798,43 +892,134 @@ struct GameOverView: View {
     }
 }
 
-struct AchievementPopupView: View {
-    let achievements: [Achievement]
+struct ModernAchievementPopup: View {
+    let achievement: Achievement
+    @State private var scale: CGFloat = 0.8
+    @State private var opacity: Double = 0
+    @State private var rotation: Double = -10
+    
+    var achievementColor: (primary: Color, secondary: Color) {
+        switch achievement.type {
+        case .firstWin, .perfectScore:
+            return (.green, .mint)
+        case .streak5, .streak10, .streak20:
+            return (.orange, .yellow)
+        case .speed50, .speed100:
+            return (.blue, .cyan)
+        case .allLanguages:
+            return (.purple, .pink)
+        case .hardMode:
+            return (.red, .orange)
+        case .master100, .master500, .master1000:
+            return (.yellow, .orange)
+        case .nightOwl, .earlyBird, .weekendWarrior:
+            return (.indigo, .purple)
+        }
+    }
     
     var body: some View {
-        VStack {
-            ForEach(achievements) { achievement in
-                HStack(spacing: 15) {
-                    Image(systemName: achievement.icon)
-                        .font(.title)
-                        .foregroundColor(.yellow)
-                    
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Achievement Unlocked!")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.8))
-                        Text(achievement.title)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("+\(achievement.xpReward) XP")
-                            .font(.caption)
-                            .foregroundColor(.yellow)
-                    }
-                    
-                    Spacer()
+        HStack(spacing: 16) {
+            // Animated Icon
+            ZStack {
+                // Glow effect
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [achievementColor.primary.opacity(0.6), .clear],
+                            center: .center,
+                            startRadius: 15,
+                            endRadius: 40
+                        )
+                    )
+                    .frame(width: 70, height: 70)
+                    .blur(radius: 10)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [achievementColor.primary, achievementColor.secondary],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 56, height: 56)
+                    .overlay(
+                        Circle()
+                            .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                    )
+                
+                Image(systemName: achievement.icon)
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundColor(.white)
+            }
+            .rotationEffect(.degrees(rotation))
+            
+            // Content
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 6) {
+                    Image(systemName: "sparkles")
+                        .font(.caption2)
+                        .foregroundColor(achievementColor.primary)
+                    Text("ACHIEVEMENT UNLOCKED")
+                        .font(.caption2)
+                        .fontWeight(.bold)
+                        .foregroundColor(achievementColor.primary)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.black.opacity(0.9))
-                        .shadow(color: .yellow.opacity(0.5), radius: 10)
-                )
-                .padding(.horizontal)
+                
+                Text(achievement.title)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                HStack(spacing: 4) {
+                    Image(systemName: "star.fill")
+                        .font(.caption2)
+                        .foregroundColor(.yellow)
+                    Text("+\(achievement.xpReward) XP")
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.yellow)
+                }
             }
             
             Spacer()
         }
-        .padding(.top, 60)
+        .padding(18)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.black.opacity(0.95),
+                                Color.black.opacity(0.9)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(
+                        LinearGradient(
+                            colors: [achievementColor.primary, achievementColor.secondary],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        ),
+                        lineWidth: 2
+                    )
+            }
+            .shadow(color: achievementColor.primary.opacity(0.6), radius: 20, x: 0, y: 10)
+        )
+        .padding(.horizontal, 20)
+        .scaleEffect(scale)
+        .opacity(opacity)
+        .onAppear {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                scale = 1.0
+                opacity = 1.0
+                rotation = 0
+            }
+        }
     }
 }
