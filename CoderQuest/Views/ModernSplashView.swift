@@ -107,11 +107,14 @@ struct ModernSplashView: View {
             startAnimations()
             
             // Navigate to main view after delay
+            print("⏰ Splash timer started - will transition in 2 seconds")
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 print("🚀 Transitioning to main menu...")
+                print("🔄 Setting showSplash to false")
                 withAnimation(.easeOut(duration: 0.5)) {
                     showSplash = false
                 }
+                print("✅ showSplash is now: \(showSplash)")
             }
         }
     }

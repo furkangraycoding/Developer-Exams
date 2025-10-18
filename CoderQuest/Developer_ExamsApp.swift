@@ -14,6 +14,11 @@ struct CoderQuestApp: App {
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    init() {
+        print("🎬 CoderQuestApp initialized")
+        print("📱 showSplash initial value: true")
+    }
+    
     var body: some Scene {
         WindowGroup {
             ZStack {
@@ -21,6 +26,9 @@ struct CoderQuestApp: App {
                     MainMenuView()
                         .environmentObject(interstitialAdsManager)
                         .transition(.opacity)
+                        .onAppear {
+                            print("✅ MainMenuView appeared on screen!")
+                        }
                 }
                 
                 if showSplash {
@@ -28,6 +36,9 @@ struct CoderQuestApp: App {
                         .transition(.opacity)
                         .zIndex(1)
                 }
+            }
+            .onChange(of: showSplash) { newValue in
+                print("🔄 showSplash value changed to: \(newValue)")
             }
         }
     }
