@@ -264,7 +264,7 @@ struct AchievementCard: View {
                         .font(.caption2)
                         .fontWeight(.medium)
                         .foregroundColor(.gray.opacity(0.6))
-                } else {
+                } else if achievement.isClaimed {
                     Spacer()
                         .frame(height: 6)
                     
@@ -272,7 +272,7 @@ struct AchievementCard: View {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.caption)
                             .foregroundColor(.green)
-                        Text("Unlocked!")
+                        Text("Claimed!")
                             .font(.caption2)
                             .fontWeight(.semibold)
                             .foregroundColor(.green)
@@ -282,6 +282,25 @@ struct AchievementCard: View {
                     .background(
                         Capsule()
                             .fill(Color.green.opacity(0.2))
+                    )
+                } else {
+                    Spacer()
+                        .frame(height: 6)
+                    
+                    HStack(spacing: 3) {
+                        Image(systemName: "gift.fill")
+                            .font(.caption)
+                            .foregroundColor(.yellow)
+                        Text("Claim Prize!")
+                            .font(.caption2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.yellow)
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(
+                        Capsule()
+                            .fill(Color.yellow.opacity(0.2))
                     )
                 }
             }
@@ -325,6 +344,8 @@ struct AchievementCard: View {
 
 struct AchievementDetailView: View {
     let achievement: Achievement
+    @ObservedObject var progressManager = ProgressManager.shared
+    @State private var showClaimAnimation = false
     
     var detailColor: (primary: Color, secondary: Color) {
         if achievement.isUnlocked {
@@ -412,12 +433,12 @@ struct AchievementDetailView: View {
             
             // Progress or Status
             if achievement.isUnlocked {
-                VStack(spacing: 12) {
+                VStack(spacing: 15) {
                     HStack(spacing: 8) {
-                        Image(systemName: "checkmark.seal.fill")
+                        Image(systemName: achievement.isClaimed ? "checkmark.seal.fill" : "gift.fill")
                             .font(.title3)
-                            .foregroundColor(detailColor.primary)
-                        Text("Achievement Unlocked!")
+                            .foregroundColor(achievement.isClaimed ? detailColor.primary : .yellow)
+                        Text(achievement.isClaimed ? "Achievement Claimed!" : "Ready to Claim!")
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -428,7 +449,9 @@ struct AchievementDetailView: View {
                         Capsule()
                             .fill(
                                 LinearGradient(
-                                    colors: [detailColor.primary.opacity(0.3), detailColor.secondary.opacity(0.2)],
+                                    colors: achievement.isClaimed ? 
+                                        [detailColor.primary.opacity(0.3), detailColor.secondary.opacity(0.2)] :
+                                        [Color.yellow.opacity(0.3), Color.orange.opacity(0.2)],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
@@ -437,7 +460,9 @@ struct AchievementDetailView: View {
                                 Capsule()
                                     .stroke(
                                         LinearGradient(
-                                            colors: [detailColor.primary, detailColor.secondary],
+                                            colors: achievement.isClaimed ?
+                                                [detailColor.primary, detailColor.secondary] :
+                                                [Color.yellow, Color.orange],
                                             startPoint: .leading,
                                             endPoint: .trailing
                                         ),
@@ -445,12 +470,40 @@ struct AchievementDetailView: View {
                                     )
                             )
                     )
-                    .shadow(color: detailColor.primary.opacity(0.4), radius: 10)
+                    .shadow(color: (achievement.isClaimed ? detailColor.primary : .yellow).opacity(0.4), radius: 10)
                     
-                    Text(achievement.description)
-                        .font(.body)
-                        .foregroundColor(.white.opacity(0.8))
-                        .multilineTextAlignment(.center)
+                    if !achievement.isClaimed {
+                        Button(action: {
+                            let success = progressManager.claimAchievementReward(achievementId: achievement.id)
+                            if success {
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                                    showClaimAnimation = true
+                                }
+                            }
+                        }) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "gift.fill")
+                                    .font(.title3)
+                                Text("Claim Rewards")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                LinearGradient(
+                                    colors: [.yellow, .orange],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: .yellow.opacity(0.5), radius: 15, x: 0, y: 8)
+                        }
+                        .scaleEffect(showClaimAnimation ? 1.1 : 1.0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showClaimAnimation)
+                    }
                 }
             } else {
                 VStack(spacing: 10) {
@@ -495,33 +548,74 @@ struct AchievementDetailView: View {
                 )
             }
             
-            // XP Reward
-            HStack(spacing: 8) {
-                Image(systemName: "star.fill")
-                    .font(.title3)
-                    .foregroundColor(.yellow)
-                Text("+\(achievement.xpReward) XP")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
-            .padding(.horizontal, 25)
-            .padding(.vertical, 12)
-            .background(
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [.yellow.opacity(0.3), .orange.opacity(0.2)],
-                            startPoint: .leading,
-                            endPoint: .trailing
+            // Rewards Display
+            HStack(spacing: 15) {
+                // XP Reward
+                HStack(spacing: 6) {
+                    Image(systemName: "star.fill")
+                        .font(.title3)
+                        .foregroundColor(.yellow)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("+\(achievement.xpReward)")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Text("XP")
+                            .font(.caption2)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.yellow.opacity(0.3), .orange.opacity(0.2)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.yellow.opacity(0.6), lineWidth: 2)
-                    )
-            )
-            .shadow(color: .yellow.opacity(0.4), radius: 10)
+                        .overlay(
+                            Capsule()
+                                .stroke(Color.yellow.opacity(0.6), lineWidth: 2)
+                        )
+                )
+                .shadow(color: .yellow.opacity(0.4), radius: 10)
+                
+                // Coin Reward
+                HStack(spacing: 6) {
+                    Image(systemName: "dollarsign.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.cyan)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("+\(achievement.coinReward)")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Text("Coins")
+                            .font(.caption2)
+                            .foregroundColor(.white.opacity(0.7))
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.cyan.opacity(0.3), .blue.opacity(0.2)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color.cyan.opacity(0.6), lineWidth: 2)
+                        )
+                )
+                .shadow(color: .cyan.opacity(0.4), radius: 10)
+            }
         }
         .padding(35)
         .background(

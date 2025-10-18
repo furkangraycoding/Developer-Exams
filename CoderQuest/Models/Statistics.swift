@@ -68,6 +68,7 @@ struct LanguageStatistics: Codable {
 
 struct UserStatistics: Codable {
     var totalXP: Int
+    var totalCoins: Int
     var level: Int
     var currentStreak: Int
     var longestStreak: Int
@@ -85,18 +86,34 @@ struct UserStatistics: Codable {
         return Double(totalCorrectAnswers) / Double(totalQuestionsAnswered) * 100
     }
     
+    // Exponential leveling - much harder to level up
     var xpForNextLevel: Int {
-        return level * 100
+        // Formula: base * (1.5 ^ (level - 1))
+        let base = 100
+        let exponent = pow(1.5, Double(level - 1))
+        return Int(Double(base) * exponent)
+    }
+    
+    var currentLevelXP: Int {
+        var xpCounted = 0
+        for lvl in 1..<level {
+            let base = 100
+            let exponent = pow(1.5, Double(lvl - 1))
+            xpCounted += Int(Double(base) * exponent)
+        }
+        return totalXP - xpCounted
     }
     
     var levelProgress: Double {
         let xpNeeded = xpForNextLevel
-        let currentLevelXP = totalXP % xpNeeded
-        return Double(currentLevelXP) / Double(xpNeeded)
+        let currentXP = currentLevelXP
+        guard xpNeeded > 0 else { return 0 }
+        return Double(currentXP) / Double(xpNeeded)
     }
     
     init() {
         self.totalXP = 0
+        self.totalCoins = 0
         self.level = 1
         self.currentStreak = 0
         self.longestStreak = 0
@@ -112,10 +129,37 @@ struct UserStatistics: Codable {
     
     mutating func addXP(_ amount: Int) {
         totalXP += amount
-        let newLevel = totalXP / 100 + 1
-        if newLevel > level {
-            level = newLevel
+        // Calculate new level based on exponential formula
+        var calculatedLevel = 1
+        var xpThreshold = 0
+        
+        while true {
+            let base = 100
+            let exponent = pow(1.5, Double(calculatedLevel - 1))
+            let xpNeeded = Int(Double(base) * exponent)
+            xpThreshold += xpNeeded
+            
+            if totalXP < xpThreshold {
+                break
+            }
+            calculatedLevel += 1
         }
+        
+        if calculatedLevel > level {
+            level = calculatedLevel
+        }
+    }
+    
+    mutating func addCoins(_ amount: Int) {
+        totalCoins += amount
+    }
+    
+    mutating func spendCoins(_ amount: Int) -> Bool {
+        if totalCoins >= amount {
+            totalCoins -= amount
+            return true
+        }
+        return false
     }
 }
 
