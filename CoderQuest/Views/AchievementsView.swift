@@ -190,6 +190,7 @@ struct AchievementCard: View {
     
     var body: some View {
         VStack(spacing: 12) {
+            // Icon section with FIXED height
             ZStack {
                 // Outer glow for unlocked achievements
                 if achievement.isUnlocked {
@@ -246,6 +247,7 @@ struct AchievementCard: View {
                         .foregroundColor(.gray.opacity(0.6))
                 }
             }
+            .frame(width: 80, height: 80)
             
             Text(achievement.title)
                 .font(.subheadline)
@@ -255,86 +257,93 @@ struct AchievementCard: View {
                 .lineLimit(2)
                 .frame(height: 35)
             
-            // Status section with fixed height
-            VStack(spacing: 4) {
+            // Status section with FIXED height
+            ZStack {
                 if !achievement.isUnlocked {
-                    // Progress bar - 6px height
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.white.opacity(0.1))
-                                .frame(height: 6)
-                            
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.blue, .cyan],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
+                    VStack(spacing: 4) {
+                        // Progress bar
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.white.opacity(0.1))
+                                    .frame(height: 6)
+                                
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.blue, .cyan],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
                                     )
-                                )
-                                .frame(width: geometry.size.width * achievement.progress, height: 6)
+                                    .frame(width: geometry.size.width * achievement.progress, height: 6)
+                            }
                         }
+                        .frame(height: 6)
+                        
+                        Spacer()
+                            .frame(height: 2)
+                        
+                        // Counter text
+                        Text("\(achievement.currentCount)/\(achievement.requiredCount)")
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .foregroundColor(.gray.opacity(0.6))
+                            .frame(height: 22)
                     }
-                    .frame(height: 6)
-                    
-                    Spacer()
-                        .frame(height: 2)
-                    
-                    // Counter text - 22px height
-                    Text("\(achievement.currentCount)/\(achievement.requiredCount)")
-                        .font(.caption2)
-                        .fontWeight(.medium)
-                        .foregroundColor(.gray.opacity(0.6))
-                        .frame(height: 22)
                 } else if achievement.isClaimed {
-                    // Top spacer to match progress bar height
-                    Spacer()
-                        .frame(height: 8)
-                    
-                    // Badge - 22px height to match
-                    HStack(spacing: 3) {
-                        Image(systemName: "checkmark.seal.fill")
-                            .font(.caption)
-                            .foregroundColor(.green)
-                        Text("Claimed!")
-                            .font(.caption2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.green)
+                    VStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 8)
+                        
+                        HStack(spacing: 3) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                            Text("Claimed!")
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.green)
+                        }
+                        .frame(height: 22)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(Color.green.opacity(0.2))
+                        )
+                        
+                        Spacer()
                     }
-                    .frame(minWidth: 80, minHeight: 22)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(
-                        Capsule()
-                            .fill(Color.green.opacity(0.2))
-                    )
                 } else {
-                    // Top spacer to match progress bar height
-                    Spacer()
-                        .frame(height: 8)
-                    
-                    // Badge - 22px height to match
-                    HStack(spacing: 3) {
-                        Image(systemName: "gift.fill")
-                            .font(.caption)
-                            .foregroundColor(.yellow)
-                        Text("Claim Prize!")
-                            .font(.caption2)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.yellow)
+                    VStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 8)
+                        
+                        HStack(spacing: 3) {
+                            Image(systemName: "gift.fill")
+                                .font(.caption)
+                                .foregroundColor(.yellow)
+                            Text("Claim Prize!")
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.yellow)
+                        }
+                        .frame(height: 22)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(Color.yellow.opacity(0.2))
+                        )
+                        
+                        Spacer()
                     }
-                    .frame(minWidth: 80, minHeight: 22)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(
-                        Capsule()
-                            .fill(Color.yellow.opacity(0.2))
-                    )
                 }
             }
             .frame(height: 40)
         }
+        .frame(height: 200)
         .padding(.vertical, 15)
         .padding(.horizontal, 10)
         .background(
