@@ -12,7 +12,7 @@ struct UserProgress: Codable {
     var experiencePoints: Int
     var hintsUsed: Int
     var achievements: [Achievement]
-    var languagesPlayed: Set<String>
+    var languagesPlayed: [String] // Changed from Set to Array for Codable
     var gamesPlayed: Int
     var perfectRounds: Int
     var fastestTime: TimeInterval?
@@ -33,6 +33,7 @@ struct UserProgress: Codable {
         self.gamesPlayed = 0
         self.perfectRounds = 0
         self.fastestTime = nil
+        print("✅ UserProgress initialized")
     }
     
     var accuracy: Double {

@@ -150,7 +150,7 @@ struct ProfileView: View {
                                     .padding()
                             } else {
                                 FlowLayout(spacing: 10) {
-                                    ForEach(Array(progressManager.userProgress.languagesPlayed), id: \.self) { language in
+                                    ForEach(progressManager.userProgress.languagesPlayed, id: \.self) { language in
                                         LanguageTag(name: language)
                                     }
                                 }

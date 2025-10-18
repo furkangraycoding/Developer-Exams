@@ -8,6 +8,7 @@ struct MainMenuView: View {
     @State private var showSettings = false
     @State private var selectedLanguage: String?
     @State private var animateGradient = false
+    @State private var isLoaded = false
     
     let languages = [
         ("Swift", Color.orange, "swift"),
@@ -35,13 +36,17 @@ struct MainMenuView: View {
                 )
                 .ignoresSafeArea()
                 .onAppear {
+                    print("📱 MainMenuView appeared")
                     withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
                         animateGradient.toggle()
                     }
+                    isLoaded = true
                 }
                 
                 // Floating particles
-                ParticlesView()
+                if isLoaded {
+                    ParticlesView()
+                }
                 
                 ScrollView {
                     VStack(spacing: 30) {
@@ -375,6 +380,7 @@ struct QuickActionButton: View {
 
 struct ParticlesView: View {
     @State private var particles: [ParticleModel] = []
+    @State private var timer: Timer?
     
     var body: some View {
         GeometryReader { geometry in
@@ -388,29 +394,41 @@ struct ParticlesView: View {
                 }
             }
             .onAppear {
+                print("🎨 Generating particles...")
                 generateParticles(in: geometry.size)
-                animateParticles(in: geometry.size)
+                startAnimating(in: geometry.size)
+            }
+            .onDisappear {
+                timer?.invalidate()
+                timer = nil
             }
         }
         .ignoresSafeArea()
     }
     
     private func generateParticles(in size: CGSize) {
-        for _ in 0..<20 {
+        guard size.width > 0 && size.height > 0 else { return }
+        
+        particles.removeAll()
+        for _ in 0..<15 {
             particles.append(ParticleModel(
                 position: CGPoint(
                     x: CGFloat.random(in: 0...size.width),
                     y: CGFloat.random(in: 0...size.height)
                 ),
-                size: CGFloat.random(in: 2...6),
+                size: CGFloat.random(in: 2...5),
                 color: [Color.cyan, Color.blue, Color.purple].randomElement()!,
                 opacity: Double.random(in: 0.1...0.3)
             ))
         }
     }
     
-    private func animateParticles(in size: CGSize) {
-        Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+    private func startAnimating(in size: CGSize) {
+        guard size.width > 0 && size.height > 0 else { return }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [self] _ in
+            guard !particles.isEmpty else { return }
+            
             for index in particles.indices {
                 particles[index].position.y -= CGFloat.random(in: 0.5...1.5)
                 particles[index].position.x += CGFloat.random(in: -0.5...0.5)

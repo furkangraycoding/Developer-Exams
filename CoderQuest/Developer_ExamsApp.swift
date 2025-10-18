@@ -16,11 +16,18 @@ struct CoderQuestApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if showSplash {
-                ModernSplashView(isActive: $showSplash)
-            } else {
-                MainMenuView()
-                    .environmentObject(interstitialAdsManager)
+            ZStack {
+                if !showSplash {
+                    MainMenuView()
+                        .environmentObject(interstitialAdsManager)
+                        .transition(.opacity)
+                }
+                
+                if showSplash {
+                    ModernSplashView(showSplash: $showSplash)
+                        .transition(.opacity)
+                        .zIndex(1)
+                }
             }
         }
     }

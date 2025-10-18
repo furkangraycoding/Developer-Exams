@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct ModernSplashView: View {
-    @Binding var isActive: Bool
+    @Binding var showSplash: Bool
     @State private var scale: CGFloat = 0.5
     @State private var opacity: Double = 0
     @State private var rotation: Double = 0
-    @State private var particlesOpacity: Double = 0
     
     var body: some View {
         ZStack {
@@ -20,10 +19,6 @@ struct ModernSplashView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-            
-            // Animated particles
-            SplashParticlesView()
-                .opacity(particlesOpacity)
             
             VStack(spacing: 20) {
                 // App icon with animation
@@ -112,9 +107,10 @@ struct ModernSplashView: View {
             startAnimations()
             
             // Navigate to main view after delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                print("🚀 Transitioning to main menu...")
                 withAnimation(.easeOut(duration: 0.5)) {
-                    isActive = true
+                    showSplash = false
                 }
             }
         }
@@ -131,81 +127,11 @@ struct ModernSplashView: View {
         withAnimation(.linear(duration: 3.0).repeatForever(autoreverses: false)) {
             rotation = 360
         }
-        
-        // Particles fade in
-        withAnimation(.easeIn(duration: 0.8).delay(0.3)) {
-            particlesOpacity = 1.0
-        }
     }
-}
-
-struct SplashParticlesView: View {
-    @State private var particles: [SplashParticle] = []
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                ForEach(particles) { particle in
-                    Circle()
-                        .fill(particle.color)
-                        .frame(width: particle.size, height: particle.size)
-                        .position(particle.position)
-                        .opacity(particle.opacity)
-                        .blur(radius: 2)
-                }
-            }
-            .onAppear {
-                generateParticles(in: geometry.size)
-                animateParticles(in: geometry.size)
-            }
-        }
-        .ignoresSafeArea()
-    }
-    
-    private func generateParticles(in size: CGSize) {
-        for _ in 0..<30 {
-            particles.append(SplashParticle(
-                position: CGPoint(
-                    x: CGFloat.random(in: 0...size.width),
-                    y: CGFloat.random(in: 0...size.height)
-                ),
-                size: CGFloat.random(in: 3...8),
-                color: [Color.cyan, Color.blue, Color.purple, Color.pink].randomElement()!,
-                opacity: Double.random(in: 0.2...0.5)
-            ))
-        }
-    }
-    
-    private func animateParticles(in size: CGSize) {
-        Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { _ in
-            for index in particles.indices {
-                // Floating animation
-                particles[index].position.y -= CGFloat.random(in: 0.3...1.0)
-                particles[index].position.x += CGFloat.random(in: -0.5...0.5)
-                
-                // Wrap around
-                if particles[index].position.y < 0 {
-                    particles[index].position.y = size.height
-                    particles[index].position.x = CGFloat.random(in: 0...size.width)
-                }
-                
-                // Pulse opacity
-                particles[index].opacity = Double.random(in: 0.2...0.5)
-            }
-        }
-    }
-}
-
-struct SplashParticle: Identifiable {
-    let id = UUID()
-    var position: CGPoint
-    var size: CGFloat
-    var color: Color
-    var opacity: Double
 }
 
 struct ModernSplashView_Previews: PreviewProvider {
     static var previews: some View {
-        ModernSplashView(isActive: .constant(false))
+        ModernSplashView(showSplash: .constant(true))
     }
 }

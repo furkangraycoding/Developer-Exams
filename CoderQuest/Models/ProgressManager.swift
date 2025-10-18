@@ -9,11 +9,14 @@ class ProgressManager: ObservableObject {
     private let progressKey = "userProgress"
     
     private init() {
+        print("🔄 Initializing ProgressManager...")
         if let data = UserDefaults.standard.data(forKey: progressKey),
            let progress = try? JSONDecoder().decode(UserProgress.self, from: data) {
             self.userProgress = progress
+            print("✅ Loaded existing progress - Level \(progress.level)")
         } else {
             self.userProgress = UserProgress()
+            print("✅ Created new UserProgress")
         }
     }
     
@@ -29,8 +32,10 @@ class ProgressManager: ObservableObject {
     }
     
     func addLanguage(_ language: String) {
-        userProgress.languagesPlayed.insert(language)
-        saveProgress()
+        if !userProgress.languagesPlayed.contains(language) {
+            userProgress.languagesPlayed.append(language)
+            saveProgress()
+        }
     }
     
     func incrementGamesPlayed() {
