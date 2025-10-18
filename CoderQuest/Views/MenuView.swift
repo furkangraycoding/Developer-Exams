@@ -6,7 +6,6 @@ struct MenuView: View {
     @ObservedObject var progressManager = ProgressManager.shared
     @State private var showStatistics = false
     @State private var showAchievements = false
-    @State private var selectedDifficulty: DifficultyLevel = .easy
     
     // Enhanced color palette
     let menuItems = [
@@ -214,7 +213,6 @@ struct MenuView: View {
                                 withAnimation(.spring()) {
                                     GlobalViewModel.shared.chosenMenu = menuItems[index].0
                                     GlobalViewModel.shared.chosenMenuColor = menuItems[index].1
-                                    GlobalViewModel.shared.selectedDifficulty = selectedDifficulty
                                     isMenuVisible = false
                                 }
                             }
@@ -316,84 +314,6 @@ struct QuickActionButton: View {
     }
 }
 
-struct DifficultyButton: View {
-    let difficulty: DifficultyLevel
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var color: Color {
-        switch difficulty {
-        case .easy: return .green
-        case .medium: return .orange
-        case .hard: return .red
-        }
-    }
-    
-    var emoji: String {
-        switch difficulty {
-        case .easy: return "😊"
-        case .medium: return "🤔"
-        case .hard: return "💪"
-        }
-    }
-    
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 8) {
-                // Emoji icon
-                Text(emoji)
-                    .font(.title)
-                
-                Text(difficulty.rawValue)
-                    .font(.subheadline)
-                    .fontWeight(isSelected ? .bold : .medium)
-                
-                HStack(spacing: 2) {
-                    ForEach(0..<difficulty.heartCount, id: \.self) { _ in
-                        Image(systemName: "heart.fill")
-                            .font(.system(size: 8))
-                            .foregroundColor(.red)
-                    }
-                }
-                
-                if let timeLimit = difficulty.timeLimit {
-                    Text("\(timeLimit)s")
-                        .font(.caption2)
-                        .foregroundColor(.white.opacity(0.6))
-                }
-            }
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(isSelected ? color.opacity(0.25) : Color.white.opacity(0.08))
-                    
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(
-                            isSelected ?
-                                LinearGradient(
-                                    colors: [color, color.opacity(0.6)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ) :
-                                LinearGradient(
-                                    colors: [.clear, .clear],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                            lineWidth: isSelected ? 2 : 1
-                        )
-                }
-                .shadow(color: isSelected ? color.opacity(0.4) : .clear, radius: isSelected ? 8 : 0)
-            )
-            .scaleEffect(isSelected ? 1.05 : 1.0)
-            .animation(.spring(response: 0.3), value: isSelected)
-        }
-    }
-}
-
 struct LanguageCard: View {
     let language: String
     let color: Color
@@ -403,20 +323,20 @@ struct LanguageCard: View {
     
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 15) {
-                // Enhanced Icon with glow
+            VStack(spacing: 10) {
+                // Enhanced Icon with glow (smaller)
                 ZStack {
                     Circle()
                         .fill(
                             RadialGradient(
                                 colors: [color.opacity(0.4), .clear],
                                 center: .center,
-                                startRadius: 20,
-                                endRadius: 50
+                                startRadius: 15,
+                                endRadius: 40
                             )
                         )
-                        .frame(width: 90, height: 90)
-                        .blur(radius: 10)
+                        .frame(width: 70, height: 70)
+                        .blur(radius: 8)
                     
                     Circle()
                         .fill(
@@ -426,76 +346,61 @@ struct LanguageCard: View {
                                 endPoint: .bottomTrailing
                             )
                         )
-                        .frame(width: 70, height: 70)
+                        .frame(width: 55, height: 55)
                         .overlay(
                             Circle()
                                 .stroke(Color.white.opacity(0.3), lineWidth: 2)
                         )
-                        .shadow(color: color.opacity(0.5), radius: 12)
+                        .shadow(color: color.opacity(0.5), radius: 10)
                     
                     if icon.count == 1 {
                         Text(icon)
-                            .font(.system(size: 35))
+                            .font(.system(size: 28))
                     } else {
                         Image(systemName: icon)
-                            .font(.system(size: 30, weight: .semibold))
+                            .font(.system(size: 24, weight: .semibold))
                             .foregroundColor(.white)
                     }
                 }
                 
                 // Language Name
                 Text(language)
-                    .font(.headline)
+                    .font(.subheadline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                 
-                // Enhanced Stats
+                // Enhanced Stats (compact)
                 if let stats = stats {
-                    VStack(spacing: 6) {
-                        HStack(spacing: 5) {
-                            Image(systemName: "star.fill")
-                                .font(.caption)
-                                .foregroundColor(.yellow)
-                            Text("\(stats.totalPoints)")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.yellow)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(Color.yellow.opacity(0.2))
-                        )
-                        
-                        Text(String(format: "%.0f%% Accuracy", stats.accuracy))
+                    HStack(spacing: 4) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(.yellow)
+                        Text("\(stats.totalPoints)")
                             .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
+                            .fontWeight(.semibold)
+                            .foregroundColor(.yellow)
                     }
-                } else {
-                    HStack(spacing: 6) {
-                        Image(systemName: "play.circle.fill")
-                            .font(.subheadline)
-                            .foregroundColor(color)
-                        Text("Start Learning")
-                            .font(.caption)
-                            .fontWeight(.medium)
-                            .foregroundColor(.white.opacity(0.9))
-                    }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
                     .background(
                         Capsule()
-                            .fill(color.opacity(0.2))
-                            .overlay(
-                                Capsule()
-                                    .stroke(color.opacity(0.4), lineWidth: 1)
-                            )
+                            .fill(Color.yellow.opacity(0.2))
                     )
+                } else {
+                    Text("Start")
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                        .foregroundColor(color)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(color.opacity(0.2))
+                        )
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 20)
+            .padding(.vertical, 12)
             .background(
                 ZStack {
                     RoundedRectangle(cornerRadius: 22)

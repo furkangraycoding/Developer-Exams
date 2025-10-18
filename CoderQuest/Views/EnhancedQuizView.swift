@@ -10,15 +10,12 @@ import SwiftUI
 struct EnhancedQuizView: View {
     var username: String = ""
     var chosenMenu: String = ""
-    var difficulty: DifficultyLevel = .easy
     
     @StateObject private var flashcardViewModel: FlashcardViewModel
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @EnvironmentObject var globalViewModel: GlobalViewModel
     @ObservedObject var progressManager = ProgressManager.shared
     
-    @State private var timeRemaining: Int = 0
-    @State private var timer: Timer?
     @State private var showGameOver = false
     @State private var showVictoryAnimation = false
     @State private var questionsInSession = 0
@@ -27,10 +24,9 @@ struct EnhancedQuizView: View {
     @State private var selectedAnswer: String? = nil
     @State private var showAchievementPopup = false
     
-    init(username: String, chosenMenu: String, difficulty: DifficultyLevel) {
+    init(username: String, chosenMenu: String) {
         self.username = username
         self.chosenMenu = chosenMenu
-        self.difficulty = difficulty
         _flashcardViewModel = StateObject(wrappedValue: FlashcardViewModel())
     }
     
@@ -92,28 +88,6 @@ struct EnhancedQuizView: View {
                             .shadow(color: .yellow.opacity(0.3), radius: 5)
                     )
                     
-                    Spacer()
-                    
-                    // Timer (if applicable)
-                    if let timeLimit = difficulty.timeLimit {
-                        HStack(spacing: 5) {
-                            Image(systemName: "timer")
-                                .font(.subheadline)
-                                .foregroundColor(timeRemaining <= 5 ? .red : .white)
-                            Text("\(timeRemaining)")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(timeRemaining <= 5 ? .red : .white)
-                        }
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 10)
-                        .background(
-                            Capsule()
-                                .fill(timeRemaining <= 5 ? Color.red.opacity(0.3) : Color.white.opacity(0.2))
-                                .shadow(color: timeRemaining <= 5 ? .red.opacity(0.5) : .clear, radius: 5)
-                        )
-                        .animation(.easeInOut, value: timeRemaining)
-                    }
                 }
                 .padding()
                 
@@ -165,7 +139,6 @@ struct EnhancedQuizView: View {
                         score: flashcardViewModel.correctAnswersCount,
                         questionsAnswered: questionsInSession,
                         correctAnswers: correctInSession,
-                        difficulty: difficulty,
                         language: chosenMenu,
                         color: globalViewModel.chosenMenuColor
                     ) {
@@ -215,12 +188,14 @@ struct EnhancedQuizView: View {
         }
         .onChange(of: flashcardViewModel.gameOver) { isGameOver in
             if isGameOver {
-                timer?.invalidate()
                 recordGameSession()
                 
-                if !progressManager.recentlyUnlockedAchievements.isEmpty {
-                    withAnimation {
-                        showAchievementPopup = true
+                // Reset and show new achievements
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    if !progressManager.recentlyUnlockedAchievements.isEmpty {
+                        withAnimation {
+                            showAchievementPopup = true
+                        }
                     }
                 }
             }
@@ -234,39 +209,13 @@ struct EnhancedQuizView: View {
     
     func setupGame() {
         flashcardViewModel.chosenMenu = chosenMenu
-        flashcardViewModel.heartsRemaining = difficulty.heartCount
+        flashcardViewModel.heartsRemaining = 5
         flashcardViewModel.loadFlashcards(chosenMenu: chosenMenu)
         sessionStartTime = Date()
-        
-        if let timeLimit = difficulty.timeLimit {
-            timeRemaining = timeLimit
-            startTimer()
-        }
-    }
-    
-    func startTimer() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                // Time's up, count as wrong answer
-                flashcardViewModel.heartsRemaining -= 1
-                if flashcardViewModel.heartsRemaining <= 0 {
-                    flashcardViewModel.gameOver = true
-                } else {
-                    flashcardViewModel.currentIndex += 1
-                    if let timeLimit = difficulty.timeLimit {
-                        timeRemaining = timeLimit
-                    }
-                }
-            }
-        }
     }
     
     func handleAnswer(_ answer: String, for flashcard: Flashcard) {
         selectedAnswer = answer
-        timer?.invalidate()
         
         let isCorrect = answer == flashcard.answer
         flashcardViewModel.resultMessage = isCorrect ? "Correct!" : "Try Again"
@@ -286,8 +235,7 @@ struct EnhancedQuizView: View {
                 selectedAnswer = nil
                 
                 if isCorrect {
-                    let multipliedPoints = Int(Double(flashcard.point) * difficulty.pointMultiplier)
-                    flashcardViewModel.correctAnswersCount += multipliedPoints
+                    flashcardViewModel.correctAnswersCount += flashcard.point
                 } else {
                     flashcardViewModel.heartsRemaining -= 1
                     
@@ -302,11 +250,6 @@ struct EnhancedQuizView: View {
                 if flashcardViewModel.currentIndex >= flashcardViewModel.currentQuestions.count {
                     flashcardViewModel.loadNewQuestions()
                 }
-                
-                if let timeLimit = difficulty.timeLimit {
-                    timeRemaining = timeLimit
-                    startTimer()
-                }
             }
         }
     }
@@ -315,12 +258,15 @@ struct EnhancedQuizView: View {
         let timePlayed = Date().timeIntervalSince(sessionStartTime)
         let isPerfect = correctInSession == questionsInSession && questionsInSession > 0
         
+        // Reset recently unlocked achievements before recording new session
+        progressManager.recentlyUnlockedAchievements.removeAll()
+        
         progressManager.recordGameSession(
             language: chosenMenu,
             score: flashcardViewModel.correctAnswersCount,
             questionsAnswered: questionsInSession,
             correctAnswers: correctInSession,
-            difficulty: difficulty,
+            difficulty: .easy,
             timePlayed: timePlayed,
             isPerfect: isPerfect
         )
@@ -331,11 +277,7 @@ struct EnhancedQuizView: View {
         questionsInSession = 0
         correctInSession = 0
         sessionStartTime = Date()
-        
-        if let timeLimit = difficulty.timeLimit {
-            timeRemaining = timeLimit
-            startTimer()
-        }
+        progressManager.recentlyUnlockedAchievements.removeAll()
     }
     
     func showAd() {
@@ -352,43 +294,104 @@ struct QuestionView: View {
     let onAnswer: (String) -> Void
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 25) {
-                // Points Badge
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 30) {
+                // Enhanced Points Badge
                 HStack {
                     Spacer()
-                    Text("+\(flashcard.point) pts")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(color.opacity(0.6))
-                                .shadow(color: color.opacity(0.4), radius: 5)
-                        )
-                }
-                
-                // Question
-                Text(flashcard.question)
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .frame(maxWidth: .infinity)
+                    HStack(spacing: 6) {
+                        Image(systemName: "star.fill")
+                            .font(.caption)
+                            .foregroundColor(.yellow)
+                        Text("+\(flashcard.point)")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Text("pts")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.8))
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
                     .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white.opacity(0.1))
-                            .shadow(color: color.opacity(0.2), radius: 10)
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [color.opacity(0.6), color.opacity(0.4)],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(color.opacity(0.6), lineWidth: 1.5)
+                            )
+                            .shadow(color: color.opacity(0.5), radius: 8)
                     )
+                }
+                .padding(.horizontal)
                 
-                // Choices
-                VStack(spacing: 15) {
-                    ForEach(flashcard.choices, id: \.self) { choice in
+                // Enhanced Question Card
+                VStack(spacing: 20) {
+                    // Question icon
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [color.opacity(0.3), .clear],
+                                    center: .center,
+                                    startRadius: 20,
+                                    endRadius: 50
+                                )
+                            )
+                            .frame(width: 80, height: 80)
+                            .blur(radius: 10)
+                        
+                        Circle()
+                            .fill(color.opacity(0.2))
+                            .frame(width: 60, height: 60)
+                        
+                        Image(systemName: "questionmark")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(color)
+                    }
+                    
+                    // Question text
+                    Text(flashcard.question)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .padding(.horizontal, 20)
+                }
+                .padding(.vertical, 30)
+                .frame(maxWidth: .infinity)
+                .background(
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 25)
+                            .fill(Color.white.opacity(0.08))
+                        
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [color.opacity(0.5), color.opacity(0.2)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 2
+                            )
+                    }
+                    .shadow(color: color.opacity(0.3), radius: 15)
+                )
+                .padding(.horizontal)
+                
+                // Enhanced Choices
+                VStack(spacing: 12) {
+                    ForEach(Array(flashcard.choices.enumerated()), id: \.element) { index, choice in
                         ChoiceButton(
                             text: choice,
+                            index: index,
                             color: color,
                             isSelected: selectedAnswer == choice
                         ) {
@@ -396,42 +399,94 @@ struct QuestionView: View {
                         }
                     }
                 }
+                .padding(.horizontal)
             }
-            .padding()
+            .padding(.vertical, 20)
         }
     }
 }
 
 struct ChoiceButton: View {
     let text: String
+    let index: Int
     let color: Color
     let isSelected: Bool
     let action: () -> Void
     
+    var optionLetter: String {
+        return String(UnicodeScalar(65 + index)!) // A, B, C, D
+    }
+    
     var body: some View {
         Button(action: action) {
-            HStack {
+            HStack(spacing: 15) {
+                // Option letter badge
+                ZStack {
+                    Circle()
+                        .fill(
+                            isSelected ?
+                                LinearGradient(
+                                    colors: [color, color.opacity(0.7)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) :
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.15), Color.white.opacity(0.1)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                        )
+                        .frame(width: 40, height: 40)
+                    
+                    Text(optionLetter)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                }
+                
+                // Answer text
                 Text(text)
                     .font(.body)
-                    .fontWeight(.medium)
+                    .fontWeight(isSelected ? .semibold : .regular)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
+                // Checkmark for selected
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
+                        .font(.title3)
                         .foregroundColor(color)
                 }
             }
-            .padding()
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
             .background(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(isSelected ? color.opacity(0.3) : Color.white.opacity(0.1))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(isSelected ? color : Color.clear, lineWidth: 2)
-                    )
-                    .shadow(color: isSelected ? color.opacity(0.4) : .clear, radius: 8)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(
+                            isSelected ?
+                                color.opacity(0.15) :
+                                Color.white.opacity(0.06)
+                        )
+                    
+                    RoundedRectangle(cornerRadius: 18)
+                        .stroke(
+                            isSelected ?
+                                LinearGradient(
+                                    colors: [color, color.opacity(0.6)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ) :
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.1), Color.clear],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                            lineWidth: isSelected ? 2 : 1
+                        )
+                }
+                .shadow(color: isSelected ? color.opacity(0.4) : .clear, radius: isSelected ? 12 : 0)
             )
         }
         .buttonStyle(ScaleButtonStyle())
@@ -478,7 +533,6 @@ struct GameOverView: View {
     let score: Int
     let questionsAnswered: Int
     let correctAnswers: Int
-    let difficulty: DifficultyLevel
     let language: String
     let color: Color
     let onRestart: () -> Void
@@ -535,16 +589,6 @@ struct GameOverView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.green)
                         Text("Accuracy")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                    
-                    VStack {
-                        Text(difficulty.rawValue)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(color)
-                        Text("Difficulty")
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.7))
                     }

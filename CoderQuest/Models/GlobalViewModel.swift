@@ -16,7 +16,6 @@ class GlobalViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var isMenuVisible: Bool = true
     @Published var shapesWithPositions: [(shape: AnyView, position: CGPoint)] = []
-    @Published var selectedDifficulty: DifficultyLevel = .easy
     
     static let shared = GlobalViewModel()
 }

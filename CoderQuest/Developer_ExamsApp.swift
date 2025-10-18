@@ -26,8 +26,7 @@ struct CoderQuestApp: App {
                     if GlobalViewModel.shared.chosenMenu != "" {
                         EnhancedQuizView(
                             username: username,
-                            chosenMenu: globalViewModel.chosenMenu,
-                            difficulty: globalViewModel.selectedDifficulty
+                            chosenMenu: globalViewModel.chosenMenu
                         ).environmentObject(globalViewModel)
                     }
                 }
