@@ -21,18 +21,20 @@ struct CoderQuestApp: App {
         WindowGroup {
             if globalViewModel.isActive == "AnaEkran" {
                 if globalViewModel.isMenuVisible {
-                            MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
-                        } else {
-                            if GlobalViewModel.shared.chosenMenu != "" {
-                                ContentView(username: username, chosenMenu: globalViewModel.chosenMenu).environmentObject(globalViewModel)
-                            }
-                        }
-                
+                    MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
+                } else {
+                    if GlobalViewModel.shared.chosenMenu != "" {
+                        EnhancedQuizView(
+                            username: username,
+                            chosenMenu: globalViewModel.chosenMenu,
+                            difficulty: globalViewModel.selectedDifficulty
+                        ).environmentObject(globalViewModel)
+                    }
+                }
             }
             else if (globalViewModel.isActive == "SplashEkranı") {
                 SplashScreenView(isActive: $isActive).environmentObject(globalViewModel)
             }
-                
             else if (globalViewModel.isActive == "Login") {
                 UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
             }
