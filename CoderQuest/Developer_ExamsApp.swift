@@ -10,36 +10,21 @@ import GoogleMobileAds
 
 @main
 struct CoderQuestApp: App {
-    @State private var showSplash = true
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
         print("🎬 CoderQuestApp initialized")
-        print("📱 showSplash initial value: true")
     }
     
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                if !showSplash {
-                    MainMenuView()
-                        .environmentObject(interstitialAdsManager)
-                        .transition(.opacity)
-                        .onAppear {
-                            print("✅ MainMenuView appeared on screen!")
-                        }
+            // Temporarily bypass splash screen for testing
+            MainMenuView()
+                .environmentObject(interstitialAdsManager)
+                .onAppear {
+                    print("✅ MainMenuView loaded successfully!")
                 }
-                
-                if showSplash {
-                    ModernSplashView(showSplash: $showSplash)
-                        .transition(.opacity)
-                        .zIndex(1)
-                }
-            }
-            .onChange(of: showSplash) { newValue in
-                print("🔄 showSplash value changed to: \(newValue)")
-            }
         }
     }
 }
