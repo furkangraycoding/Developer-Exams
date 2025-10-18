@@ -578,7 +578,7 @@ struct AnswerFeedbackView: View {
                         .fill(
                             RadialGradient(
                                 colors: [
-                                    (isCorrect ? Color.green : Color.red).opacity(glowIntensity),
+                                    isCorrect ? Color.green.opacity(glowIntensity) : Color.red.opacity(glowIntensity),
                                     .clear
                                 ],
                                 center: .center,
@@ -593,7 +593,7 @@ struct AnswerFeedbackView: View {
                     Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .font(.system(size: 120))
                         .foregroundColor(isCorrect ? .green : .red)
-                        .shadow(color: (isCorrect ? .green : .red).opacity(0.6), radius: 20)
+                        .shadow(color: isCorrect ? Color.green.opacity(0.6) : Color.red.opacity(0.6), radius: 20)
                         .scaleEffect(scaleEffect)
                         .rotationEffect(.degrees(isCorrect ? rotationEffect : 0))
                 }
@@ -623,7 +623,7 @@ struct AnswerFeedbackView: View {
                                     )
                             )
                     )
-                    .shadow(color: (isCorrect ? .green : .red).opacity(0.4), radius: 15)
+                    .shadow(color: isCorrect ? Color.green.opacity(0.4) : Color.red.opacity(0.4), radius: 15)
                     .scaleEffect(scaleEffect)
             }
         }
