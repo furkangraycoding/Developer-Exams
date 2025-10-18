@@ -1,6 +1,6 @@
 //
 //  Developer_ExamsApp.swift
-//  Developer Exams
+//  CoderQuest
 //
 //  Created by furkan gurcay on 12.01.2025.
 //
@@ -10,37 +10,23 @@ import GoogleMobileAds
 
 @main
 struct CoderQuestApp: App {
-    @State private var isActive = "Login"
-    @State private var username: String = "" // Kullanıcının girdiği takma ad
+    @State private var showSplash = true
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
-    @StateObject private var globalViewModel = GlobalViewModel()
-    @State private var chosenMenu : String = ""
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-
     var body: some Scene {
         WindowGroup {
-            if globalViewModel.isActive == "AnaEkran" {
-                if globalViewModel.isMenuVisible {
-                            MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
-                        } else {
-                            if GlobalViewModel.shared.chosenMenu != "" {
-                                ContentView(username: username, chosenMenu: globalViewModel.chosenMenu).environmentObject(globalViewModel)
-                            }
-                        }
-                
-            }
-            else if (globalViewModel.isActive == "SplashEkranı") {
-                SplashScreenView(isActive: $isActive).environmentObject(globalViewModel)
-            }
-                
-            else if (globalViewModel.isActive == "Login") {
-                UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
+            if showSplash {
+                ModernSplashView(isActive: $showSplash)
+            } else {
+                MainMenuView()
+                    .environmentObject(interstitialAdsManager)
             }
         }
     }
 }
 
-class AppDelegate:NSObject,UIApplicationDelegate{
+class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         GADMobileAds.sharedInstance().start()
         return true
