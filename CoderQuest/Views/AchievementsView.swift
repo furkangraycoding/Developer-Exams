@@ -126,8 +126,15 @@ struct AchievementsView: View {
                             }
                         }
                     
-                    AchievementDetailView(achievement: achievement)
-                        .transition(.scale.combined(with: .opacity))
+                    AchievementDetailView(
+                        achievement: achievement,
+                        onClose: {
+                            withAnimation(.spring()) {
+                                selectedAchievement = nil
+                            }
+                        }
+                    )
+                    .transition(.scale.combined(with: .opacity))
                 }
             }
         }
@@ -354,8 +361,12 @@ struct AchievementCard: View {
 
 struct AchievementDetailView: View {
     let achievement: Achievement
+    let onClose: () -> Void
     @ObservedObject var progressManager = ProgressManager.shared
     @State private var showClaimAnimation = false
+    @State private var showConfetti = false
+    @State private var buttonScale: CGFloat = 1.0
+    @State private var showXPPopup = false
     
     var detailColor: (primary: Color, secondary: Color) {
         if achievement.isUnlocked {
@@ -496,8 +507,30 @@ struct AchievementDetailView: View {
                         Button(action: {
                             let success = progressManager.claimAchievementReward(achievementId: achievement.id)
                             if success {
-                                withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                                // Trigger animations
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                    buttonScale = 1.2
                                     showClaimAnimation = true
+                                }
+                                
+                                // Show confetti
+                                showConfetti = true
+                                
+                                // Show XP popup
+                                withAnimation(.spring(response: 0.4, dampingFraction: 0.7).delay(0.2)) {
+                                    showXPPopup = true
+                                }
+                                
+                                // Reset button scale
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                        buttonScale = 1.0
+                                    }
+                                }
+                                
+                                // Auto-close after 2 seconds
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    onClose()
                                 }
                             }
                         }) {
@@ -521,8 +554,31 @@ struct AchievementDetailView: View {
                             .cornerRadius(20)
                             .shadow(color: .yellow.opacity(0.5), radius: 15, x: 0, y: 8)
                         }
-                        .scaleEffect(showClaimAnimation ? 1.1 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: showClaimAnimation)
+                        .scaleEffect(buttonScale)
+                    } else {
+                        // Disabled "Claimed" button
+                        HStack(spacing: 10) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.title3)
+                            Text("Already Claimed")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                        }
+                        .foregroundColor(.white.opacity(0.5))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.gray.opacity(0.4), Color.gray.opacity(0.3)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
                     }
                 }
             } else {
@@ -624,6 +680,55 @@ struct AchievementDetailView: View {
             )
         )
         .padding(40)
+        .overlay(
+            ZStack {
+                // Confetti animation
+                if showConfetti {
+                    ForEach(0..<30) { i in
+                        Circle()
+                            .fill(
+                                [Color.yellow, Color.orange, Color.red, Color.green, Color.blue, Color.purple].randomElement() ?? .yellow
+                            )
+                            .frame(width: CGFloat.random(in: 6...12), height: CGFloat.random(in: 6...12))
+                            .offset(
+                                x: CGFloat.random(in: -150...150),
+                                y: showClaimAnimation ? CGFloat.random(in: -300...(-100)) : 0
+                            )
+                            .opacity(showClaimAnimation ? 0 : 1)
+                            .animation(
+                                .easeOut(duration: Double.random(in: 0.8...1.5))
+                                    .delay(Double(i) * 0.02),
+                                value: showClaimAnimation
+                            )
+                    }
+                }
+                
+                // XP popup animation
+                if showXPPopup {
+                    VStack(spacing: 8) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.yellow)
+                        Text("+\(achievement.xpReward) XP")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+                    .padding(25)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.black.opacity(0.9))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.yellow, lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.6), radius: 20)
+                    )
+                    .scaleEffect(showXPPopup ? 1.0 : 0.5)
+                    .opacity(showXPPopup ? 1 : 0)
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+        )
     }
 }
 
