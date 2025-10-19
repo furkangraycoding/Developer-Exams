@@ -38,31 +38,38 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
     }
     
     // Display InterstitialAd
-    func displayInterstitialAd(){
+    func displayInterstitialAd() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         guard let root = windowScene?.windows.first?.rootViewController else {
             return
         }
+        
         InterstitialAdsManager.withoutAdCounter += 1
+        
+        // Always ensure an ad is loaded if we don't have one
+        if interstitialAd == nil {
+            print("🔵: No ad loaded yet, loading a new one...")
+            loadInterstitialAd()
+        }
+
         if InterstitialAdsManager.withoutAdCounter >= 2 {
-            if let add = interstitialAd {
-            print("🔵: interstitialAd withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
-            
-            add.present(fromRootViewController: root)
-            self.interstitialAdLoaded = true
-            InterstitialAdsManager.withoutAdCounter = 0
-        }
-        }
-            else{
-                print("🔵: Ad wasn't ready")
-                print("🔵: withoutAdCounter :" + String((InterstitialAdsManager.withoutAdCounter)))
-                if InterstitialAdsManager.withoutAdCounter == 2 {
-                    self.interstitialAdLoaded = false
-                    self.loadInterstitialAd()
-                }
+            if let ad = interstitialAd {
+                print("🔵: Showing interstitialAd, counter: \(InterstitialAdsManager.withoutAdCounter)")
+                ad.present(fromRootViewController: root)
+                interstitialAd = nil
+                interstitialAdLoaded = false
+                InterstitialAdsManager.withoutAdCounter = 0
+                loadInterstitialAd() // preload next one
+            } else {
+                print("🔵: Ad wasn't ready, reloading...")
+                loadInterstitialAd()
             }
+        } else {
+            print("🔵: Ad not due yet, counter: \(InterstitialAdsManager.withoutAdCounter)")
+        }
     }
+
     
     // Failure notification
     func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
@@ -79,6 +86,7 @@ class InterstitialAdsManager: NSObject, GADFullScreenContentDelegate, Observable
     // Close notification
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("😔: Interstitial ad closed")
+        loadInterstitialAd()
     }
 }
 
