@@ -432,11 +432,11 @@ struct QuestionView: View {
                                             colors: [color, .clear, color.opacity(0.3), .clear],
                                             center: .center
                                         ),
-                                        lineWidth: 3
+                                        lineWidth: 1.5
                                     )
-                                    .frame(width: 110, height: 110)
+                                    .frame(width: 55, height: 55)
                                     .rotationEffect(.degrees(pulseAnimation ? 360 : 0))
-                                    .blur(radius: 2)
+                                    .blur(radius: 1)
                                 
                                 // Multiple glow layers with pulse
                                 ForEach(0..<3) { i in
@@ -448,12 +448,12 @@ struct QuestionView: View {
                                                     .clear
                                                 ],
                                                 center: .center,
-                                                startRadius: CGFloat(30 + i * 20),
-                                                endRadius: CGFloat(70 + i * 25)
+                                                startRadius: CGFloat(15 + i * 10),
+                                                endRadius: CGFloat(35 + i * 12)
                                             )
                                         )
-                                        .frame(width: 140, height: 140)
-                                        .blur(radius: 18)
+                                        .frame(width: 70, height: 70)
+                                        .blur(radius: 9)
                                 }
                                 
                                 // Main icon circle with shimmer
@@ -470,7 +470,7 @@ struct QuestionView: View {
                                                 endPoint: .bottomTrailing
                                             )
                                         )
-                                        .frame(width: 90, height: 90)
+                                        .frame(width: 45, height: 45)
                                     
                                     Circle()
                                         .strokeBorder(
@@ -479,19 +479,19 @@ struct QuestionView: View {
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
                                             ),
-                                            lineWidth: 4
+                                            lineWidth: 2
                                         )
-                                        .frame(width: 90, height: 90)
-                                        .shadow(color: color.opacity(0.6), radius: 18, x: 0, y: 6)
+                                        .frame(width: 45, height: 45)
+                                        .shadow(color: color.opacity(0.6), radius: 9, x: 0, y: 3)
                                     
                                     Image(systemName: "brain.head.profile")
                                         .font(.system(size: 20, weight: .bold))
                                         .foregroundColor(color)
-                                        .shadow(color: .black.opacity(0.4), radius: 4)
+                                        .shadow(color: .black.opacity(0.4), radius: 2)
                                 }
                                 .scaleEffect(pulseAnimation ? 1.05 : 1.0)
                             }
-                            .padding(.top, 15)
+                            .padding(.top, 8)
                             
                             // Enhanced question text
                             Text(flashcard.question)
