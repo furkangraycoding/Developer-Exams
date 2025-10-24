@@ -693,17 +693,23 @@ struct GameOverView: View {
             // Score Card
             VStack(spacing: 15) {
                 HStack {
-                    Image(systemName: "star.fill")
+                    let starIcon = Image(systemName: "star.fill")
                         .font(.system(size: 50))
                         .foregroundColor(.yellow)
                     
+                    starIcon
+                    
                     VStack(alignment: .leading) {
-                        Text("Score")
+                        let scoreLabel = Text("Score")
                             .font(.subheadline)
                             .foregroundColor(.white.opacity(0.8))
-                        Text("\(score)")
+                        
+                        let scoreValue = Text("\(score)")
                             .font(.system(size: 40, weight: .bold))
                             .foregroundColor(.white)
+                        
+                        scoreLabel
+                        scoreValue
                     }
                 }
                 
