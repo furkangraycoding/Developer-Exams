@@ -100,7 +100,7 @@ struct AchievementsView: View {
                 .padding(.bottom, 10)
                 
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                    LazyVGrid(columns: [GridItem(.fixed(200)), GridItem(.fixed(200))], spacing: 15) {
                         ForEach(progressManager.achievements) { achievement in
                             AchievementCard(achievement: achievement)
                                 .onTapGesture {
@@ -126,8 +126,15 @@ struct AchievementsView: View {
                             }
                         }
                     
-                    AchievementDetailView(achievement: achievement)
-                        .transition(.scale.combined(with: .opacity))
+                    AchievementDetailView(
+                        achievement: achievement,
+                        onClose: {
+                            withAnimation(.spring()) {
+                                selectedAchievement = nil
+                            }
+                        }
+                    )
+                    .transition(.scale.combined(with: .opacity))
                 }
             }
         }
@@ -153,18 +160,28 @@ struct AchievementCard: View {
             switch achievement.type {
             case .firstWin, .perfectScore:
                 return (.green, .mint)
-            case .streak5, .streak10, .streak20:
+            case .streak5, .streak10, .streak20, .streak50:
                 return (.orange, .yellow)
-            case .speed50, .speed100:
+            case .speed50, .speed100, .speed250, .speed500:
                 return (.blue, .cyan)
             case .allLanguages:
                 return (.purple, .pink)
             case .hardMode:
                 return (.red, .orange)
-            case .master100, .master500, .master1000:
+            case .master100, .master500, .master1000, .master2500, .master5000:
                 return (.yellow, .orange)
             case .nightOwl, .earlyBird, .weekendWarrior:
                 return (.indigo, .purple)
+            case .marathonRunner, .centuryClub:
+                return (.green, .teal)
+            case .perfectStreak:
+                return (.pink, .purple)
+            case .speedDemon:
+                return (.cyan, .blue)
+            case .dedicated, .veteran:
+                return (.orange, .red)
+            case .legend:
+                return (.yellow, .pink)
             }
         } else {
             return (.gray.opacity(0.2), .gray.opacity(0.1))
@@ -172,7 +189,11 @@ struct AchievementCard: View {
     }
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
+            Spacer()
+                .frame(height: 5)
+            
+            // Icon section with FIXED height
             ZStack {
                 // Outer glow for unlocked achievements
                 if achievement.isUnlocked {
@@ -198,7 +219,7 @@ struct AchievementCard: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .frame(width: 80, height: 80)
+                    .frame(width: 70, height: 70)
                     .shadow(
                         color: achievement.isUnlocked ? cardColor.primary.opacity(0.6) : .clear,
                         radius: achievement.isUnlocked ? 15 : 0
@@ -215,75 +236,121 @@ struct AchievementCard: View {
                 
                 // Icon
                 Image(systemName: achievement.icon)
-                    .font(.system(size: 35, weight: .semibold))
+                    .font(.system(size: 30, weight: .semibold))
                     .foregroundColor(achievement.isUnlocked ? .white : .gray.opacity(0.4))
                 
                 // Locked overlay
                 if !achievement.isUnlocked {
                     Circle()
                         .fill(Color.black.opacity(0.6))
-                        .frame(width: 80, height: 80)
+                        .frame(width: 70, height: 70)
                     
                     Image(systemName: "lock.fill")
-                        .font(.system(size: 25))
+                        .font(.system(size: 22))
                         .foregroundColor(.gray.opacity(0.6))
                 }
             }
+            .frame(width: 70, height: 70)
             
             Text(achievement.title)
-                .font(.subheadline)
+                .font(.caption)
                 .fontWeight(achievement.isUnlocked ? .bold : .regular)
                 .foregroundColor(achievement.isUnlocked ? .white : .gray.opacity(0.5))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .frame(height: 35)
+                .frame(height: 32)
             
-            if !achievement.isUnlocked {
-                VStack(spacing: 4) {
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.white.opacity(0.1))
-                                .frame(height: 6)
-                            
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.blue, .cyan],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
+            // Status section with FIXED height
+            ZStack {
+                if !achievement.isUnlocked {
+                    VStack(spacing: 4) {
+                        // Progress bar
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(Color.white.opacity(0.1))
+                                    .frame(height: 6)
+                                
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.blue, .cyan],
+                                            startPoint: .leading,
+                                            endPoint: .trailing
+                                        )
                                     )
-                                )
-                                .frame(width: geometry.size.width * achievement.progress, height: 6)
+                                    .frame(width: geometry.size.width * achievement.progress, height: 6)
+                            }
                         }
+                        .frame(height: 6)
+                        .padding(.horizontal, 15)
+                        
+                        Spacer()
+                            .frame(height: 2)
+                        
+                        // Counter text
+                        Text("\(achievement.currentCount)/\(achievement.requiredCount)")
+                            .font(.caption2)
+                            .fontWeight(.medium)
+                            .foregroundColor(.gray.opacity(0.6))
+                            .frame(height: 22)
                     }
-                    .frame(height: 6)
-                    
-                    Text("\(achievement.currentCount)/\(achievement.requiredCount)")
-                        .font(.caption2)
-                        .fontWeight(.medium)
-                        .foregroundColor(.gray.opacity(0.6))
+                } else if achievement.isClaimed {
+                    VStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 8)
+                        
+                        HStack(spacing: 3) {
+                            Image(systemName: "checkmark.seal.fill")
+                                .font(.caption)
+                                .foregroundColor(.green)
+                            Text("Claimed!")
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.green)
+                        }
+                        .frame(height: 22)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(Color.green.opacity(0.2))
+                        )
+                        
+                        Spacer()
+                    }
+                } else {
+                    VStack(spacing: 0) {
+                        Spacer()
+                            .frame(height: 8)
+                        
+                        HStack(spacing: 3) {
+                            Image(systemName: "gift.fill")
+                                .font(.caption)
+                                .foregroundColor(.yellow)
+                            Text("Claim Prize!")
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.yellow)
+                        }
+                        .frame(height: 22)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(Color.yellow.opacity(0.2))
+                        )
+                        
+                        Spacer()
+                    }
                 }
-            } else {
-                HStack(spacing: 3) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                    Text("Unlocked!")
-                        .font(.caption2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(
-                    Capsule()
-                        .fill(Color.green.opacity(0.2))
-                )
             }
+            .frame(height: 35)
+            
+            Spacer()
+                .frame(height: 5)
         }
-        .padding(.vertical, 15)
-        .padding(.horizontal, 10)
+        .frame(width: 200, height: 200)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(
@@ -320,24 +387,40 @@ struct AchievementCard: View {
 
 struct AchievementDetailView: View {
     let achievement: Achievement
+    let onClose: () -> Void
+    @ObservedObject var progressManager = ProgressManager.shared
+    @State private var showClaimAnimation = false
+    @State private var showConfetti = false
+    @State private var buttonScale: CGFloat = 1.0
+    @State private var showXPPopup = false
     
     var detailColor: (primary: Color, secondary: Color) {
         if achievement.isUnlocked {
             switch achievement.type {
             case .firstWin, .perfectScore:
                 return (.green, .mint)
-            case .streak5, .streak10, .streak20:
+            case .streak5, .streak10, .streak20, .streak50:
                 return (.orange, .yellow)
-            case .speed50, .speed100:
+            case .speed50, .speed100, .speed250, .speed500:
                 return (.blue, .cyan)
             case .allLanguages:
                 return (.purple, .pink)
             case .hardMode:
                 return (.red, .orange)
-            case .master100, .master500, .master1000:
+            case .master100, .master500, .master1000, .master2500, .master5000:
                 return (.yellow, .orange)
             case .nightOwl, .earlyBird, .weekendWarrior:
                 return (.indigo, .purple)
+            case .marathonRunner, .centuryClub:
+                return (.green, .teal)
+            case .perfectStreak:
+                return (.pink, .purple)
+            case .speedDemon:
+                return (.cyan, .blue)
+            case .dedicated, .veteran:
+                return (.orange, .red)
+            case .legend:
+                return (.yellow, .pink)
             }
         } else {
             return (.gray.opacity(0.3), .gray.opacity(0.5))
@@ -407,12 +490,12 @@ struct AchievementDetailView: View {
             
             // Progress or Status
             if achievement.isUnlocked {
-                VStack(spacing: 12) {
+                VStack(spacing: 15) {
                     HStack(spacing: 8) {
-                        Image(systemName: "checkmark.seal.fill")
+                        Image(systemName: achievement.isClaimed ? "checkmark.seal.fill" : "gift.fill")
                             .font(.title3)
-                            .foregroundColor(detailColor.primary)
-                        Text("Achievement Unlocked!")
+                            .foregroundColor(achievement.isClaimed ? detailColor.primary : .yellow)
+                        Text(achievement.isClaimed ? "Achievement Claimed!" : "Ready to Claim!")
                             .font(.headline)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -423,7 +506,9 @@ struct AchievementDetailView: View {
                         Capsule()
                             .fill(
                                 LinearGradient(
-                                    colors: [detailColor.primary.opacity(0.3), detailColor.secondary.opacity(0.2)],
+                                    colors: achievement.isClaimed ? 
+                                        [detailColor.primary.opacity(0.3), detailColor.secondary.opacity(0.2)] :
+                                        [Color.yellow.opacity(0.3), Color.orange.opacity(0.2)],
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
@@ -432,7 +517,9 @@ struct AchievementDetailView: View {
                                 Capsule()
                                     .stroke(
                                         LinearGradient(
-                                            colors: [detailColor.primary, detailColor.secondary],
+                                            colors: achievement.isClaimed ?
+                                                [detailColor.primary, detailColor.secondary] :
+                                                [Color.yellow, Color.orange],
                                             startPoint: .leading,
                                             endPoint: .trailing
                                         ),
@@ -440,12 +527,85 @@ struct AchievementDetailView: View {
                                     )
                             )
                     )
-                    .shadow(color: detailColor.primary.opacity(0.4), radius: 10)
+                    .shadow(color: (achievement.isClaimed ? detailColor.primary : .yellow).opacity(0.4), radius: 10)
                     
-                    Text(achievement.description)
-                        .font(.body)
-                        .foregroundColor(.white.opacity(0.8))
-                        .multilineTextAlignment(.center)
+                    if !achievement.isClaimed {
+                        Button(action: {
+                            let success = progressManager.claimAchievementReward(achievementId: achievement.id)
+                            if success {
+                                // Trigger animations
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                    buttonScale = 1.2
+                                    showClaimAnimation = true
+                                }
+                                
+                                // Show confetti
+                                showConfetti = true
+                                
+                                // Show XP popup
+                                withAnimation(.spring(response: 0.4, dampingFraction: 0.7).delay(0.2)) {
+                                    showXPPopup = true
+                                }
+                                
+                                // Reset button scale
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                        buttonScale = 1.0
+                                    }
+                                }
+                                
+                                // Auto-close after 2 seconds
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                    onClose()
+                                }
+                            }
+                        }) {
+                            HStack(spacing: 10) {
+                                Image(systemName: "gift.fill")
+                                    .font(.title3)
+                                Text("Claim Rewards")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                            }
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                LinearGradient(
+                                    colors: [.yellow, .orange],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .cornerRadius(20)
+                            .shadow(color: .yellow.opacity(0.5), radius: 15, x: 0, y: 8)
+                        }
+                        .scaleEffect(buttonScale)
+                    } else {
+                        // Disabled "Claimed" button
+                        HStack(spacing: 10) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.title3)
+                            Text("Already Claimed")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                        }
+                        .foregroundColor(.white.opacity(0.5))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.gray.opacity(0.4), Color.gray.opacity(0.3)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                    }
                 }
             } else {
                 VStack(spacing: 10) {
@@ -546,6 +706,55 @@ struct AchievementDetailView: View {
             )
         )
         .padding(40)
+        .overlay(
+            ZStack {
+                // Confetti animation
+                if showConfetti {
+                    ForEach(0..<30) { i in
+                        Circle()
+                            .fill(
+                                [Color.yellow, Color.orange, Color.red, Color.green, Color.blue, Color.purple].randomElement() ?? .yellow
+                            )
+                            .frame(width: CGFloat.random(in: 6...12), height: CGFloat.random(in: 6...12))
+                            .offset(
+                                x: CGFloat.random(in: -150...150),
+                                y: showClaimAnimation ? CGFloat.random(in: -300...(-100)) : 0
+                            )
+                            .opacity(showClaimAnimation ? 0 : 1)
+                            .animation(
+                                .easeOut(duration: Double.random(in: 0.8...1.5))
+                                    .delay(Double(i) * 0.02),
+                                value: showClaimAnimation
+                            )
+                    }
+                }
+                
+                // XP popup animation
+                if showXPPopup {
+                    VStack(spacing: 8) {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 40))
+                            .foregroundColor(.yellow)
+                        Text("+\(achievement.xpReward) XP")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+                    .padding(25)
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.black.opacity(0.9))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .stroke(Color.yellow, lineWidth: 3)
+                            )
+                            .shadow(color: .yellow.opacity(0.6), radius: 20)
+                    )
+                    .scaleEffect(showXPPopup ? 1.0 : 0.5)
+                    .opacity(showXPPopup ? 1 : 0)
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+        )
     }
 }
 

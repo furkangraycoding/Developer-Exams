@@ -24,18 +24,18 @@ struct UsernameInputView: View {
             )
             .ignoresSafeArea()
             
-            VStack(spacing: 0) {
+            VStack(spacing: 40) {
                 Spacer()
                 
                 // Welcome Section (centered, no image)
                 if showWelcomeText {
-                    VStack(spacing: 8) {
+                    VStack(spacing: 15) {
                         Text("Welcome to")
-                            .font(.title3)
+                            .font(.title2)
                             .foregroundColor(.white.opacity(0.8))
                         
                         Text("CoderQuest")
-                            .font(.system(size: 42, weight: .bold, design: .rounded))
+                            .font(.system(size: 52, weight: .bold, design: .rounded))
                             .foregroundStyle(
                                 LinearGradient(
                                     colors: [.cyan, .purple, .pink],
@@ -43,16 +43,16 @@ struct UsernameInputView: View {
                                     endPoint: .trailing
                                 )
                             )
+                            .shadow(color: .cyan.opacity(0.5), radius: 15)
                         
                         Text("Start your coding journey")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.6))
+                            .font(.title3)
+                            .foregroundColor(.white.opacity(0.7))
                     }
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-                    .padding(.bottom, 40)
+                    .transition(.opacity.combined(with: .scale))
                 }
                 
-                Spacer()
+                Spacer().frame(height: 20)
                 
                 // Input Card
                 VStack(spacing: 25) {
@@ -94,7 +94,7 @@ struct UsernameInputView: View {
                                 username = "Player" + String(Int.random(in: 1000..<9999))
                             }
                             // Save username to UserDefaults
-                            UserDefaults.standard.set(username, forKey: "username")
+                            UserDefaults.standard.set(username, forKey: "savedUsername")
                             globalViewModel.username = username
                             globalViewModel.isActive = "AnaEkran"
                         }
@@ -127,7 +127,7 @@ struct UsernameInputView: View {
                         withAnimation(.spring()) {
                             username = "Guest" + String(Int.random(in: 100..<999))
                             // Save username to UserDefaults
-                            UserDefaults.standard.set(username, forKey: "username")
+                            UserDefaults.standard.set(username, forKey: "savedUsername")
                             globalViewModel.username = username
                             globalViewModel.isActive = "AnaEkran"
                         }
@@ -170,7 +170,7 @@ struct UsernameInputView: View {
             }
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 0.5)) {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
                 showWelcomeText = true
             }
             

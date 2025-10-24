@@ -16,19 +16,28 @@ struct CoderQuestApp: App {
     @StateObject private var globalViewModel = GlobalViewModel()
     @State private var chosenMenu : String = ""
     
+    init() {
+        // Check if username is already saved
+        if let savedUsername = UserDefaults.standard.string(forKey: "savedUsername"), !savedUsername.isEmpty {
+            _username = State(initialValue: savedUsername)
+            _isActive = State(initialValue: "AnaEkran")
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
-            Group {
-                if globalViewModel.isActive == "AnaEkran" {
-                    if globalViewModel.isMenuVisible {
-                        MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
-                    } else {
-                        if globalViewModel.chosenMenu != "" {
-                            EnhancedQuizView(
-                                username: username,
-                                chosenMenu: globalViewModel.chosenMenu
-                            ).environmentObject(globalViewModel)
+            if globalViewModel.isActive == "AnaEkran" || isActive == "AnaEkran" {
+                if globalViewModel.isMenuVisible {
+                    MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
+                        .onAppear {
+                            globalViewModel.username = username
                         }
+                } else {
+                    if GlobalViewModel.shared.chosenMenu != "" {
+                        EnhancedQuizView(
+                            username: username,
+                            chosenMenu: globalViewModel.chosenMenu
+                        ).environmentObject(globalViewModel)
                     }
                 } else {
                     // Default to Login screen
@@ -42,6 +51,9 @@ struct CoderQuestApp: App {
                             }
                         }
                 }
+            }
+            else if (globalViewModel.isActive == "Login" || isActive == "Login") {
+                UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
             }
         }
     }

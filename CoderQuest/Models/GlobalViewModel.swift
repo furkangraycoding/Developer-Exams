@@ -18,4 +18,12 @@ class GlobalViewModel: ObservableObject {
     @Published var shapesWithPositions: [(shape: AnyView, position: CGPoint)] = []
     
     static let shared = GlobalViewModel()
+    
+    init() {
+        // Check if username is saved, if so, go directly to main screen
+        if let savedUsername = UserDefaults.standard.string(forKey: "savedUsername"), !savedUsername.isEmpty {
+            self.username = savedUsername
+            self.isActive = "AnaEkran"
+        }
+    }
 }

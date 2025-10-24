@@ -175,6 +175,8 @@ class ProgressManager: ObservableObject {
                 continue
             }
             
+            var shouldUnlock = false
+            
             switch achievement.type {
             case .firstWin:
                 achievement.currentCount = statistics.totalGamesPlayed
@@ -186,19 +188,25 @@ class ProgressManager: ObservableObject {
             case .streak5:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 5 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .streak10:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 10 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .streak20:
                 achievement.currentCount = statistics.longestStreak
                 if statistics.longestStreak >= 20 {
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
+                }
+                
+            case .streak50:
+                achievement.currentCount = statistics.longestStreak
+                if statistics.longestStreak >= 50 {
+                    shouldUnlock = true
                 }
                 
             case .perfectScore:
@@ -233,7 +241,7 @@ class ProgressManager: ObservableObject {
                 if difficulty == .hard {
                     achievement.currentCount += 1
                     if achievement.currentCount >= 10 {
-                        unlockAchievement(at: index)
+                        shouldUnlock = true
                     }
                 }
                 
@@ -262,14 +270,14 @@ class ProgressManager: ObservableObject {
                 let hour = Calendar.current.component(.hour, from: Date())
                 if hour >= 0 && hour < 6 {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .earlyBird:
                 let hour = Calendar.current.component(.hour, from: Date())
                 if hour >= 4 && hour < 6 {
                     achievement.currentCount = 1
-                    unlockAchievement(at: index)
+                    shouldUnlock = true
                 }
                 
             case .weekendWarrior:
@@ -277,12 +285,18 @@ class ProgressManager: ObservableObject {
                 if weekday == 1 || weekday == 7 {
                     achievement.currentCount += 1
                     if achievement.currentCount >= 5 {
-                        unlockAchievement(at: index)
+                        shouldUnlock = true
                     }
                 }
             }
             
+            // Update the achievement first with current count
             achievements[index] = achievement
+            
+            // Then unlock if needed (this will update isUnlocked flag)
+            if shouldUnlock {
+                unlockAchievement(at: index)
+            }
         }
         
         saveAchievements()
@@ -307,6 +321,26 @@ class ProgressManager: ObservableObject {
         statistics.addXP(achievements[index].xpReward)
         saveStatistics()
         saveAchievements()
+    }
+    
+    func claimAchievementReward(achievementId: String) -> Bool {
+        guard let index = achievements.firstIndex(where: { $0.id == achievementId }) else {
+            return false
+        }
+        
+        guard achievements[index].isUnlocked && !achievements[index].isClaimed else {
+            return false
+        }
+        
+        let achievement = achievements[index]
+        statistics.addXP(achievement.xpReward)
+        achievements[index].isClaimed = true
+        
+        saveStatistics()
+        saveAchievements()
+        
+        print("🎁 Claimed reward for '\(achievement.title)': +\(achievement.xpReward) XP")
+        return true
     }
     
     func clearRecentAchievements() {
