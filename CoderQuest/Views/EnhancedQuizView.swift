@@ -219,6 +219,15 @@ struct EnhancedQuizView: View {
                 }
             }
         }
+        .onChange(of: progressManager.recentlyUnlockedAchievements.count) { count in
+            // Show popup when achievements are unlocked during gameplay
+            if count > 0 && !flashcardViewModel.gameOver {
+                print("🎊 New achievement(s) unlocked during gameplay: \(count)")
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    showAchievementPopup = true
+                }
+            }
+        }
         .onAppear {
             setupGame()
         }
