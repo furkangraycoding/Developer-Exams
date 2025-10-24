@@ -444,7 +444,7 @@ struct QuestionView: View {
                                         .fill(
                                             RadialGradient(
                                                 colors: [
-                                                    color.opacity(glowIntensity * (1 - Double(i) * 0.3)),
+                                                    color.opacity(0.4 * (1 - Double(i) * 0.3)),
                                                     .clear
                                                 ],
                                                 center: .center,
