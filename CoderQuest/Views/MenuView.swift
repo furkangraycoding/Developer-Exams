@@ -188,8 +188,8 @@ struct MenuView: View {
                                 stats: progressManager.statistics.languageStats[menuItems[index].0]
                             ) {
                                 withAnimation(.spring()) {
-                                    GlobalViewModel.shared.chosenMenu = menuItems[index].0
-                                    GlobalViewModel.shared.chosenMenuColor = menuItems[index].1
+                                    globalViewModel.chosenMenu = menuItems[index].0
+                                    globalViewModel.chosenMenuColor = menuItems[index].1
                                     isMenuVisible = false
                                 }
                             }

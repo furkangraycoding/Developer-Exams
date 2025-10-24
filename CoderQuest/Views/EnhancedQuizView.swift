@@ -23,6 +23,8 @@ struct EnhancedQuizView: View {
     @State private var sessionStartTime = Date()
     @State private var selectedAnswer: String? = nil
     @State private var showAchievementPopup = false
+    @State private var correctAnswer: String? = nil
+    @State private var isAnswerCorrect: Bool? = nil
     
     init(username: String, chosenMenu: String) {
         self.username = username
@@ -46,8 +48,9 @@ struct EnhancedQuizView: View {
             .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Top Bar
+                // Top Bar with centered points
                 HStack {
+                    // Menu Button
                     Button(action: {
                         globalViewModel.isMenuVisible = true
                     }) {
@@ -70,7 +73,48 @@ struct EnhancedQuizView: View {
                     
                     Spacer()
                     
-                    // Score
+                    // Center Points Badge
+                    if !flashcardViewModel.gameOver && !flashcardViewModel.loadingNewQuestions && flashcardViewModel.currentIndex < flashcardViewModel.currentQuestions.count {
+                        let flashcard = flashcardViewModel.currentQuestions[flashcardViewModel.currentIndex]
+                        HStack(spacing: 6) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.yellow)
+                            Text("\(flashcard.point)")
+                                .font(.system(size: 18, weight: .black, design: .rounded))
+                                .foregroundColor(.white)
+                            Text("PTS")
+                                .font(.system(size: 10, weight: .heavy))
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            globalViewModel.chosenMenuColor.opacity(0.4),
+                                            globalViewModel.chosenMenuColor.opacity(0.3)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .strokeBorder(
+                                            globalViewModel.chosenMenuColor.opacity(0.6),
+                                            lineWidth: 2
+                                        )
+                                )
+                                .shadow(color: globalViewModel.chosenMenuColor.opacity(0.4), radius: 8)
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Total Score
                     HStack(spacing: 5) {
                         Image(systemName: "star.fill")
                             .font(.subheadline)
@@ -87,7 +131,6 @@ struct EnhancedQuizView: View {
                             .fill(Color.white.opacity(0.2))
                             .shadow(color: .yellow.opacity(0.3), radius: 5)
                     )
-                    
                 }
                 .padding()
                 
@@ -120,6 +163,8 @@ struct EnhancedQuizView: View {
                     QuestionView(
                         flashcard: flashcard,
                         selectedAnswer: $selectedAnswer,
+                        correctAnswer: correctAnswer,
+                        isAnswerCorrect: isAnswerCorrect,
                         color: globalViewModel.chosenMenuColor
                     ) { answer in
                         handleAnswer(answer, for: flashcard)
@@ -181,6 +226,15 @@ struct EnhancedQuizView: View {
                 }
             }
         }
+        .onChange(of: progressManager.recentlyUnlockedAchievements.count) { count in
+            // Show popup when achievements are unlocked during gameplay
+            if count > 0 && !flashcardViewModel.gameOver {
+                print("🎊 New achievement(s) unlocked during gameplay: \(count)")
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                    showAchievementPopup = true
+                }
+            }
+        }
         .onAppear {
             setupGame()
         }
@@ -225,6 +279,9 @@ struct EnhancedQuizView: View {
     
     func setupGame() {
         print("🎮 Setting up new game")
+        print("📋 Local chosenMenu parameter: '\(chosenMenu)'")
+        print("📋 Global chosenMenu: '\(globalViewModel.chosenMenu)'")
+        
         // CRITICAL: Clear achievements first
         showAchievementPopup = false
         progressManager.clearRecentAchievements()
@@ -233,13 +290,15 @@ struct EnhancedQuizView: View {
         flashcardViewModel.heartsRemaining = 5
         flashcardViewModel.loadFlashcards(chosenMenu: chosenMenu)
         sessionStartTime = Date()
-        print("✅ Game setup complete")
+        print("✅ Game setup complete for language: '\(chosenMenu)'")
     }
     
     func handleAnswer(_ answer: String, for flashcard: Flashcard) {
         selectedAnswer = answer
+        correctAnswer = flashcard.answer
         
         let isCorrect = answer == flashcard.answer
+        isAnswerCorrect = isCorrect
         flashcardViewModel.resultMessage = isCorrect ? "Correct!" : "Try Again"
         flashcardViewModel.showingAnswer = true
         
@@ -251,10 +310,12 @@ struct EnhancedQuizView: View {
             progressManager.updateStreak(correct: false)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
             withAnimation {
                 flashcardViewModel.showingAnswer = false
                 selectedAnswer = nil
+                correctAnswer = nil
+                isAnswerCorrect = nil
                 
                 if isCorrect {
                     flashcardViewModel.correctAnswersCount += flashcard.point
@@ -315,6 +376,8 @@ struct EnhancedQuizView: View {
 struct QuestionView: View {
     let flashcard: Flashcard
     @Binding var selectedAnswer: String?
+    let correctAnswer: String?
+    let isAnswerCorrect: Bool?
     let color: Color
     let onAnswer: (String) -> Void
     @State private var showQuestion = false
@@ -420,12 +483,291 @@ struct ChoiceButton: View {
     let index: Int
     let color: Color
     let isSelected: Bool
+    let isCorrectAnswer: Bool
+    let showResult: Bool
     let action: () -> Void
     
     @State private var pulseEffect = false
     
     var optionLetter: String {
         String(UnicodeScalar(65 + index)!)
+    }
+    
+    var buttonColor: Color {
+        if showResult {
+            if isCorrectAnswer {
+                return color // Show correct answer in theme color
+            } else if isSelected {
+                return Color.gray // Show wrong selection in gray
+            }
+        }
+        return color
+    }
+    
+    var shouldHighlight: Bool {
+        if showResult {
+            return isCorrectAnswer || isSelected
+        }
+        return isSelected
+    }
+    
+    // Extract rotating ring to simplify type-checking
+    @ViewBuilder
+    private var rotatingRing: some View {
+        if shouldHighlight {
+            Circle()
+                .strokeBorder(
+                    AngularGradient(
+                        colors: [buttonColor, buttonColor.opacity(0.3), buttonColor, buttonColor.opacity(0.3)],
+                        center: .center
+                    ),
+                    lineWidth: 2
+                )
+                .frame(width: 64, height: 64)
+                .rotationEffect(.degrees(shouldHighlight ? 360 : 0))
+                .animation(
+                    Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
+                    value: shouldHighlight
+                )
+                .blur(radius: 1)
+        }
+    }
+    
+    // Extract glow layers to simplify type-checking
+    @ViewBuilder
+    private var glowLayers: some View {
+        if shouldHighlight {
+            ForEach(0..<3) { i in
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [
+                                buttonColor.opacity(0.4 - Double(i) * 0.15),
+                                .clear
+                            ],
+                            center: .center,
+                            startRadius: CGFloat(18 + i * 12),
+                            endRadius: CGFloat(35 + i * 15)
+                        )
+                    )
+                    .frame(width: 60, height: 60)
+                    .blur(radius: 12)
+            }
+        }
+    }
+    
+    // Extract main badge fill to simplify type-checking
+    @ViewBuilder
+    private var badgeFill: some View {
+        if shouldHighlight {
+            Circle()
+                .fill(
+                    AngularGradient(
+                        colors: [buttonColor, buttonColor.opacity(0.8), buttonColor, buttonColor.opacity(0.8)],
+                        center: .center
+                    )
+                )
+                .frame(width: 52, height: 52)
+        } else {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.20),
+                            Color.white.opacity(0.12)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 52, height: 52)
+        }
+    }
+    
+    // Extract main badge to simplify type-checking
+    private var mainBadge: some View {
+        ZStack {
+            badgeFill
+            
+            Circle()
+                .strokeBorder(
+                    LinearGradient(
+                        colors: shouldHighlight ?
+                            [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
+                            [Color.white.opacity(0.2), Color.white.opacity(0.05)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 3
+                )
+                .frame(width: 52, height: 52)
+            
+            Text(optionLetter)
+                .font(.system(size: 22, weight: .black, design: .rounded))
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.3), radius: 2)
+        }
+        .shadow(color: shouldHighlight ? buttonColor.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
+        .scaleEffect(shouldHighlight ? 1.08 : 1.0)
+    }
+    
+    // Extract letter badge to simplify type-checking
+    private var letterBadge: some View {
+        ZStack {
+            rotatingRing
+            glowLayers
+            mainBadge
+        }
+    }
+    
+    // Extract checkmark view to simplify type-checking
+    @ViewBuilder
+    private var checkmarkView: some View {
+        if showResult && isCorrectAnswer {
+            ZStack {
+                // Pulse effect
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [buttonColor.opacity(0.4), .clear],
+                            center: .center,
+                            startRadius: 10,
+                            endRadius: 25
+                        )
+                    )
+                    .frame(width: 42, height: 42)
+                    .blur(radius: 8)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [buttonColor.opacity(0.3), buttonColor.opacity(0.2)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 38, height: 38)
+                
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(buttonColor)
+                    .shadow(color: buttonColor.opacity(0.6), radius: 6)
+            }
+            .transition(.scale.combined(with: .opacity))
+        } else if showResult && isSelected && !isCorrectAnswer {
+            ZStack {
+                // Pulse effect for wrong answer
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.gray.opacity(0.4), .clear],
+                            center: .center,
+                            startRadius: 10,
+                            endRadius: 25
+                        )
+                    )
+                    .frame(width: 42, height: 42)
+                    .blur(radius: 8)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.2)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 38, height: 38)
+                
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.gray)
+                    .shadow(color: Color.gray.opacity(0.6), radius: 6)
+            }
+            .transition(.scale.combined(with: .opacity))
+        }
+    }
+    
+    // Extract background to simplify type-checking
+    private var buttonBackground: some View {
+        ZStack {
+            // Base glass card
+            RoundedRectangle(cornerRadius: 24)
+                .fill(
+                    shouldHighlight ?
+                        LinearGradient(
+                            colors: [
+                                buttonColor.opacity(0.22),
+                                buttonColor.opacity(0.14),
+                                buttonColor.opacity(0.18)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ) :
+                        LinearGradient(
+                            colors: [
+                                Color(white: 0.16, opacity: 0.85),
+                                Color(white: 0.13, opacity: 0.75)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                )
+            
+            // Shimmer effect for selected
+            if shouldHighlight {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                .clear,
+                                Color.white.opacity(0.15),
+                                .clear
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .offset(x: shimmerOffset)
+                    .mask(RoundedRectangle(cornerRadius: 24))
+                    .onAppear {
+                        withAnimation(
+                            Animation.linear(duration: 2.0)
+                                .repeatForever(autoreverses: false)
+                        ) {
+                            shimmerOffset = 400
+                        }
+                    }
+            }
+            
+            // Premium border with gradient
+            RoundedRectangle(cornerRadius: 24)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: shouldHighlight ?
+                            [
+                                buttonColor.opacity(0.9),
+                                buttonColor.opacity(0.5),
+                                buttonColor.opacity(0.7),
+                                buttonColor.opacity(0.4)
+                            ] :
+                            [
+                                Color.white.opacity(0.22),
+                                Color.white.opacity(0.08),
+                                Color.white.opacity(0.15)
+                            ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: shouldHighlight ? 3.5 : 2
+                )
+        }
+        .shadow(
+            color: shouldHighlight ? buttonColor.opacity(0.6) : Color.black.opacity(0.25),
+            radius: shouldHighlight ? 22 : 10,
+            x: 0,
+            y: shouldHighlight ? 12 : 5
+        )
     }
     
     var body: some View {

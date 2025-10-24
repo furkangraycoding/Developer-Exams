@@ -39,6 +39,17 @@ struct CoderQuestApp: App {
                             chosenMenu: globalViewModel.chosenMenu
                         ).environmentObject(globalViewModel)
                     }
+                } else {
+                    // Default to Login screen
+                    UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
+                        .onAppear {
+                            // Check if username exists and skip login screen
+                            if let savedUsername = UserDefaults.standard.string(forKey: "username"), !savedUsername.isEmpty {
+                                username = savedUsername
+                                globalViewModel.username = savedUsername
+                                globalViewModel.isActive = "AnaEkran"
+                            }
+                        }
                 }
             }
             else if (globalViewModel.isActive == "Login" || isActive == "Login") {
