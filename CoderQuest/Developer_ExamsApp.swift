@@ -23,7 +23,7 @@ struct CoderQuestApp: App {
                 if globalViewModel.isMenuVisible {
                     MenuView(isMenuVisible: $globalViewModel.isMenuVisible).environmentObject(globalViewModel)
                 } else {
-                    if GlobalViewModel.shared.chosenMenu != "" {
+                    if globalViewModel.chosenMenu != "" {
                         EnhancedQuizView(
                             username: username,
                             chosenMenu: globalViewModel.chosenMenu

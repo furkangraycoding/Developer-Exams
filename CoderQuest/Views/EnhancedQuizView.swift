@@ -240,6 +240,9 @@ struct EnhancedQuizView: View {
     
     func setupGame() {
         print("🎮 Setting up new game")
+        print("📋 Local chosenMenu parameter: '\(chosenMenu)'")
+        print("📋 Global chosenMenu: '\(globalViewModel.chosenMenu)'")
+        
         // CRITICAL: Clear achievements first
         showAchievementPopup = false
         progressManager.clearRecentAchievements()
@@ -248,7 +251,7 @@ struct EnhancedQuizView: View {
         flashcardViewModel.heartsRemaining = 5
         flashcardViewModel.loadFlashcards(chosenMenu: chosenMenu)
         sessionStartTime = Date()
-        print("✅ Game setup complete")
+        print("✅ Game setup complete for language: '\(chosenMenu)'")
     }
     
     func handleAnswer(_ answer: String, for flashcard: Flashcard) {

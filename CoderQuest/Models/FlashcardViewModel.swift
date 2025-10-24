@@ -18,8 +18,8 @@ class FlashcardViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        self.chosenMenu = GlobalViewModel.shared.chosenMenu
-        loadFlashcards(chosenMenu: self.chosenMenu)
+        // Don't load flashcards here - they will be loaded in setupGame()
+        // This prevents loading the wrong language on initialization
     }
     
     func updateMenu(globalViewModel: GlobalViewModel) {
@@ -29,10 +29,15 @@ class FlashcardViewModel: ObservableObject {
     }
     
     func loadFlashcards(chosenMenu : String) {
+        print("🔍 Attempting to load flashcards for language: '\(chosenMenu)'")
+        
         guard let url = Bundle.main.url(forResource: chosenMenu, withExtension: "json") else {
-            print("JSON file not found")
+            print("❌ JSON file not found for: '\(chosenMenu)'")
+            print("📂 Looking for file: '\(chosenMenu).json'")
             return
         }
+        
+        print("✅ Found JSON file at: \(url.lastPathComponent)")
         
         URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
@@ -40,9 +45,13 @@ class FlashcardViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case .failure(let error) = completion {
-                    print("Failed to load JSON data: \(error.localizedDescription)")
+                    print("❌ Failed to load JSON data: \(error.localizedDescription)")
                 }
             }, receiveValue: { flashcards in
+                print("✅ Successfully loaded \(flashcards.count) flashcards for '\(chosenMenu)'")
+                if let firstQuestion = flashcards.first {
+                    print("📝 First question: \(firstQuestion.question)")
+                }
                 self.allFlashcards = flashcards
                 self.loadNewQuestions()
             })
