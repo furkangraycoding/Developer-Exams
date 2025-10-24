@@ -683,6 +683,66 @@ struct GameOverView: View {
         return Double(correctAnswers) / Double(questionsAnswered) * 100
     }
     
+    var scoreCardView: some View {
+        VStack(spacing: 15) {
+            scoreHeaderView
+            
+            Divider()
+                .background(Color.white.opacity(0.3))
+            
+            statsRowView
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white.opacity(0.1))
+                .shadow(color: color.opacity(0.3), radius: 10)
+        )
+        .padding(.horizontal)
+    }
+    
+    var scoreHeaderView: some View {
+        HStack {
+            Image(systemName: "star.fill")
+                .font(.system(size: 50))
+                .foregroundColor(.yellow)
+            
+            VStack(alignment: .leading) {
+                Text("Score")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.8))
+                
+                Text("\(score)")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundColor(.white)
+            }
+        }
+    }
+    
+    var statsRowView: some View {
+        HStack(spacing: 30) {
+            VStack {
+                Text("\(questionsAnswered)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                Text("Questions")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.7))
+            }
+            
+            VStack {
+                Text(String(format: "%.0f%%", accuracy))
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.green)
+                Text("Accuracy")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.7))
+            }
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 25) {
             Text("Game Over!")
@@ -691,60 +751,7 @@ struct GameOverView: View {
                 .foregroundColor(.white)
             
             // Score Card
-            VStack(spacing: 15) {
-                HStack {
-                    let starIcon = Image(systemName: "star.fill")
-                        .font(.system(size: 50))
-                        .foregroundColor(.yellow)
-                    
-                    starIcon
-                    
-                    VStack(alignment: .leading) {
-                        let scoreLabel = Text("Score")
-                            .font(.subheadline)
-                            .foregroundColor(.white.opacity(0.8))
-                        
-                        let scoreValue = Text("\(score)")
-                            .font(.system(size: 40, weight: .bold))
-                            .foregroundColor(.white)
-                        
-                        scoreLabel
-                        scoreValue
-                    }
-                }
-                
-                Divider()
-                    .background(Color.white.opacity(0.3))
-                
-                HStack(spacing: 30) {
-                    VStack {
-                        Text("\(questionsAnswered)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                        Text("Questions")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                    
-                    VStack {
-                        Text(String(format: "%.0f%%", accuracy))
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.green)
-                        Text("Accuracy")
-                            .font(.caption)
-                            .foregroundColor(.white.opacity(0.7))
-                    }
-                }
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color.white.opacity(0.1))
-                    .shadow(color: color.opacity(0.3), radius: 10)
-            )
-            .padding(.horizontal)
+            scoreCardView
             
             // Action Buttons
             HStack(spacing: 20) {
