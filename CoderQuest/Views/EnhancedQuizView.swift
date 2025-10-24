@@ -692,91 +692,215 @@ struct RevolutionaryChoiceButton: View {
         return String(UnicodeScalar(65 + index)!) // A, B, C, D
     }
     
+    // Extract letter badge to simplify type-checking
+    private var letterBadge: some View {
+        ZStack {
+            // Outer rotating ring for selected
+            if isSelected {
+                Circle()
+                    .strokeBorder(
+                        AngularGradient(
+                            colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
+                            center: .center
+                        ),
+                        lineWidth: 2
+                    )
+                    .frame(width: 64, height: 64)
+                    .rotationEffect(.degrees(isSelected ? 360 : 0))
+                    .animation(
+                        Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
+                        value: isSelected
+                    )
+                    .blur(radius: 1)
+            }
+            
+            // Multi-layer glow
+            if isSelected {
+                ForEach(0..<3) { i in
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    color.opacity(0.4 - Double(i) * 0.15),
+                                    .clear
+                                ],
+                                center: .center,
+                                startRadius: CGFloat(18 + i * 12),
+                                endRadius: CGFloat(35 + i * 15)
+                            )
+                        )
+                        .frame(width: 60, height: 60)
+                        .blur(radius: 12)
+                }
+            }
+            
+            // Main badge
+            ZStack {
+                Circle()
+                    .fill(
+                        isSelected ?
+                            AngularGradient(
+                                colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
+                                center: .center
+                            ) :
+                            LinearGradient(
+                                colors: [
+                                    Color.white.opacity(0.20),
+                                    Color.white.opacity(0.12)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                    )
+                    .frame(width: 52, height: 52)
+                
+                Circle()
+                    .strokeBorder(
+                        LinearGradient(
+                            colors: isSelected ?
+                                [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
+                                [Color.white.opacity(0.2), Color.white.opacity(0.05)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 3
+                    )
+                    .frame(width: 52, height: 52)
+                
+                Text(optionLetter)
+                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.3), radius: 2)
+            }
+            .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
+            .scaleEffect(isSelected ? 1.08 : 1.0)
+        }
+    }
+    
+    // Extract checkmark view to simplify type-checking
+    @ViewBuilder
+    private var checkmarkView: some View {
+        if isSelected {
+            ZStack {
+                // Pulse effect
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [color.opacity(0.4), .clear],
+                            center: .center,
+                            startRadius: 10,
+                            endRadius: 25
+                        )
+                    )
+                    .frame(width: 42, height: 42)
+                    .blur(radius: 8)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [color.opacity(0.3), color.opacity(0.2)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 38, height: 38)
+                
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(color)
+                    .shadow(color: color.opacity(0.6), radius: 6)
+            }
+            .transition(.scale.combined(with: .opacity))
+        }
+    }
+    
+    // Extract background to simplify type-checking
+    private var buttonBackground: some View {
+        ZStack {
+            // Base glass card
+            RoundedRectangle(cornerRadius: 24)
+                .fill(
+                    isSelected ?
+                        LinearGradient(
+                            colors: [
+                                color.opacity(0.22),
+                                color.opacity(0.14),
+                                color.opacity(0.18)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ) :
+                        LinearGradient(
+                            colors: [
+                                Color(white: 0.16, opacity: 0.85),
+                                Color(white: 0.13, opacity: 0.75)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                )
+            
+            // Shimmer effect for selected
+            if isSelected {
+                RoundedRectangle(cornerRadius: 24)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                .clear,
+                                Color.white.opacity(0.15),
+                                .clear
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .offset(x: shimmerOffset)
+                    .mask(RoundedRectangle(cornerRadius: 24))
+                    .onAppear {
+                        withAnimation(
+                            Animation.linear(duration: 2.0)
+                                .repeatForever(autoreverses: false)
+                        ) {
+                            shimmerOffset = 400
+                        }
+                    }
+            }
+            
+            // Premium border with gradient
+            RoundedRectangle(cornerRadius: 24)
+                .strokeBorder(
+                    LinearGradient(
+                        colors: isSelected ?
+                            [
+                                color.opacity(0.9),
+                                color.opacity(0.5),
+                                color.opacity(0.7),
+                                color.opacity(0.4)
+                            ] :
+                            [
+                                Color.white.opacity(0.22),
+                                Color.white.opacity(0.08),
+                                Color.white.opacity(0.15)
+                            ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: isSelected ? 3.5 : 2
+                )
+        }
+        .shadow(
+            color: isSelected ? color.opacity(0.6) : Color.black.opacity(0.25),
+            radius: isSelected ? 22 : 10,
+            x: 0,
+            y: isSelected ? 12 : 5
+        )
+    }
+    
     var body: some View {
         Button(action: action) {
             HStack(spacing: 20) {
                 // Revolutionary Letter Badge with Animations
-                ZStack {
-                    // Outer rotating ring for selected
-                    if isSelected {
-                        Circle()
-                            .strokeBorder(
-                                AngularGradient(
-                                    colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
-                                    center: .center
-                                ),
-                                lineWidth: 2
-                            )
-                            .frame(width: 64, height: 64)
-                            .rotationEffect(.degrees(isSelected ? 360 : 0))
-                            .animation(
-                                Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
-                                value: isSelected
-                            )
-                            .blur(radius: 1)
-                    }
-                    
-                    // Multi-layer glow
-                    if isSelected {
-                        ForEach(0..<3) { i in
-                            Circle()
-                                .fill(
-                                    RadialGradient(
-                                        colors: [
-                                            color.opacity(0.4 - Double(i) * 0.15),
-                                            .clear
-                                        ],
-                                        center: .center,
-                                        startRadius: CGFloat(18 + i * 12),
-                                        endRadius: CGFloat(35 + i * 15)
-                                    )
-                                )
-                                .frame(width: 60, height: 60)
-                                .blur(radius: 12)
-                        }
-                    }
-                    
-                    // Main badge
-                    ZStack {
-                        Circle()
-                            .fill(
-                                isSelected ?
-                                    AngularGradient(
-                                        colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
-                                        center: .center
-                                    ) :
-                                    LinearGradient(
-                                        colors: [
-                                            Color.white.opacity(0.20),
-                                            Color.white.opacity(0.12)
-                                        ],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                            )
-                            .frame(width: 52, height: 52)
-                        
-                        Circle()
-                            .strokeBorder(
-                                LinearGradient(
-                                    colors: isSelected ?
-                                        [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
-                                        [Color.white.opacity(0.2), Color.white.opacity(0.05)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 3
-                            )
-                            .frame(width: 52, height: 52)
-                        
-                        Text(optionLetter)
-                            .font(.system(size: 22, weight: .black, design: .rounded))
-                            .foregroundColor(.white)
-                            .shadow(color: .black.opacity(0.3), radius: 2)
-                    }
-                    .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
-                    .scaleEffect(isSelected ? 1.08 : 1.0)
-                }
+                letterBadge
                 
                 // Enhanced Answer Text
                 Text(text)
@@ -788,121 +912,11 @@ struct RevolutionaryChoiceButton: View {
                     .shadow(color: .black.opacity(0.2), radius: 1)
                 
                 // Animated Checkmark
-                if isSelected {
-                    ZStack {
-                        // Pulse effect
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [color.opacity(0.4), .clear],
-                                    center: .center,
-                                    startRadius: 10,
-                                    endRadius: 25
-                                )
-                            )
-                            .frame(width: 42, height: 42)
-                            .blur(radius: 8)
-                        
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [color.opacity(0.3), color.opacity(0.2)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 38, height: 38)
-                        
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(color)
-                            .shadow(color: color.opacity(0.6), radius: 6)
-                    }
-                    .transition(.scale.combined(with: .opacity))
-                }
+                checkmarkView
             }
             .padding(.horizontal, 22)
             .padding(.vertical, 22)
-            .background(
-                ZStack {
-                    // Base glass card
-                    RoundedRectangle(cornerRadius: 24)
-                        .fill(
-                            isSelected ?
-                                LinearGradient(
-                                    colors: [
-                                        color.opacity(0.22),
-                                        color.opacity(0.14),
-                                        color.opacity(0.18)
-                                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ) :
-                                LinearGradient(
-                                    colors: [
-                                        Color(white: 0.16, opacity: 0.85),
-                                        Color(white: 0.13, opacity: 0.75)
-                                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                        )
-                    
-                    // Shimmer effect for selected
-                    if isSelected {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(
-                                LinearGradient(
-                                    colors: [
-                                        .clear,
-                                        Color.white.opacity(0.15),
-                                        .clear
-                                    ],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .offset(x: shimmerOffset)
-                            .mask(RoundedRectangle(cornerRadius: 24))
-                            .onAppear {
-                                withAnimation(
-                                    Animation.linear(duration: 2.0)
-                                        .repeatForever(autoreverses: false)
-                                ) {
-                                    shimmerOffset = 400
-                                }
-                            }
-                    }
-                    
-                    // Premium border with gradient
-                    RoundedRectangle(cornerRadius: 24)
-                        .strokeBorder(
-                            LinearGradient(
-                                colors: isSelected ?
-                                    [
-                                        color.opacity(0.9),
-                                        color.opacity(0.5),
-                                        color.opacity(0.7),
-                                        color.opacity(0.4)
-                                    ] :
-                                    [
-                                        Color.white.opacity(0.22),
-                                        Color.white.opacity(0.08),
-                                        Color.white.opacity(0.15)
-                                    ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: isSelected ? 3.5 : 2
-                        )
-                }
-                .shadow(
-                    color: isSelected ? color.opacity(0.6) : Color.black.opacity(0.25),
-                    radius: isSelected ? 22 : 10,
-                    x: 0,
-                    y: isSelected ? 12 : 5
-                )
-            )
+            .background(buttonBackground)
         }
         .buttonStyle(RevolutionaryButtonStyle())
         .scaleEffect(isSelected ? 1.04 : 1.0)
