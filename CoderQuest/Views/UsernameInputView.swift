@@ -7,7 +7,6 @@ struct UsernameInputView: View {
 
     @State private var inputAreaOffset: CGFloat = -500
     @State private var inputAreaOpacity: Double = 0
-    @State private var logoScale: CGFloat = 0.5
     @State private var showWelcomeText = false
 
     var body: some View {
@@ -28,55 +27,30 @@ struct UsernameInputView: View {
             VStack(spacing: 0) {
                 Spacer()
                 
-                // Logo and Welcome Section
-                VStack(spacing: 20) {
-                    // Logo with glow effect
-                    ZStack {
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [Color.cyan.opacity(0.4), Color.clear],
-                                    center: .center,
-                                    startRadius: 20,
-                                    endRadius: 100
+                // Welcome Section (centered, no image)
+                if showWelcomeText {
+                    VStack(spacing: 8) {
+                        Text("Welcome to")
+                            .font(.title3)
+                            .foregroundColor(.white.opacity(0.8))
+                        
+                        Text("CoderQuest")
+                            .font(.system(size: 42, weight: .bold, design: .rounded))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.cyan, .purple, .pink],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
                                 )
                             )
-                            .frame(width: 200, height: 200)
-                            .blur(radius: 20)
                         
-                        Image(.developer)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .shadow(color: .cyan.opacity(0.5), radius: 20)
+                        Text("Start your coding journey")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.6))
                     }
-                    .scaleEffect(logoScale)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.6), value: logoScale)
-                    
-                    if showWelcomeText {
-                        VStack(spacing: 8) {
-                            Text("Welcome to")
-                                .font(.title3)
-                                .foregroundColor(.white.opacity(0.8))
-                            
-                            Text("CoderQuest")
-                                .font(.system(size: 42, weight: .bold, design: .rounded))
-                                .foregroundStyle(
-                                    LinearGradient(
-                                        colors: [.cyan, .purple, .pink],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                            
-                            Text("Start your coding journey")
-                                .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.6))
-                        }
-                        .transition(.opacity.combined(with: .move(edge: .top)))
-                    }
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                    .padding(.bottom, 40)
                 }
-                .padding(.bottom, 40)
                 
                 Spacer()
                 
@@ -116,11 +90,13 @@ struct UsernameInputView: View {
                     // Continue Button
                     Button(action: {
                         withAnimation(.spring()) {
-                            globalViewModel.isActive = "AnaEkran"
                             if username.isEmpty {
                                 username = "Player" + String(Int.random(in: 1000..<9999))
                             }
+                            // Save username to UserDefaults
+                            UserDefaults.standard.set(username, forKey: "username")
                             globalViewModel.username = username
+                            globalViewModel.isActive = "AnaEkran"
                         }
                     }) {
                         HStack {
@@ -150,6 +126,8 @@ struct UsernameInputView: View {
                     Button(action: {
                         withAnimation(.spring()) {
                             username = "Guest" + String(Int.random(in: 100..<999))
+                            // Save username to UserDefaults
+                            UserDefaults.standard.set(username, forKey: "username")
                             globalViewModel.username = username
                             globalViewModel.isActive = "AnaEkran"
                         }
@@ -192,17 +170,11 @@ struct UsernameInputView: View {
             }
         }
         .onAppear {
-            withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
-                logoScale = 1.0
+            withAnimation(.easeOut(duration: 0.5)) {
+                showWelcomeText = true
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeOut(duration: 0.5)) {
-                    showWelcomeText = true
-                }
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 withAnimation(.spring(response: 0.8, dampingFraction: 0.7)) {
                     inputAreaOffset = 0
                     inputAreaOpacity = 1

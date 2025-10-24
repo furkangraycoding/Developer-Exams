@@ -11,12 +11,11 @@ import GoogleMobileAds
 @main
 struct CoderQuestApp: App {
     @State private var isActive = "Login"
-    @State private var username: String = "" // Kullanıcının girdiği takma ad
+    @State private var username: String = ""
     @StateObject var interstitialAdsManager = InterstitialAdsManager()
     @StateObject private var globalViewModel = GlobalViewModel()
     @State private var chosenMenu : String = ""
     
-
     var body: some Scene {
         WindowGroup {
             if globalViewModel.isActive == "AnaEkran" {
@@ -31,11 +30,16 @@ struct CoderQuestApp: App {
                     }
                 }
             }
-            else if (globalViewModel.isActive == "SplashEkranı") {
-                SplashScreenView(isActive: $isActive).environmentObject(globalViewModel)
-            }
             else if (globalViewModel.isActive == "Login") {
                 UsernameInputView(isActive: $isActive, username : $username).environmentObject(globalViewModel)
+                    .onAppear {
+                        // Check if username exists and skip login screen
+                        if let savedUsername = UserDefaults.standard.string(forKey: "username"), !savedUsername.isEmpty {
+                            username = savedUsername
+                            globalViewModel.username = savedUsername
+                            globalViewModel.isActive = "AnaEkran"
+                        }
+                    }
             }
         }
     }
