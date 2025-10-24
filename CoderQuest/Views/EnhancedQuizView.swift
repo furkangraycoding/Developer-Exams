@@ -46,8 +46,9 @@ struct EnhancedQuizView: View {
             .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Top Bar
+                // Top Bar with centered points
                 HStack {
+                    // Menu Button
                     Button(action: {
                         globalViewModel.isMenuVisible = true
                     }) {
@@ -70,7 +71,48 @@ struct EnhancedQuizView: View {
                     
                     Spacer()
                     
-                    // Score
+                    // Center Points Badge
+                    if !flashcardViewModel.gameOver && !flashcardViewModel.loadingNewQuestions && flashcardViewModel.currentIndex < flashcardViewModel.currentQuestions.count {
+                        let flashcard = flashcardViewModel.currentQuestions[flashcardViewModel.currentIndex]
+                        HStack(spacing: 6) {
+                            Image(systemName: "star.fill")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(.yellow)
+                            Text("\(flashcard.point)")
+                                .font(.system(size: 18, weight: .black, design: .rounded))
+                                .foregroundColor(.white)
+                            Text("PTS")
+                                .font(.system(size: 10, weight: .heavy))
+                                .foregroundColor(.white.opacity(0.8))
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            globalViewModel.chosenMenuColor.opacity(0.4),
+                                            globalViewModel.chosenMenuColor.opacity(0.3)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .strokeBorder(
+                                            globalViewModel.chosenMenuColor.opacity(0.6),
+                                            lineWidth: 2
+                                        )
+                                )
+                                .shadow(color: globalViewModel.chosenMenuColor.opacity(0.4), radius: 8)
+                        )
+                    }
+                    
+                    Spacer()
+                    
+                    // Total Score
                     HStack(spacing: 5) {
                         Image(systemName: "star.fill")
                             .font(.subheadline)
@@ -87,49 +129,8 @@ struct EnhancedQuizView: View {
                             .fill(Color.white.opacity(0.2))
                             .shadow(color: .yellow.opacity(0.3), radius: 5)
                     )
-                    
                 }
                 .padding()
-                
-                // Progress Bar
-                GeometryReader { geometry in
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.white.opacity(0.2))
-                            .frame(height: 8)
-                        
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                LinearGradient(
-                                    colors: [globalViewModel.chosenMenuColor, globalViewModel.chosenMenuColor.opacity(0.6)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .frame(width: geometry.size.width * progress, height: 8)
-                            .animation(.spring(), value: progress)
-                    }
-                }
-                .frame(height: 8)
-                .padding(.horizontal)
-                
-                // Hearts
-                if !flashcardViewModel.gameOver {
-                    HStack(spacing: 8) {
-                        ForEach(0..<flashcardViewModel.heartsRemaining, id: \.self) { _ in
-                            Image(systemName: "heart.fill")
-                                .font(.title2)
-                                .foregroundColor(.red)
-                        }
-                        
-                        ForEach(0..<(5 - flashcardViewModel.heartsRemaining), id: \.self) { _ in
-                            Image(systemName: "heart")
-                                .font(.title2)
-                                .foregroundColor(.white.opacity(0.3))
-                        }
-                    }
-                    .padding(.vertical, 10)
-                }
                 
                 Spacer()
                 
@@ -167,6 +168,24 @@ struct EnhancedQuizView: View {
                 }
                 
                 Spacer()
+                
+                // Hearts at bottom
+                if !flashcardViewModel.gameOver {
+                    HStack(spacing: 12) {
+                        ForEach(0..<flashcardViewModel.heartsRemaining, id: \.self) { _ in
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 42))
+                                .foregroundColor(.red)
+                        }
+                        
+                        ForEach(0..<(5 - flashcardViewModel.heartsRemaining), id: \.self) { _ in
+                            Image(systemName: "heart")
+                                .font(.system(size: 42))
+                                .foregroundColor(.white.opacity(0.3))
+                        }
+                    }
+                    .padding(.bottom, 20)
+                }
             }
             
             // Achievement Popup - Only show if we have NEW achievements
@@ -337,113 +356,11 @@ struct QuestionView: View {
     let onAnswer: (String) -> Void
     @State private var showQuestion = false
     @State private var pulseAnimation = false
-    @State private var floatAnimation = false
-    @State private var glowIntensity: Double = 0.3
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Ultra Premium Points Badge with Floating Effect
-                    HStack {
-                        Spacer()
-                        
-                        ZStack {
-                            // Multi-layer animated glow
-                            ForEach(0..<3) { i in
-                                Capsule()
-                                    .fill(
-                                        RadialGradient(
-                                            colors: [color.opacity(glowIntensity), .clear],
-                                            center: .center,
-                                            startRadius: CGFloat(15 + i * 10),
-                                            endRadius: CGFloat(40 + i * 15)
-                                        )
-                                    )
-                                    .frame(height: 56)
-                                    .blur(radius: CGFloat(12 + i * 4))
-                                    .opacity(1.0 - Double(i) * 0.2)
-                            }
-                            
-                            HStack(spacing: 12) {
-                                // Premium animated star
-                                ZStack {
-                                    // Star glow
-                                    Circle()
-                                        .fill(
-                                            RadialGradient(
-                                                colors: [.yellow.opacity(0.6), .orange.opacity(0.3), .clear],
-                                                center: .center,
-                                                startRadius: 10,
-                                                endRadius: 30
-                                            )
-                                        )
-                                        .frame(width: 50, height: 50)
-                                        .blur(radius: 8)
-                                    
-                                    Circle()
-                                        .fill(
-                                            AngularGradient(
-                                                colors: [.yellow, .orange, .yellow, .orange, .yellow],
-                                                center: .center
-                                            )
-                                        )
-                                        .frame(width: 40, height: 40)
-                                        .shadow(color: .yellow.opacity(0.8), radius: 10)
-                                    
-                                    Image(systemName: "star.fill")
-                                        .font(.system(size: 18, weight: .bold))
-                                        .foregroundColor(.white)
-                                        .rotationEffect(.degrees(pulseAnimation ? 360 : 0))
-                                        .shadow(color: .black.opacity(0.3), radius: 2)
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 3) {
-                                    Text("\(flashcard.point)")
-                                        .font(.system(size: 24, weight: .black, design: .rounded))
-                                        .foregroundColor(.white)
-                                    Text("POINTS")
-                                        .font(.system(size: 10, weight: .heavy))
-                                        .foregroundColor(.white.opacity(0.8))
-                                        .tracking(1.5)
-                                }
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 12)
-                            .background(
-                                ZStack {
-                                    Capsule()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [
-                                                    color.opacity(0.4),
-                                                    color.opacity(0.25),
-                                                    color.opacity(0.35)
-                                                ],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                    
-                                    Capsule()
-                                        .strokeBorder(
-                                            LinearGradient(
-                                                colors: [color, color.opacity(0.6), color, color.opacity(0.6)],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            ),
-                                            lineWidth: 3
-                                        )
-                                }
-                                .shadow(color: color.opacity(0.6), radius: 15, x: 0, y: 6)
-                            )
-                        }
-                        .offset(y: floatAnimation ? -5 : 0)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 15)
-                    .padding(.bottom, 35)
-                    
                     // Revolutionary Question Card with Particle Effects
                     VStack(spacing: 0) {
                         // Futuristic header with animated elements
@@ -667,16 +584,6 @@ struct QuestionView: View {
             // Star rotation animation
             withAnimation(Animation.linear(duration: 8.0).repeatForever(autoreverses: false)) {
                 pulseAnimation = true
-            }
-            
-            // Floating animation
-            withAnimation(Animation.easeInOut(duration: 3.0).repeatForever(autoreverses: true)) {
-                floatAnimation = true
-            }
-            
-            // Glow intensity animation
-            withAnimation(Animation.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
-                glowIntensity = 0.5
             }
         }
     }
