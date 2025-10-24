@@ -568,7 +568,7 @@ struct QuestionView: View {
                                         .shadow(color: color.opacity(0.6), radius: 18, x: 0, y: 6)
                                     
                                     Image(systemName: "brain.head.profile")
-                                        .font(.system(size: 40, weight: .bold))
+                                        .font(.system(size: 20, weight: .bold))
                                         .foregroundColor(color)
                                         .shadow(color: .black.opacity(0.4), radius: 4)
                                 }
