@@ -692,88 +692,100 @@ struct RevolutionaryChoiceButton: View {
         return String(UnicodeScalar(65 + index)!) // A, B, C, D
     }
     
+    // Extract rotating ring to simplify type-checking
+    @ViewBuilder
+    private var rotatingRing: some View {
+        if isSelected {
+            Circle()
+                .strokeBorder(
+                    AngularGradient(
+                        colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
+                        center: .center
+                    ),
+                    lineWidth: 2
+                )
+                .frame(width: 64, height: 64)
+                .rotationEffect(.degrees(isSelected ? 360 : 0))
+                .animation(
+                    Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
+                    value: isSelected
+                )
+                .blur(radius: 1)
+        }
+    }
+    
+    // Extract glow layers to simplify type-checking
+    @ViewBuilder
+    private var glowLayers: some View {
+        if isSelected {
+            ForEach(0..<3) { i in
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [
+                                color.opacity(0.4 - Double(i) * 0.15),
+                                .clear
+                            ],
+                            center: .center,
+                            startRadius: CGFloat(18 + i * 12),
+                            endRadius: CGFloat(35 + i * 15)
+                        )
+                    )
+                    .frame(width: 60, height: 60)
+                    .blur(radius: 12)
+            }
+        }
+    }
+    
+    // Extract main badge to simplify type-checking
+    private var mainBadge: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    isSelected ?
+                        AngularGradient(
+                            colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
+                            center: .center
+                        ) :
+                        LinearGradient(
+                            colors: [
+                                Color.white.opacity(0.20),
+                                Color.white.opacity(0.12)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                )
+                .frame(width: 52, height: 52)
+            
+            Circle()
+                .strokeBorder(
+                    LinearGradient(
+                        colors: isSelected ?
+                            [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
+                            [Color.white.opacity(0.2), Color.white.opacity(0.05)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 3
+                )
+                .frame(width: 52, height: 52)
+            
+            Text(optionLetter)
+                .font(.system(size: 22, weight: .black, design: .rounded))
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.3), radius: 2)
+        }
+        .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
+        .scaleEffect(isSelected ? 1.08 : 1.0)
+    }
+    
     // Extract letter badge to simplify type-checking
     private var letterBadge: some View {
         ZStack {
-            // Outer rotating ring for selected
-            if isSelected {
-                Circle()
-                    .strokeBorder(
-                        AngularGradient(
-                            colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
-                            center: .center
-                        ),
-                        lineWidth: 2
-                    )
-                    .frame(width: 64, height: 64)
-                    .rotationEffect(.degrees(isSelected ? 360 : 0))
-                    .animation(
-                        Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
-                        value: isSelected
-                    )
-                    .blur(radius: 1)
-            }
-            
-            // Multi-layer glow
-            if isSelected {
-                ForEach(0..<3) { i in
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                colors: [
-                                    color.opacity(0.4 - Double(i) * 0.15),
-                                    .clear
-                                ],
-                                center: .center,
-                                startRadius: CGFloat(18 + i * 12),
-                                endRadius: CGFloat(35 + i * 15)
-                            )
-                        )
-                        .frame(width: 60, height: 60)
-                        .blur(radius: 12)
-                }
-            }
-            
-            // Main badge
-            ZStack {
-                Circle()
-                    .fill(
-                        isSelected ?
-                            AngularGradient(
-                                colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
-                                center: .center
-                            ) :
-                            LinearGradient(
-                                colors: [
-                                    Color.white.opacity(0.20),
-                                    Color.white.opacity(0.12)
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                    )
-                    .frame(width: 52, height: 52)
-                
-                Circle()
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: isSelected ?
-                                [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
-                                [Color.white.opacity(0.2), Color.white.opacity(0.05)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 3
-                    )
-                    .frame(width: 52, height: 52)
-                
-                Text(optionLetter)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
-                    .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.3), radius: 2)
-            }
-            .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
-            .scaleEffect(isSelected ? 1.08 : 1.0)
+            rotatingRing
+            glowLayers
+            mainBadge
         }
     }
     
