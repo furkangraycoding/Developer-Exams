@@ -737,26 +737,38 @@ struct RevolutionaryChoiceButton: View {
         }
     }
     
+    // Extract main badge fill to simplify type-checking
+    @ViewBuilder
+    private var badgeFill: some View {
+        if isSelected {
+            Circle()
+                .fill(
+                    AngularGradient(
+                        colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
+                        center: .center
+                    )
+                )
+                .frame(width: 52, height: 52)
+        } else {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.20),
+                            Color.white.opacity(0.12)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 52, height: 52)
+        }
+    }
+    
     // Extract main badge to simplify type-checking
     private var mainBadge: some View {
         ZStack {
-            Circle()
-                .fill(
-                    isSelected ?
-                        AngularGradient(
-                            colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
-                            center: .center
-                        ) :
-                        LinearGradient(
-                            colors: [
-                                Color.white.opacity(0.20),
-                                Color.white.opacity(0.12)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                )
-                .frame(width: 52, height: 52)
+            badgeFill
             
             Circle()
                 .strokeBorder(
