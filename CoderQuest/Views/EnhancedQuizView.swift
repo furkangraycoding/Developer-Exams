@@ -23,6 +23,8 @@ struct EnhancedQuizView: View {
     @State private var sessionStartTime = Date()
     @State private var selectedAnswer: String? = nil
     @State private var showAchievementPopup = false
+    @State private var correctAnswer: String? = nil
+    @State private var isAnswerCorrect: Bool? = nil
     
     init(username: String, chosenMenu: String) {
         self.username = username
@@ -161,6 +163,8 @@ struct EnhancedQuizView: View {
                     QuestionView(
                         flashcard: flashcard,
                         selectedAnswer: $selectedAnswer,
+                        correctAnswer: correctAnswer,
+                        isAnswerCorrect: isAnswerCorrect,
                         color: globalViewModel.chosenMenuColor
                     ) { answer in
                         handleAnswer(answer, for: flashcard)
@@ -275,8 +279,10 @@ struct EnhancedQuizView: View {
     
     func handleAnswer(_ answer: String, for flashcard: Flashcard) {
         selectedAnswer = answer
+        correctAnswer = flashcard.answer
         
         let isCorrect = answer == flashcard.answer
+        isAnswerCorrect = isCorrect
         flashcardViewModel.resultMessage = isCorrect ? "Correct!" : "Try Again"
         flashcardViewModel.showingAnswer = true
         
@@ -288,10 +294,12 @@ struct EnhancedQuizView: View {
             progressManager.updateStreak(correct: false)
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
             withAnimation {
                 flashcardViewModel.showingAnswer = false
                 selectedAnswer = nil
+                correctAnswer = nil
+                isAnswerCorrect = nil
                 
                 if isCorrect {
                     flashcardViewModel.correctAnswersCount += flashcard.point
@@ -352,6 +360,8 @@ struct EnhancedQuizView: View {
 struct QuestionView: View {
     let flashcard: Flashcard
     @Binding var selectedAnswer: String?
+    let correctAnswer: String?
+    let isAnswerCorrect: Bool?
     let color: Color
     let onAnswer: (String) -> Void
     @State private var showQuestion = false
@@ -363,67 +373,9 @@ struct QuestionView: View {
                 VStack(spacing: 0) {
                     // Revolutionary Question Card with Particle Effects
                     VStack(spacing: 0) {
-                        // Futuristic header with animated elements
-                        VStack(spacing: 0) {
-                            HStack(spacing: 12) {
-                                // Animated status dots
-                                ForEach(0..<3) { i in
-                                    Circle()
-                                        .fill(
-                                            LinearGradient(
-                                                colors: [color, color.opacity(0.6)],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
-                                        .frame(width: 11, height: 11)
-                                        .shadow(color: color.opacity(0.8), radius: 4)
-                                        .scaleEffect(pulseAnimation ? 1.1 : 1.0)
-                                        .animation(
-                                            Animation.easeInOut(duration: 1.2)
-                                                .repeatForever(autoreverses: true)
-                                                .delay(Double(i) * 0.2),
-                                            value: pulseAnimation
-                                        )
-                                }
-                                
-                                Spacer()
-                                
-                                HStack(spacing: 4) {
-                                    Image(systemName: "bolt.fill")
-                                        .font(.system(size: 10))
-                                        .foregroundColor(color)
-                                    Text("QUESTION")
-                                        .font(.system(size: 11, weight: .black))
-                                        .foregroundColor(color.opacity(0.8))
-                                        .tracking(2)
-                                }
-                            }
-                            .padding(.horizontal, 26)
-                            .padding(.top, 22)
-                            .padding(.bottom, 14)
-                            
-                            // Animated divider
-                            GeometryReader { geo in
-                                LinearGradient(
-                                    colors: [.clear, color.opacity(0.5), color, color.opacity(0.5), .clear],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                                .frame(height: 2)
-                                .mask(
-                                    Rectangle()
-                                        .frame(width: geo.size.width * (showQuestion ? 1.0 : 0.0))
-                                        .animation(.easeOut(duration: 0.8).delay(0.3), value: showQuestion)
-                                )
-                            }
-                            .frame(height: 2)
-                            .padding(.horizontal, 26)
-                        }
-                        
                         // Premium content
                         VStack(spacing: 32) {
-                            // Ultra premium animated icon
+                            // Ultra premium animated icon at top
                             ZStack {
                                 // Rotating outer ring
                                 Circle()
@@ -491,7 +443,7 @@ struct QuestionView: View {
                                 }
                                 .scaleEffect(pulseAnimation ? 1.05 : 1.0)
                             }
-                            .padding(.top, 8)
+                            .padding(.top, 20)
                             
                             // Enhanced question text
                             Text(flashcard.question)
@@ -557,9 +509,13 @@ struct QuestionView: View {
                                 text: choice,
                                 index: index,
                                 color: color,
-                                isSelected: selectedAnswer == choice
+                                isSelected: selectedAnswer == choice,
+                                isCorrectAnswer: choice == correctAnswer,
+                                showResult: selectedAnswer != nil && correctAnswer != nil
                             ) {
-                                onAnswer(choice)
+                                if selectedAnswer == nil {
+                                    onAnswer(choice)
+                                }
                             }
                             .opacity(showQuestion ? 1 : 0)
                             .offset(x: showQuestion ? 0 : -50)
@@ -594,6 +550,8 @@ struct RevolutionaryChoiceButton: View {
     let index: Int
     let color: Color
     let isSelected: Bool
+    let isCorrectAnswer: Bool
+    let showResult: Bool
     let action: () -> Void
     
     @State private var shimmerOffset: CGFloat = -200
@@ -602,23 +560,41 @@ struct RevolutionaryChoiceButton: View {
         return String(UnicodeScalar(65 + index)!) // A, B, C, D
     }
     
+    var buttonColor: Color {
+        if showResult {
+            if isCorrectAnswer {
+                return color // Show correct answer in theme color
+            } else if isSelected {
+                return Color.gray // Show wrong selection in gray
+            }
+        }
+        return color
+    }
+    
+    var shouldHighlight: Bool {
+        if showResult {
+            return isCorrectAnswer || isSelected
+        }
+        return isSelected
+    }
+    
     // Extract rotating ring to simplify type-checking
     @ViewBuilder
     private var rotatingRing: some View {
-        if isSelected {
+        if shouldHighlight {
             Circle()
                 .strokeBorder(
                     AngularGradient(
-                        colors: [color, color.opacity(0.3), color, color.opacity(0.3)],
+                        colors: [buttonColor, buttonColor.opacity(0.3), buttonColor, buttonColor.opacity(0.3)],
                         center: .center
                     ),
                     lineWidth: 2
                 )
                 .frame(width: 64, height: 64)
-                .rotationEffect(.degrees(isSelected ? 360 : 0))
+                .rotationEffect(.degrees(shouldHighlight ? 360 : 0))
                 .animation(
                     Animation.linear(duration: 4.0).repeatForever(autoreverses: false),
-                    value: isSelected
+                    value: shouldHighlight
                 )
                 .blur(radius: 1)
         }
@@ -627,13 +603,13 @@ struct RevolutionaryChoiceButton: View {
     // Extract glow layers to simplify type-checking
     @ViewBuilder
     private var glowLayers: some View {
-        if isSelected {
+        if shouldHighlight {
             ForEach(0..<3) { i in
                 Circle()
                     .fill(
                         RadialGradient(
                             colors: [
-                                color.opacity(0.4 - Double(i) * 0.15),
+                                buttonColor.opacity(0.4 - Double(i) * 0.15),
                                 .clear
                             ],
                             center: .center,
@@ -650,11 +626,11 @@ struct RevolutionaryChoiceButton: View {
     // Extract main badge fill to simplify type-checking
     @ViewBuilder
     private var badgeFill: some View {
-        if isSelected {
+        if shouldHighlight {
             Circle()
                 .fill(
                     AngularGradient(
-                        colors: [color, color.opacity(0.8), color, color.opacity(0.8)],
+                        colors: [buttonColor, buttonColor.opacity(0.8), buttonColor, buttonColor.opacity(0.8)],
                         center: .center
                     )
                 )
@@ -683,7 +659,7 @@ struct RevolutionaryChoiceButton: View {
             Circle()
                 .strokeBorder(
                     LinearGradient(
-                        colors: isSelected ?
+                        colors: shouldHighlight ?
                             [Color.white.opacity(0.5), Color.white.opacity(0.2)] :
                             [Color.white.opacity(0.2), Color.white.opacity(0.05)],
                         startPoint: .topLeading,
@@ -698,8 +674,8 @@ struct RevolutionaryChoiceButton: View {
                 .foregroundColor(.white)
                 .shadow(color: .black.opacity(0.3), radius: 2)
         }
-        .shadow(color: isSelected ? color.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
-        .scaleEffect(isSelected ? 1.08 : 1.0)
+        .shadow(color: shouldHighlight ? buttonColor.opacity(0.7) : .clear, radius: 16, x: 0, y: 6)
+        .scaleEffect(shouldHighlight ? 1.08 : 1.0)
     }
     
     // Extract letter badge to simplify type-checking
@@ -714,13 +690,13 @@ struct RevolutionaryChoiceButton: View {
     // Extract checkmark view to simplify type-checking
     @ViewBuilder
     private var checkmarkView: some View {
-        if isSelected {
+        if showResult && isCorrectAnswer {
             ZStack {
                 // Pulse effect
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [color.opacity(0.4), .clear],
+                            colors: [buttonColor.opacity(0.4), .clear],
                             center: .center,
                             startRadius: 10,
                             endRadius: 25
@@ -732,7 +708,7 @@ struct RevolutionaryChoiceButton: View {
                 Circle()
                     .fill(
                         LinearGradient(
-                            colors: [color.opacity(0.3), color.opacity(0.2)],
+                            colors: [buttonColor.opacity(0.3), buttonColor.opacity(0.2)],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -741,8 +717,39 @@ struct RevolutionaryChoiceButton: View {
                 
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(color)
-                    .shadow(color: color.opacity(0.6), radius: 6)
+                    .foregroundColor(buttonColor)
+                    .shadow(color: buttonColor.opacity(0.6), radius: 6)
+            }
+            .transition(.scale.combined(with: .opacity))
+        } else if showResult && isSelected && !isCorrectAnswer {
+            ZStack {
+                // Pulse effect for wrong answer
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.gray.opacity(0.4), .clear],
+                            center: .center,
+                            startRadius: 10,
+                            endRadius: 25
+                        )
+                    )
+                    .frame(width: 42, height: 42)
+                    .blur(radius: 8)
+                
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.gray.opacity(0.3), Color.gray.opacity(0.2)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 38, height: 38)
+                
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.gray)
+                    .shadow(color: Color.gray.opacity(0.6), radius: 6)
             }
             .transition(.scale.combined(with: .opacity))
         }
@@ -754,12 +761,12 @@ struct RevolutionaryChoiceButton: View {
             // Base glass card
             RoundedRectangle(cornerRadius: 24)
                 .fill(
-                    isSelected ?
+                    shouldHighlight ?
                         LinearGradient(
                             colors: [
-                                color.opacity(0.22),
-                                color.opacity(0.14),
-                                color.opacity(0.18)
+                                buttonColor.opacity(0.22),
+                                buttonColor.opacity(0.14),
+                                buttonColor.opacity(0.18)
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -775,7 +782,7 @@ struct RevolutionaryChoiceButton: View {
                 )
             
             // Shimmer effect for selected
-            if isSelected {
+            if shouldHighlight {
                 RoundedRectangle(cornerRadius: 24)
                     .fill(
                         LinearGradient(
@@ -804,12 +811,12 @@ struct RevolutionaryChoiceButton: View {
             RoundedRectangle(cornerRadius: 24)
                 .strokeBorder(
                     LinearGradient(
-                        colors: isSelected ?
+                        colors: shouldHighlight ?
                             [
-                                color.opacity(0.9),
-                                color.opacity(0.5),
-                                color.opacity(0.7),
-                                color.opacity(0.4)
+                                buttonColor.opacity(0.9),
+                                buttonColor.opacity(0.5),
+                                buttonColor.opacity(0.7),
+                                buttonColor.opacity(0.4)
                             ] :
                             [
                                 Color.white.opacity(0.22),
@@ -819,14 +826,14 @@ struct RevolutionaryChoiceButton: View {
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ),
-                    lineWidth: isSelected ? 3.5 : 2
+                    lineWidth: shouldHighlight ? 3.5 : 2
                 )
         }
         .shadow(
-            color: isSelected ? color.opacity(0.6) : Color.black.opacity(0.25),
-            radius: isSelected ? 22 : 10,
+            color: shouldHighlight ? buttonColor.opacity(0.6) : Color.black.opacity(0.25),
+            radius: shouldHighlight ? 22 : 10,
             x: 0,
-            y: isSelected ? 12 : 5
+            y: shouldHighlight ? 12 : 5
         )
     }
     
@@ -853,8 +860,8 @@ struct RevolutionaryChoiceButton: View {
             .background(buttonBackground)
         }
         .buttonStyle(RevolutionaryButtonStyle())
-        .scaleEffect(isSelected ? 1.04 : 1.0)
-        .animation(.spring(response: 0.5, dampingFraction: 0.72), value: isSelected)
+        .scaleEffect(shouldHighlight ? 1.04 : 1.0)
+        .animation(.spring(response: 0.5, dampingFraction: 0.72), value: shouldHighlight)
     }
 }
 
