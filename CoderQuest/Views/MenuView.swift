@@ -153,21 +153,30 @@ struct MenuView: View {
                         QuickActionButton(
                             icon: "trophy.fill",
                             title: "Achievements",
-                            color: .yellow
+                            color: .yellow,
+                            badge: progressManager.achievements.filter { $0.isUnlocked }.count
                         ) {
                             showAchievements = true
                         }
                         
                         QuickActionButton(
                             icon: "flame.fill",
-                            title: "\(progressManager.statistics.longestStreak) Streak",
+                            title: "Streak \(progressManager.statistics.currentStreak)",
                             color: .orange
                         ) {}
                     }
                     .padding(.horizontal)
                 }
                 .padding(.bottom, 20)
-            
+                
+                // Language Selection Title
+                Text("Choose Your Language")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
                 // Language Grid
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 15) {
